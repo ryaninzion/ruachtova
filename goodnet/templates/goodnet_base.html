@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block module %}
+
+<nav>
+	<ul>
+		<li id="menu-home"><a href="">בית</a></li>
+		<li id="menu-assoc"><a href="">ארגונים ועמותות</a></li>
+		<li id="menu-initiative"><a href="">יוזמה אישית</a></li>
+		<li id="menu-volunteer"><a href="">התנדבות</a></li>
+		<li id="menu-events"><a href="">אירועים</a></li>
+		<li id="menu-about"><a href="">מי אנחנו</a></li>
+		<li id="menu-ruach"><a href="">רוח טובה</a></li>
+	</ul>
+</nav>
+
+<div id="reshethead">
+<img src="{{ STATIC_URL }}img/reshetova-logo.jpg" alt="" id="reshetlogo" />
+
+{% if user.is_authenticated %}
+
+<div id="user-menu-logged">
+<img src="{{ STATIC_URL }}img/person-icon-small.png" alt="" />
+<img src="{{ STATIC_URL }}img/star-icon-small.png" alt="" />
+<img src="{{ STATIC_URL }}img/plus-icon-small.png" alt="" />
+<img src="{{ STATIC_URL }}img/tool-icon-small.png" alt="" />
+<img src="{{ STATIC_URL }}img/people-icon-small.png" alt="" />
+</div>
+
+{% else %}
+
+<div id="user-menu-unlogged">
+<img src="{{ STATIC_URL }}img/orange-logo.jpg" alt="" />
+</div>
+
+{% endif %}
+
+<div style="clear:both;"></div>
+</div>
+
+{% block content %}
+
+{% endblock %}
+
+{% endblock %}
