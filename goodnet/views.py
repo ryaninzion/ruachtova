@@ -8,3 +8,4 @@ def event(request,id):
 	
 def post(request,id):
 	post = get_object_or_404(Post,pk=id)
+	return render_to_response('posts/view.html',{'post':post},context_instance=RequestContext(request))

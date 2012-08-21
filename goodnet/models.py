@@ -15,23 +15,6 @@ class Event(models.Model):
 	def __unicode__(self): return self.title
 
 
-class Post(models.Model):
-	title = models.CharField("כותרת",max_length=100)
-	POST_TYPE_CHOICES = (
-       	('post', 'פוסט'),
-       	('event', 'אירוע'),
-	('initiative', 'יוזמה אישית'),
-   	)
-	post_type = models.CharField("סוג הפעילות",max_length=1, choices=POST_TYPE_CHOICES)
-	post_image = models.ImageField("תמונה",upload_to="images/posts/") 
-	start_date = models.DateTimeField("תאריך ושעה")
-	end_date = models.DateTimeField("עד תאריך ושעה", null=True)
-	ongoing = models.BooleanField("חד פעמי?")
-	location = models.CharField("מיקום",max_length=100)
-	address = models.CharField("רחוב ומםפר",max_length=100)
-	desc = models.TextField("מידע נוסף")
-
-	def __unicode__(self): return self.title
 
 class Category(models.Model):
 	title = models.CharField("שם",max_length=100)
@@ -39,4 +22,32 @@ class Category(models.Model):
 
 	class Meta:
 		verbose_name = "קטגוריה"
-		verbose_name_plural = "קטגןריות"
+		verbose_name_plural = "קטגוריות"
+
+	def __unicode__(self): return self.title
+
+
+class Post(models.Model):
+	title = models.CharField("כותרת",max_length=100)
+	POST_TYPE_CHOICES = (
+       	('post', 'פוסט'),
+       	('event', 'אירוע'),
+	('initiative', 'יוזמה אישית'),
+   	)
+	post_type = models.CharField("סוג הפעילות",max_length=100, choices=POST_TYPE_CHOICES)
+	post_image = models.ImageField("תמונה",upload_to="images/posts/") 
+	category = models.ForeignKey(Category, verbose_name=u"קטגוריה", unique=True)
+	start_date = models.DateTimeField("תאריך ושעה")
+	end_date = models.DateTimeField("עד תאריך ושעה", blank=True, null=True)
+	ongoing = models.BooleanField("חד פעמי?")
+	location = models.CharField("מיקום",max_length=100)
+	address = models.CharField("רחוב ומםפר",max_length=100)
+	desc = models.TextField("מידע נוסף")
+	tags = models.CharField("תגיות",max_length=100)
+
+	class Meta:
+		verbose_name = "פוסט"
+		verbose_name_plural = "פוסטים"
+
+	def __unicode__(self): return self.title
+
