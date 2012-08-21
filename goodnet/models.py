@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.contrib.auth.models import User
 
 class Event(models.Model):
 	date =  models.DateField("תאריך")
@@ -29,6 +30,7 @@ class Category(models.Model):
 
 class Post(models.Model):
 	title = models.CharField("כותרת",max_length=100)
+	author = models.ForeignKey(User)
 	POST_TYPE_CHOICES = (
        	('post', 'פוסט'),
        	('event', 'אירוע'),
@@ -36,7 +38,7 @@ class Post(models.Model):
    	)
 	post_type = models.CharField("סוג הפעילות",max_length=100, choices=POST_TYPE_CHOICES)
 	post_image = models.ImageField("תמונה",upload_to="images/posts/") 
-	category = models.ForeignKey(Category, verbose_name=u"קטגוריה", unique=True)
+	category = models.ForeignKey(Category, verbose_name=u"קטגוריה")
 	start_date = models.DateTimeField("תאריך ושעה")
 	end_date = models.DateTimeField("עד תאריך ושעה", blank=True, null=True)
 	ongoing = models.BooleanField("חד פעמי?")

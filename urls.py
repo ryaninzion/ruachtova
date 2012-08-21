@@ -10,7 +10,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'ruachtova.views.home', name='home'),
 	url(r'^goodnet/', include('goodnet.urls')),
-
+	url(r'^comments/', include('django.contrib.comments.urls')),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
