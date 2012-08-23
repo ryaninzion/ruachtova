@@ -1,23 +1,56 @@
 {% extends "goodnet_base.html" %}
 {% load comments %}
-{% get_comment_count for post as comment_count %}
 
 {% block content %}
 <div id="content">
+<img src="{{ STATIC_URL }}img/left-yellowarrow.png" class="headline-arrow" alt="" />
 <h2>{{ post }}</h2>
-<p>מעת: {{ post.author.first_name }}</p>
-<p>{{ post.location }}</p>
-<p>{{ post.category }}</p>
-<img src="{{ post.post_image.url }}" />
+{% if post.ongoing %}
+<div id="one-time">
+	<img src="{{ STATIC_URL }}img/one-time.png" alt="" /> <p>אירוע חד פעמי</p>
+</div>
+{% endif %}
+מעת: {{ post.author.first_name }} &nbsp; | &nbsp; {{ post.created_on|date:"d.m.Y" }}
+<br style="clear:both;" /><br/>
 
-<p><a href="{{ post.get_absolute_url }}#comments">{{ comment_count }} Comment{{ comment_count|pluralize }}</a></p>
+<div id="post-right">
+	<img src="{{ post.post_image.url }}" />
+</div>
+<div id="post-left">
+
+	<span class="text-lbl">מועד:</span> {{ post.start_date|date:"l, j F Y, H:i" }}<br/>
+	<span class="text-lbl">מקום:</span> {{ post.address }}, {{ post.location }}<br/><br/>
+	<div class="desc">
+	{{ post.desc|linebreaks }}
+	<div id="desc-more-less">
+		<a name="desc-more" class="desc-more">קרא עוד</a>
+		<a name="desc-less" class="desc-less">קרא פחות</a>
+	</div>
+	</div>
+
+
+</div><br style="clear:both;" />
+
+<div id="action-bar">
+
+	<img src="{{ STATIC_URL }}img/join.png" alt="" /> &nbsp;	
+	<img src="{{ STATIC_URL }}img/left-yellowarrow.png" alt="" /> הוסיפו למועדפים &nbsp;
+	<img src="{{ STATIC_URL }}img/left-yellowarrow.png" alt="" /> שילחו לחבר &nbsp;
+	<img src="{{ STATIC_URL }}img/action-facebook.png" alt="" />
+	<img src="{{ STATIC_URL }}img/action-twitter.png" alt="" /> שתפו
+
+	<span class="inappropriate"><a href="" class="inappropriate">תוכן פוגעני</a></span>
+
+</div>
+
+{% get_comment_count for post as comment_count %}
+
+<h3>{% if comment_count > 0 %}{{ comment_count }} תגובות{% else %}אין תגובות{% endif %}</h3>
 
 {% get_comment_list for post as comment_list %}
 
-<p id="comments">Comments</p>
 {% for comment in comment_list %}
 	<div class="comment" id="c{{ comment.id }}">
-		<a id="c{{ comment.id }}" href="#c{{ comment.id }}">#{{forloop.counter }}</a>
 		<p><b>{{ comment.person_name|escape }}</b></p>
 		{{ comment.comment|escape|urlizetrunc:40|linebreaks }}
 	</div>

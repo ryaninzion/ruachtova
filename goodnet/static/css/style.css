@@ -2,7 +2,7 @@
 
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
 
-html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+html { font-size: 14px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 html, button, input, select, textarea { font-family: "Lucida Grande",Arial,sans; color: #222; }
 body { margin: 0; font-size: 1em; line-height: 1.4; }
 
@@ -16,9 +16,13 @@ b, strong { font-weight: bold; }
 blockquote { margin: 1em 40px; }
 hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
 
+.text-lbl { color:#FBBD09; }
+
+p { margin:0 0 30px 0; }
+
 q { quotes: none; }
 q:before, q:after { content: ""; content: none; }
-small { font-size: 85%; }
+small { font-size: 11px; }
 
 ul, ol { margin: 1em 0; padding: 0 0 0 40px; }
 dd { margin: 0 0 0 40px; }
@@ -59,7 +63,32 @@ nav li a, nav li a:hover, nav li a:visited { text-decoration:none; font-weight:b
 
 /* CONTENT PAGES */
 
-#content { float:right; width:700px; min-height:400px; border-top:3px solid #FBBD09; padding:20px 0; }
+#content { float:right; width:700px; min-height:400px; border-top:3px solid #FBBD09; padding:30px 0; }
+.headline-arrow { float:right; margin:0 0 40px 5px; }
+
+#content h2 { font-weight:normal; font-size:24px; margin:0; padding:0; }
+#content h3 { font-weight:normal; font-size:20px; }
+
+#one-time { float:left; width:150px;  }
+#one-time img { float:right; }
+#one-time p { line-height:36px; margin-bottom:0; }
+.checkmark { color:#FBBD09; font-weight:bold; font-size:20px; } 
+
+#post-right { float:right; width:200px; }
+#post-left { float:left; width:470px; }
+#post-right img { width:200px; margin-bottom:40px; }
+
+#post-left .desc p { display:none; }
+#post-left .desc p:first-child { display:block; }
+#desc-more-less { text-align:left; padding-bottom:30px; }
+
+#action-bar { clear:both; border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding:15px 0; text-align:right; }
+.inappropriate a, .inappropriate a:hover, .inappropriate a:visited { color:#FCC833; text-decoration:none; padding:0 50px 0 10px; font-weight:bold; }
+
+
+/* COMMENTS */
+
+.comment { background-color:#FFFCF1; padding:10px; margin-bottom:15px; }
 
 
 /* FORMS */

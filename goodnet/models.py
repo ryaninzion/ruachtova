@@ -46,6 +46,7 @@ class Post(models.Model):
 	address = models.CharField("רחוב ומםפר",max_length=100)
 	desc = models.TextField("מידע נוסף")
 	tags = models.CharField("תגיות",max_length=100)
+	created_on = models.DateTimeField(auto_now_add=True)
 
 	class Meta:
 		verbose_name = "פוסט"
