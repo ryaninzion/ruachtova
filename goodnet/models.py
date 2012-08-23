@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+
 
 class Event(models.Model):
 	date =  models.DateField("תאריך")
@@ -15,6 +17,37 @@ class Event(models.Model):
 
 	def __unicode__(self): return self.title
 
+
+class Profile(models.Model):
+	user		= models.OneToOneField(User)
+	PROFILE_TYPE_CHOICES = (
+	('org', 'פרופיל ארגון'),
+	('personal', 'פרופיל חבר'),
+	)
+	profile_type	= models.CharField("", max_length=100, choices=PROFILE_TYPE_CHOICES) 
+	name		= models.CharField("", max_length=100)
+	avatar		= models.ImageField("", upload_to="images/avatars/")
+	email		= models.EmailField("אימייל", max_length=254) 
+	username	= models.CharField("", max_length=100)
+	agreement	= models.BooleanField()
+	datebirth	= models.DateField()
+	phone		= models.CharField("", max_length=100)
+	website		= models.URLField()
+	facebook	= models.URLField()
+	desc		= models.TextField()
+	categories	= models.ManyToManyField(Specialization)
+	area		= models.ManyToManyField(Area)	
+
+	class Meta:
+		verbose_name = "פרופיל"
+		verbose_name_plural = "פרופילים"
+
+	def __unicode__(self): return self.name	
+
+
+def create_user_profile_callback(sender, instance, **kwargs):
+	profile, new = Profile.objects.get_or_create(user=instance)
+post_save.connect(create_user_profile_callback, User)
 
 
 class Category(models.Model):

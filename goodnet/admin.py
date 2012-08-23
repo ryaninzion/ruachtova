@@ -11,4 +11,4 @@ class PostAdmin(admin.ModelAdmin):
 admin.site.register(Post, PostAdmin)
 admin.site.register(Event)
 admin.site.register(Category)
-
+admin.site.register(Profile)
