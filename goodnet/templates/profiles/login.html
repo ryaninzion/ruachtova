@@ -1,8 +1,4 @@
 {% extends "goodnet_base.html" %}
-{% block extraheaders %}
-<!--	LOAD JQUERY SCRIPTS FROM GOOGLE CDN HERE
-	USE JQUERY UI DATEPICKER FOR DATE FIELD -->
-{% endblock %}
 
 {% block content %}
 <form action="" method="post">
@@ -14,9 +10,9 @@
 	<p>{{ form.username }}</p>
 </div>
 <div class="form-field">
-	{% if form.email.errors %}<p class="errors">{{ form.email.errors }}</p>{% endif %}
-	<p><label for="email"{% if form.email.errors %} class="errors"{% endif %}>Email:</label></p>
-	<p>{{ form.email }}</p>
+	{% if form.password.errors %}<p class="errors">{{ form.password.errors }}</p>{% endif %}
+	<p><label for="password"{% if form.password.errors %} class="errors"{% endif %}>Password:</label></p>
+	<p>{{ form.password }}</p>
 </div>
 <p><input type="submit" alt="register" /></p>
 </form>

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm
@@ -17,13 +19,22 @@ class RegistrationForm(ModelForm):
 		username = self.cleaned_data['username']
 		try:
 			User.objects.get(username=username)
-		except: User.DoesNotExist:
+		except User.DoesNotExist:
 			return username
-		raise forms.ValidationError('שם משתמש כבר קיים. אנא בחר בשם משתמש שונה.')
+		raise forms.ValidationError(u'שם משתמש כבר קיים. אנא בחר בשם משתמש שונה.')
 
-	def clean_password(self):
-		password = self.cleaned_data['password']
-		password1 = self.cleaned_data['password1']
-		if password != password1:
-			raise forms.ValidationError('סיסמות לא תאמו. אנא נסה שוב.')
-		return password
+	def clean(self):
+		if self.cleaned_data['password'] != self.cleaned_data['password1']:
+			raise forms.ValidationError(u'סיסמות לא תאמו. אנא נסה שוב.')
+		return self.cleaned_data
+
+
+class LoginForm(forms.Form):
+	username	= forms.CharField(label=(u'username'))
+	password	= forms.CharField(label=(u'Password'), widget=forms.PasswordInput(render_value=False))
+
+
+class PostForm(ModelForm):
+
+	class Meta:
+		model = Post

@@ -1,7 +1,9 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('goodnet.views',
-	(r'^event/(?P<id>\d+)/$','event'),
 	(r'^post/(?P<id>\d+)/$','post'),
-	(r'^register/$', 'register'),
+	(r'^post/create/$', 'post_form'),
+	(r'^register/$', 'registration'),
+	(r'^login/$', 'loginrequest'),
+	(r'^logout/$', 'logoutrequest'),
 )
