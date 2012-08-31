@@ -33,7 +33,7 @@ def registration(request):
 			user.save()
 #			profile = user.get_profile()
 #			profile.save()
-			profile = Profile(user=user, name=form.cleaned_data['name'], datebirth=form.cleaned_data['datebirth'])
+			profile = Profile(user=user, profile_type=form.cleaned_data['profile_type'], name=form.cleaned_data['name'], avatar=form.cleaned_data['avatar'], agreement=form.cleaned_data['agreement'], datebirth=form.cleaned_data['datebirth'], phone=form.cleaned_data['phone'], website=form.cleaned_data['website'], facebook=form.cleaned_data['facebook'], desc=form.cleaned_data['desc'], categories=form.cleaned_data['categories'], area=form.cleaned_data['area'], likes=form.cleaned_data['likes'], causes_joined=form.cleaned_data['causes_joined'])
 			profile.save()
 			return HttpResponseRedirect('/profile/')
 		else:
