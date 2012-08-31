@@ -1,0 +1,47 @@
+{% extends "goodnet_base.html" %}
+{% block extraheaders %}
+<!--	LOAD JQUERY SCRIPTS FROM GOOGLE CDN HERE
+	USE JQUERY UI DATEPICKER FOR DATE FIELD -->
+{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+{% csrf_token %}
+{% if form.errors %}<p>Please correct following fields:</p>{% endif %}
+<div class="form-field">
+	{% if form.name.errors %}<p class="errors">{{ form.name.errors }}</p>{% endif %}
+	<p>{{ form.name }}</p>
+</div>
+<div class="form-field">
+	{% if form.datebirth.errors %}<p class="errors">{{ form.datebirth.errors }}</p>{% endif %}
+	<p>{{ form.datebirth }}</p>
+</div>
+<div class="form-field">
+	{% if form.phone.errors %}<p class="errors">{{ form.phone.errors }}</p>{% endif %}
+	<p>{{ form.phone }}</p>
+</div>
+<div class="form-field">
+	{% if form.website.errors %}<p class="errors">{{ form.website.errors }}</p>{% endif %}
+	<p>{{ form.website }}</p>
+</div>
+<div class="form-field">
+	{% if form.facebook.errors %}<p class="errors">{{ form.facebook.errors }}</p>{% endif %}
+	<p>{{ form.facebook }}</p>
+</div>
+<div class="form-field">
+	{% if form.desc.errors %}<p class="errors">{{ form.desc.errors }}</p>{% endif %}
+	<p>{{ form.desc }}</p>
+</div>
+
+<div class="form-field">
+	{% if form.categories.errors %}<p class="errors">{{ form.categories.errors }}</p>{% endif %}
+	<p>{{ form.categories }}</p>
+</div>
+
+<div class="form-field">
+	{% if form.areas.errors %}<p class="errors">{{ form.areas.errors }}</p>{% endif %}
+	<p>{{ form.areas }}</p>
+</div>
+<p><input type="submit" alt="register" /></p>
+</form>
+{% endblock %}

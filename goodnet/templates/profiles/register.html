@@ -9,6 +9,11 @@
 {% csrf_token %}
 {% if form.errors %}<p>Please correct following fields:</p>{% endif %}
 <div class="form-field">
+	{% if form.profile_type.errors %}<p class="errors">{{ form.profile_type.errors }}</p>{% endif %}
+	<p><label for="profile_type"{% if form.profile_type.errors %} class="label-error"{% endif %}>סוג הפרופיל:</label></p>
+	<p>{{ form.profile_type }}</p>
+</div>
+<div class="form-field">
 	{% if form.username.errors %}<p class="errors">{{ form.username.errors }}</p>{% endif %}
 	<p><label for="username"{% if form.username.errors %} class="label-error"{% endif %}>Username:</label></p>
 	<p>{{ form.username }}</p>
@@ -17,6 +22,21 @@
 	{% if form.email.errors %}<p class="errors">{{ form.email.errors }}</p>{% endif %}
 	<p><label for="email"{% if form.email.errors %} class="errors"{% endif %}>Email:</label></p>
 	<p>{{ form.email }}</p>
+</div>
+<div class="form-field">
+	{% if form.avatar.errors %}<p class="errors">{{ form.avatar.errors }}</p>{% endif %}
+	<p><label for="avatar"{% if form.avatar.errors %} class="errors"{% endif %}>תמונה:</label></p>
+	<p>{{ form.avatar }}</p>
+</div>
+<div class="form-field">
+	{% if form.password.errors %}<p class="errors">{{ form.password.errors }}</p>{% endif %}
+	<p><label for="password"{% if form.password.errors %} class="errors"{% endif %}>סיסמה:</label></p>
+	<p>{{ form.password }}</p>
+</div>
+<div class="form-field">
+	{% if form.password1.errors %}<p class="errors">{{ form.password1.errors }}</p>{% endif %}
+	<p><label for="password1"{% if form.password1.errors %} class="errors"{% endif %}>אימות סיסמה:</label></p>
+	<p>{{ form.password1 }}</p>
 </div>
 <p><input type="submit" alt="register" /></p>
 </form>
