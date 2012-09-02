@@ -74,10 +74,10 @@ class Profile(models.Model):
 	website		= models.URLField("אתר אינטרנט", blank=True, null=True)
 	facebook	= models.URLField("פרופיל פייסבוק", blank=True, null=True)
 	desc		= models.TextField("תאור", blank=True, null=True)
-	categories	= models.ManyToManyField(Category, blank=True, null=True)
-	area		= models.ManyToManyField(Area, blank=True, null=True)	
-	likes		= models.ManyToManyField(Post, blank=True, null=True, related_name='liked')
-	causes_joined	= models.ManyToManyField(Post, blank=True, null=True, related_name='our_helpers')
+	categories	= models.ManyToManyField(Category, blank=True, null=True, default="")
+	area		= models.ManyToManyField(Area, blank=True, null=True, default="")	
+	likes		= models.ManyToManyField(Post, blank=True, null=True, related_name='liked', default="")
+	causes_joined	= models.ManyToManyField(Post, blank=True, null=True, related_name='our_helpers', default="")
 
 	class Meta:
 		verbose_name = "פרופיל"

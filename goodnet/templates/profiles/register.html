@@ -38,6 +38,10 @@
 	<p><label for="password1"{% if form.password1.errors %} class="errors"{% endif %}>אימות סיסמה:</label></p>
 	<p>{{ form.password1 }}</p>
 </div>
+<div class="form-field">
+	{% if form.agreement.errors %}<p class="errors">{{ form.agreement.errors }}</p>{% endif %}
+	<p>{{ form.agreement }} אני מסכים לתנאי השימוש ולמדיניות הפרתיות באתר</p>
+</div>
 <p><input type="submit" alt="register" /></p>
 </form>
 {% endblock %}

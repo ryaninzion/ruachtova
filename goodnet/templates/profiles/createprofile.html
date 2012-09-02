@@ -10,7 +10,7 @@
 {% if form.errors %}<p>Please correct following fields:</p>{% endif %}
 <div class="form-field">
 	{% if form.name.errors %}<p class="errors">{{ form.name.errors }}</p>{% endif %}
-	<p>{{ form.name }}</p>
+	<p>שם: {{ form.name }}</p>
 </div>
 <div class="form-field">
 	{% if form.datebirth.errors %}<p class="errors">{{ form.datebirth.errors }}</p>{% endif %}
@@ -39,8 +39,8 @@
 </div>
 
 <div class="form-field">
-	{% if form.areas.errors %}<p class="errors">{{ form.areas.errors }}</p>{% endif %}
-	<p>{{ form.areas }}</p>
+	{% if form.area.errors %}<p class="errors">{{ form.area.errors }}</p>{% endif %}
+	<p>{{ form.area }}</p>
 </div>
 <p><input type="submit" alt="register" /></p>
 </form>

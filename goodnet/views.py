@@ -34,6 +34,11 @@ def registration(request):
 				user.save()
 				profile = Profile(user=user, profile_type = form.cleaned_data['profile_type'], agreement = form.cleaned_data['agreement'])
 				profile.save()
+
+				username = form.cleaned_data['username']
+				password = form.cleaned_data['password']
+				profile = authenticate(username=username, password=password)
+				login(request, profile)
 				return HttpResponseRedirect('/goodnet/profile-edit/')
 			else:
 				return render_to_response('profiles/register.html', {'form':form}, context_instance=RequestContext(request))
@@ -49,7 +54,10 @@ def profile_edit(request):
 		if request.method == 'POST':
 			form = ProfileForm(request.POST, instance=user.get_profile())
 			if form.is_valid():
-				profile = Profile(name=form.cleaned_data['name'], avatar=form.cleaned_data['avatar'], datebirth=form.cleaned_data['datebirth'], phone=form.cleaned_data['phone'], website=form.cleaned_data['website'], facebook=form.cleaned_data['facebook'], desc=form.cleaned_data['desc'], categories=form.cleaned_data['categories'], area=form.cleaned_data['area'], likes=form.cleaned_data['likes'], causes_joined=form.cleaned_data['causes_joined'])
+				profile = user.get_profile()
+				profile.save()
+				profile.categories = form.cleaned_data['categories']
+				profile.area = form.cleaned_data['area']
 				profile.save()
 				return HttpResponseRedirect('/goodnet/profile/')
 			else:

@@ -30,6 +30,8 @@ class RegistrationForm(ModelForm):
 
 
 class ProfileForm(ModelForm):
+	categories = forms.ModelMultipleChoiceField(queryset=Category.objects.all(),widget=forms.CheckboxSelectMultiple(),required=False)
+	area = forms.ModelMultipleChoiceField(queryset=Area.objects.all(),widget=forms.CheckboxSelectMultiple(),required=False)
 
 	class Meta:
 		model = Profile
