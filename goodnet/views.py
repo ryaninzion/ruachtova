@@ -23,6 +23,12 @@ def post_form(request):
 		return HttpResponseRedirect('/goodnet/post/not_logged_in/')
 
 
+def profile(request,id):
+	profile = get_object_or_404(Profile,pk=id)
+
+	return render_to_response('profiles/view.html',{'profile':profile},context_instance=RequestContext(request))
+
+
 def registration(request):
 	if request.user.is_authenticated():
 		return HttpResponseRedirect('/goodnet/profile/')
@@ -71,7 +77,7 @@ def profile_edit(request):
 
 def loginrequest(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect('/profile/')
+		return HttpResponseRedirect('/goodnet/profile/%i/' % request.user.get_profile().pk)
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		if form.is_valid():
@@ -80,9 +86,9 @@ def loginrequest(request):
 			profile = authenticate(username=username, password=password)
 			if profile is not None:
 				login(request, profile)
-				return HttpResponseRedirect('/profile/')
+				return HttpResponseRedirect('/goodnet/profile/')
 			else:
-				return HttpResponseRedirect('/login/')
+				return HttpResponseRedirect('/goodnet/login/')
 		else:
 			return render_to_response('profiles/login.html', {'form':form}, context_instance=RequestContext(request))	
 	else:
@@ -92,4 +98,4 @@ def loginrequest(request):
 
 def logoutrequest(request):
 	logout(request)
-	return HttpResponseRedirect('/')
+	return HttpResponseRedirect('/goodnet/')

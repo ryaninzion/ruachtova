@@ -1,0 +1,37 @@
+{% extends "goodnet_base.html" %}
+{% load comments %}
+
+{% block content %}
+<div id="content">
+<img src="{{ STATIC_URL }}img/left-yellowarrow.png" class="headline-arrow" alt="" />
+<h2>{{ profile.name }}</h2>
+
+<div id="post-right">
+	{% if profile.avatar %}<img src="{{ profile.avatar.url }}" />{% endif %}
+</div>
+<div id="post-left">
+
+	<div class="desc">
+	{{ profile.desc|linebreaks }}
+	<div id="desc-more-less">
+		<a name="desc-more" class="desc-more">קרא עוד</a>
+		<a name="desc-less" class="desc-less">קרא פחות</a>
+	</div>
+	</div>
+
+
+</div><br style="clear:both;" />
+
+<div id="action-bar">
+
+	<img src="{{ STATIC_URL }}img/join.png" alt="" /> &nbsp;	
+	<img src="{{ STATIC_URL }}img/left-yellowarrow.png" alt="" /> הוסיפו למועדפים &nbsp;
+	<img src="{{ STATIC_URL }}img/left-yellowarrow.png" alt="" /> שילחו לחבר &nbsp;
+	<img src="{{ STATIC_URL }}img/action-facebook.png" alt="" />
+	<img src="{{ STATIC_URL }}img/action-twitter.png" alt="" /> שתפו
+
+	<span class="inappropriate"><a href="" class="inappropriate">תוכן פוגעני</a></span>
+
+</div>
+
+{% endblock %}
