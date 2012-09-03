@@ -3,6 +3,9 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from django.core.files import File
+from django.conf import settings
+from datetime import datetime
 
 
 class Category(models.Model):
@@ -30,6 +33,56 @@ class Area(models.Model):
 
 	def __unicode__(self): return self.name
 
+
+def photo_file_path(instance):
+    return '/'.join(['images/profiles', instance.user.get_profile().id, 'photos/'])
+
+def thumbnail_file_path(instance):
+    return '/'.join(['images/profiles', instance.user.get_profile().id, 'thumbnails/'])
+
+class Photo(models.Model):
+	desc 		= models.TextField("תאור", blank=True, null=True)
+	date 		= models.DateTimeField("תאריך", default=datetime.now())
+	image 		= models.ImageField("תמונה", upload_to=photo_file_path)
+	thumb 		= models.ImageField(upload_to=thumbnail_file_path, editable=False)
+
+	class Meta:
+		ordering = ['-date']
+
+	def save(self, force_insert=False, force_update=False):
+		super(Photo, self).save(force_insert, force_update)
+		if self.image and not self.thumb:
+			# Set the thumbnail size and maximum size.
+			t_size = 100, 80
+			max_size = 800, 600
+			# Open the image that was uploaded.
+			im = Image.open(settings.MEDIA_ROOT + str(self.image))
+			# Compare the image size against the maximum size. If it is greater, the image will be resized.
+			if im.size > max_size:
+				# Using 'thumbnail', instead of 'resize', keeps the aspect ratio of the image.
+				resize = im.thumbnail(max_size)
+				resize.save(settings.MEDIA_ROOT + str(self.image))
+			# Create the thumbnail and save the path to the database.
+			im.thumbnail(t_size)
+			im.save(settings.MEDIA_ROOT + os.path.splitext(str(self.image))[0] + ".thumbnail", "JPEG")
+			self.thumb = os.path.splitext(str(self.image))[0] + ".thumbnail"
+			super(Photo, self).save(force_insert, force_update)
+
+
+def video_file_path(instance):
+    return '/'.join(['videos/profiles', instance.user.get_profile().id, ''])
+
+class Video(models.Model):
+	title		= models.CharField("כותרת", max_length=100)
+	date		= models.DateTimeField("תאריך", default=datetime.now())
+	desc		= models.TextField("תאור", blank=True, null=True)
+	video		= models.FileField("וידאו", upload_to=video_file_path)
+
+	class Meta:
+		verbose_name = "וידאו"
+		verbose_name_plural = "וידאו"
+
+	def __unicode__(self): return self.title
 
 
 class Post(models.Model):
@@ -78,6 +131,9 @@ class Profile(models.Model):
 	area		= models.ManyToManyField(Area, blank=True, null=True, default="")	
 	likes		= models.ManyToManyField(Post, blank=True, null=True, related_name='liked', default="")
 	causes_joined	= models.ManyToManyField(Post, blank=True, null=True, related_name='our_helpers', default="")
+	friends		= models.ManyToManyField("self", blank=True, null=True, symmetrical=False, related_name='friendlies', default="")
+	photos		= models.ManyToManyField(Photo, blank=True, null=True, default="")
+	videos		= models.ManyToManyField(Video, blank=True, null=True, default="")
 
 	class Meta:
 		verbose_name = "פרופיל"
