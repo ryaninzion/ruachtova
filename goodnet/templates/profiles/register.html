@@ -5,14 +5,43 @@
 {% endblock %}
 
 {% block content %}
+<div id="content">
+
+<h2 class="page-title">הירשמו לאתר</h2>
+
+<div class="intro">
+<span class="text-lbl">ברוכים הבאים!</span><br/>
+אנו מודים לכם שבחרתם לפתוח פרופיל באתר רשת טובה.<br/>
+יצירת הפרופיל תאפשר לכם להיחשף ליוזמות והזדמנויות התנדבות רבות ומגוונות.<br/>
+בנוסף, תוכלו ליצור יוזמות משלכם ולמצוא אנשים כמותכם שיעזרו לכם להפוך אותם מרעיון
+למציאות. בנוסף, אתם מוזמנים לפרסם אירועים, לעלות תמונות, סרטונים מעוררי השראה,
+חוויות מהתנדבויות קודמות ועוד.
+
+<small>שימו לב! אתם יכולים לבחור בפרופיל ארגון או חבר. הבחירה בסוג פרופיל תשפיע על החלוקה במאגר החיפוש שלנו,<br/>ותאפשר לנו לחדד את תוצאות החיפוש ולהוביל אליכם את הפניות הרלוונטיות ביותר</small>
+
+</div>
+
 <form action="" method="post">
 {% csrf_token %}
-{% if form.errors %}<p>Please correct following fields:</p>{% endif %}
-<div class="form-field">
-	{% if form.profile_type.errors %}<p class="errors">{{ form.profile_type.errors }}</p>{% endif %}
-	<p><label for="profile_type"{% if form.profile_type.errors %} class="label-error"{% endif %}>סוג הפרופיל:</label></p>
-	<p>{{ form.profile_type }}</p>
+
+<div class="circle-small">1</div>
+<h3 class="form-title">בחרו את סוג הפרופיל</h3>
+<small>במידה ואתם ארגון, עמותה או קבוצה שפועלת יחד, אנא פתחו פרופיל ארגון.<br/>
+במידה ואת\ה אדם פרטי שרוצה לעשות טוב, נא להצטרף כחבר</small>
+
+<div id="profile-type">
+	<ul>
+		<li><img src="{{ STATIC_URL }}img/heart-icon.png" /><label for="id_profile_type_1"><input type="radio" id="id_profile_type_1" value="personal" name="profile_type" /> פרופיל חבר</label><small>אנשים פרטיים עם רצון לעשות טוב</small></li>
+		<li><img src="{{ STATIC_URL }}img/profile-icon.png" /><label for="id_profile_type_0"><input type="radio" id="id_profile_type_0" value="org" name="profile_type" /> פרופיל ארגון</label><small>עמותות, אירגונים, וגופים ציבוריים</small></li>
+	</ul>
+
+	<div style="clear:both;"></div>
 </div>
+
+<div class="circle-small">1</div>
+<h3 class="form-title">מלאו את הפרטים</h3>
+
+<fieldset>
 <div class="form-field">
 	{% if form.username.errors %}<p class="errors">{{ form.username.errors }}</p>{% endif %}
 	<p><label for="username"{% if form.username.errors %} class="label-error"{% endif %}>Username:</label></p>
@@ -43,5 +72,9 @@
 	<p>{{ form.agreement }} אני מסכים לתנאי השימוש ולמדיניות הפרתיות באתר</p>
 </div>
 <p><input type="submit" alt="register" /></p>
+</fieldset>
 </form>
+</div>
+
+
 {% endblock %}

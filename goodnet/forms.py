@@ -4,8 +4,13 @@ from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from goodnet.models import *
+from django.forms.widgets import RadioSelect
+
+
+PROFILE_TYPE_CHOICES = [['org', 'פרופיל ארגון'],['personal', 'פרופיל חבר']]
 
 class RegistrationForm(ModelForm):
+	profile_type	= forms.ChoiceField(widget=RadioSelect(), choices=PROFILE_TYPE_CHOICES)
 	username	= forms.CharField("שם משתמש")
 	email		= forms.EmailField("כתובת דואל")
 	password	= forms.CharField("סיסמה", widget=forms.PasswordInput(render_value=False))
