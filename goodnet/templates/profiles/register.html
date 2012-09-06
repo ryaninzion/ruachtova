@@ -38,42 +38,37 @@
 	<div style="clear:both;"></div>
 </div>
 
-<div class="circle-small">1</div>
+<div class="circle-small">2</div>
 <h3 class="form-title">מלאו את הפרטים</h3>
-
+<div style="clear:both;"></div>
 <fieldset>
 <div class="form-field">
-	{% if form.username.errors %}<p class="errors">{{ form.username.errors }}</p>{% endif %}
-	<p><label for="username"{% if form.username.errors %} class="label-error"{% endif %}>Username:</label></p>
-	<p>{{ form.username }}</p>
+	<label for="name">שם מלא:</label> {{ form.name }}
+	{% if form.name.errors %}{{ form.name.errors }}{% endif %}
 </div>
 <div class="form-field">
-	{% if form.email.errors %}<p class="errors">{{ form.email.errors }}</p>{% endif %}
-	<p><label for="email"{% if form.email.errors %} class="errors"{% endif %}>Email:</label></p>
-	<p>{{ form.email }}</p>
+	<label for="email">כתובת דוא"ל:</label> {{ form.email }}
+	{% if form.email.errors %}{{form.email.errors }}{% endif %}
 </div>
 <div class="form-field">
-	{% if form.avatar.errors %}<p class="errors">{{ form.avatar.errors }}</p>{% endif %}
-	<p><label for="avatar"{% if form.avatar.errors %} class="errors"{% endif %}>תמונה:</label></p>
-	<p>{{ form.avatar }}</p>
+	<label for="username">שם משתמש:</label> {{ form.username }}
+	{% if form.username.errors %}{{ form.username.errors }}{% endif %}
 </div>
 <div class="form-field">
-	{% if form.password.errors %}<p class="errors">{{ form.password.errors }}</p>{% endif %}
-	<p><label for="password"{% if form.password.errors %} class="errors"{% endif %}>סיסמה:</label></p>
-	<p>{{ form.password }}</p>
+	<label for="password">סיסמה:</label> {{ form.password }}
 </div>
 <div class="form-field">
-	{% if form.password1.errors %}<p class="errors">{{ form.password1.errors }}</p>{% endif %}
-	<p><label for="password1"{% if form.password1.errors %} class="errors"{% endif %}>אימות סיסמה:</label></p>
-	<p>{{ form.password1 }}</p>
+	<label for="password1">אימות סיסמה:</label> {{ form.password1 }}
+	{% if form.password.errors %}{{ form.password.errors }}{% endif %}
 </div>
 <div class="form-field">
-	{% if form.agreement.errors %}<p class="errors">{{ form.agreement.errors }}</p>{% endif %}
-	<p>{{ form.agreement }} אני מסכים לתנאי השימוש ולמדיניות הפרתיות באתר</p>
+	{{ form.agreement }} אני מסכים <a href="javascript:window.open('{% url django.contrib.flatpages.views.flatpage url="/terms/" %}','תנאי השימוש','height=500,width=500,left=300,top=300');">לתנאי השימוש</a> ו<a href="javascript:window.open('{% url django.contrib.flatpages.views.flatpage url="/privacy/" %}','מדיניות הפרתיות','height=500,width=500,left=300,top=300');">למדיניות הפרתיות</a> באתר
+	{% if form.agreement.errors %}{{ form.agreement.errors }}{% endif %}
 </div>
-<p><input type="submit" alt="register" /></p>
+<input type="submit" class="regsubmit" value="מעבר לשלב הבא" />
 </fieldset>
 </form>
+<img src="{{ STATIC_URL}}img/homebanner-pic.jpg" alt="" width="700" />
 </div>
 
 

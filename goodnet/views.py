@@ -38,7 +38,7 @@ def registration(request):
 			if form.is_valid():
 				user = User.objects.create_user(username = form.cleaned_data['username'], email = form.cleaned_data['email'], password = form.cleaned_data['password'])
 				user.save()
-				profile = Profile(user=user, profile_type = form.cleaned_data['profile_type'], agreement = form.cleaned_data['agreement'])
+				profile = Profile(user=user, profile_type = form.cleaned_data['profile_type'], name=form.cleaned_data['name'], agreement = form.cleaned_data['agreement'])
 				profile.save()
 
 				username = form.cleaned_data['username']
@@ -54,9 +54,9 @@ def registration(request):
 
 
 
-def profile_edit(request):
+def profile_edit(request,id):
 	if request.user.is_authenticated():
-		user = User.objects.get(pk=request.user.id)
+		user = User.objects.get(pk=id)
 		if request.method == 'POST':
 			form = ProfileForm(request.POST, instance=user.get_profile())
 			if form.is_valid():
