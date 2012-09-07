@@ -38,7 +38,7 @@ def registration(request):
 			if form.is_valid():
 				user = User.objects.create_user(username = form.cleaned_data['username'], email = form.cleaned_data['email'], password = form.cleaned_data['password'])
 				user.save()
-				profile = Profile(user=user, profile_type = form.cleaned_data['profile_type'], name=form.cleaned_data['name'], agreement = form.cleaned_data['agreement'])
+				profile = Profile(user=user, profile_type = form.cleaned_data['profile_type'], name=form.cleaned_data['name'], avatar=form.cleaned_data['avatar'], agreement = form.cleaned_data['agreement'])
 				profile.save()
 
 				username = form.cleaned_data['username']
@@ -58,14 +58,14 @@ def profile_edit(request,id):
 	if request.user.is_authenticated():
 		user = User.objects.get(pk=id)
 		if request.method == 'POST':
-			form = ProfileForm(request.POST, instance=user.get_profile())
+			form = ProfileForm(request.POST, request.FILES, instance=user.get_profile())
 			if form.is_valid():
 				profile = user.get_profile()
 				profile.save()
 				profile.categories = form.cleaned_data['categories']
 				profile.area = form.cleaned_data['area']
 				profile.save()
-				return HttpResponseRedirect('/goodnet/profile/')
+				return HttpResponseRedirect('/goodnet/profile/%i/' % request.user.get_profile().pk)
 			else:
 				return render_to_response('profiles/createprofile.html', {'form':form}, context_instance=RequestContext(request))
 		else:
@@ -86,7 +86,7 @@ def loginrequest(request):
 			profile = authenticate(username=username, password=password)
 			if profile is not None:
 				login(request, profile)
-				return HttpResponseRedirect('/goodnet/profile/')
+				return HttpResponseRedirect('/goodnet/profile/$i/' % request.user.get_profile().pk)
 			else:
 				return HttpResponseRedirect('/goodnet/login/')
 		else:

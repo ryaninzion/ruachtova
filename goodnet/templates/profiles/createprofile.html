@@ -1,17 +1,21 @@
 {% extends "goodnet_base.html" %}
 {% block extraheaders %}
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui-1.8.23.custom.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/jasny-bootstrap.min.css">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>	
 	<script src="{{ STATIC_URL }}js/jquery.ui.datepicker-he.js"></script>
+	<script src="{{ STATIC_URL }}js/bootstrap-fileupload.js"></script>
 	<script>
 	jQuery(document).ready(function($){
+		
 		$(function() {
 			$.datepicker.setDefaults($.datepicker.regional['he']);
 			$( "#id_datebirth" ).datepicker({
 				changeMonth: true,
 				changeYear: true
 			});
+
 		});
 	});
 	</script>
@@ -19,11 +23,31 @@
 
 {% block content %}
 <div id="content">
-<form action="" method="post">{% csrf_token %}
+<form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
 <div class="circle-small">3</div>
 <h3 class="form-title">להשלים את הפרופיל שלך</h3>
 <div style="clear:both;"></div>
 <fieldset>
+<div id="avatar-upload1">
+	<div class="fileupload fileupload-new" data-provides="fileupload">
+	{% if form.avatar.value %}
+	<div class="fileupload-preview thumbnail">
+		<img src="{{ form.avatar.value.url }}" width="120" height="120" />
+	</div>
+	{% else %}
+	<div class="fileupload-new thumbnail" id="avatar-upload2">
+		העלה תמונה פרופיל<br/><span class="help_text">מקסימום 120x120 פיקסלים</span>
+	</div>
+	{% endif %}
+  	<div>
+    		<span class="btn btn-file"><img src="{{ STATIC_URL }}img/inputyellow-next.png" class="fileupload-new"/><img src="{{ STATIC_URL }}img/inputyellow-next.png" class="fileupload-exists"/><input type="file" id="id_avatar" name="avatar"></span>
+
+    		<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">להסיר</a>
+  	</div>
+	</div>
+</div>
+
+
 <div class="form-field">
 	<label for="name">שם מלא:</label> {{ form.name }}
 	{% if form.name.errors %}{{ form.name.errors }}{% endif %}
@@ -56,6 +80,10 @@
 	<label for="area">מיקומים של פעילות:</label> {{ form.area }}
 	{% if form.area.errors %}{{ form.area.errors }}{% endif %}
 </div>
+{{ form.profile_type.value }}
+<input type="hidden" name="user" value="{{ form.user.value }}" />
+<input type="hidden" name="profile_type" value="{{ form.profile_type.value }}" />
+{% if form.errors %} {{ form.errors }} {% endif %}
 <input type="submit" class="regsubmit" value="שמירה" />
 </fieldset>
 </form>

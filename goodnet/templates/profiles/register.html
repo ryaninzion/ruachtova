@@ -1,7 +1,9 @@
 {% extends "goodnet_base.html" %}
 {% block extraheaders %}
-<!--	LOAD JQUERY SCRIPTS FROM GOOGLE CDN HERE
-	USE JQUERY UI DATEPICKER FOR DATE FIELD -->
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/jasny-bootstrap.min.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>	
+	<script src="{{ STATIC_URL }}js/bootstrap-fileupload.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -42,6 +44,19 @@
 <h3 class="form-title">מלאו את הפרטים</h3>
 <div style="clear:both;"></div>
 <fieldset>
+<div id="avatar-upload1">
+	<div class="fileupload fileupload-new" data-provides="fileupload">
+	<div class="fileupload-new thumbnail" id="avatar-upload2">
+		העלה תמונה פרופיל<br/><span class="help_text">מקסימום 120x120 פיקסלים</span>
+	</div>
+	<div class="fileupload-preview fileupload-exists thumbnail"></div>
+  	<div>
+    		<span class="btn btn-file"><img src="{{ STATIC_URL }}img/inputyellow-next.png" class="fileupload-new"/><img src="{{ STATIC_URL }}img/inputyellow-next.png" class="fileupload-exists"/><input type="file" id="id_avatar" name="avatar"></span>
+
+    		<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">להסיר</a>
+  	</div>
+	</div>
+</div>
 <div class="form-field">
 	<label for="name">שם מלא:</label> {{ form.name }}
 	{% if form.name.errors %}{{ form.name.errors }}{% endif %}

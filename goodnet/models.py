@@ -119,7 +119,7 @@ class Profile(models.Model):
 	('personal', 'פרופיל חבר'),
 	)
 	profile_type	= models.CharField("סוג הפרופיל", max_length=100, choices=PROFILE_TYPE_CHOICES) 
-	name		= models.CharField("שם", max_length=100, blank=True, null=True)
+	name		= models.CharField("שם", max_length=100, default="פרופיל חדש")
 	avatar		= models.ImageField("תמונה", upload_to="images/avatars/", blank=True, null=True)
 	agreement	= models.BooleanField()
 	datebirth	= models.DateField("תאריך לידה", blank=True, null=True)
@@ -139,7 +139,7 @@ class Profile(models.Model):
 		verbose_name = "פרופיל"
 		verbose_name_plural = "פרופילים"
 
-	#def __unicode__(self): return self.name	
+	def __unicode__(self): return self.name	
 
 
 #def create_user_profile_callback(sender, instance, **kwargs):
