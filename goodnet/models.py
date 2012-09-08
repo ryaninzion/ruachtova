@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.core.files import File
 from django.conf import settings
 from datetime import datetime
+from PIL import Image
+import os
 
 
 class Category(models.Model):
@@ -35,16 +37,17 @@ class Area(models.Model):
 
 
 def photo_file_path(instance):
-    return '/'.join(['images/profiles', instance.user.get_profile().id, 'photos/'])
+    return 'images/gallery-photos/'
 
 def thumbnail_file_path(instance):
-    return '/'.join(['images/profiles', instance.user.get_profile().id, 'thumbnails/'])
+    return 'images/gallery-thumbnails/'
 
 class Photo(models.Model):
 	desc 		= models.TextField("תאור", blank=True, null=True)
 	date 		= models.DateTimeField("תאריך", default=datetime.now())
-	image 		= models.ImageField("תמונה", upload_to=photo_file_path)
-	thumb 		= models.ImageField(upload_to=thumbnail_file_path, editable=False)
+	image 		= models.ImageField("תמונה", upload_to="images/gallery-photos/")
+	thumb 		= models.ImageField(upload_to="images/gallery-thumbnails/", editable=False)
+	creator		= models.ForeignKey(User)
 
 	class Meta:
 		ordering = ['-date']
@@ -56,15 +59,15 @@ class Photo(models.Model):
 			t_size = 100, 80
 			max_size = 800, 600
 			# Open the image that was uploaded.
-			im = Image.open(settings.MEDIA_ROOT + str(self.image))
+			im = Image.open(settings.MEDIA_ROOT + '/' + str(self.image))
 			# Compare the image size against the maximum size. If it is greater, the image will be resized.
 			if im.size > max_size:
 				# Using 'thumbnail', instead of 'resize', keeps the aspect ratio of the image.
 				resize = im.thumbnail(max_size)
-				resize.save(settings.MEDIA_ROOT + str(self.image))
+				resize.save(settings.MEDIA_ROOT + '/' + str(self.image))
 			# Create the thumbnail and save the path to the database.
 			im.thumbnail(t_size)
-			im.save(settings.MEDIA_ROOT + os.path.splitext(str(self.image))[0] + ".thumbnail", "JPEG")
+			im.save(settings.MEDIA_ROOT + '/' + os.path.splitext(str(self.image))[0] + ".thumbnail", "JPEG")
 			self.thumb = os.path.splitext(str(self.image))[0] + ".thumbnail"
 			super(Photo, self).save(force_insert, force_update)
 
@@ -132,8 +135,6 @@ class Profile(models.Model):
 	likes		= models.ManyToManyField(Post, blank=True, null=True, related_name='liked', default="")
 	causes_joined	= models.ManyToManyField(Post, blank=True, null=True, related_name='our_helpers', default="")
 	friends		= models.ManyToManyField("self", blank=True, null=True, symmetrical=False, related_name='friendlies', default="")
-	photos		= models.ManyToManyField(Photo, blank=True, null=True, default="")
-	videos		= models.ManyToManyField(Video, blank=True, null=True, default="")
 
 	class Meta:
 		verbose_name = "פרופיל"

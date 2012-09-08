@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he-IL">
+<head>
+<title></title>
+</head>
+<body>
+<form method="post" action="" enctype="multipart/form-data">
+{% csrf_token %}
+	<input type="file" name="image" multiple>
+	<input type="submit" value="Upload">
+</form>
+<p><a href="javascript:window.close()">סגור חלון</a></p>
+</body>
+</html>

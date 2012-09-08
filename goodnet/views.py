@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from goodnet.models import *
-from goodnet.forms import RegistrationForm, ProfileForm, PostForm, LoginForm
+from goodnet.forms import *
 from django.contrib.auth import authenticate, login, logout
 
 
@@ -23,6 +23,19 @@ def post_form(request):
 		return HttpResponseRedirect('/goodnet/post/not_logged_in/')
 
 
+def photo_form(request,id):
+	if request.user.is_authenticated():
+		if request.method == 'POST':
+			for afile in request.FILES.getlist('image'):
+    				obj = Photo(image=afile, creator=request.user).save()
+			return HttpResponseRedirect('/goodnet/profile/%i' % request.user.get_profile().pk)
+		else:
+			form = PhotoForm()
+			return render_to_response('profiles/photo_form.html', {'form':form}, context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect('/goodnet/not_logged_in/')
+
+
 def profile(request,id):
 	profile = get_object_or_404(Profile,pk=id)
 
@@ -34,7 +47,7 @@ def registration(request):
 		return HttpResponseRedirect('/goodnet/profile/')
 	else:
 		if request.method == 'POST':
-			form = RegistrationForm(request.POST)
+			form = RegistrationForm(request.POST, request.FILES)
 			if form.is_valid():
 				user = User.objects.create_user(username = form.cleaned_data['username'], email = form.cleaned_data['email'], password = form.cleaned_data['password'])
 				user.save()
@@ -45,7 +58,7 @@ def registration(request):
 				password = form.cleaned_data['password']
 				profile = authenticate(username=username, password=password)
 				login(request, profile)
-				return HttpResponseRedirect('/goodnet/profile-edit/')
+				return HttpResponseRedirect('/goodnet/profile-edit/%i/' % request.user.pk)
 			else:
 				return render_to_response('profiles/register.html', {'form':form}, context_instance=RequestContext(request))
 		else:

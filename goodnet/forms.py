@@ -51,6 +51,12 @@ class ProfileForm(ModelForm):
 		return self.cleaned_data
 
 
+class PhotoForm(ModelForm):
+	
+	class Meta:
+		model = Photo
+
+
 class LoginForm(forms.Form):
 	username	= forms.CharField("username")
 	password	= forms.CharField("Password", widget=forms.PasswordInput(render_value=False))
