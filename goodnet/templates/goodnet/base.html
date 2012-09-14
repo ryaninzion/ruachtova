@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/sidebar.css">
+{% endblock %}
+
+{% block module %}
+
+<nav>
+	<ul>
+		<li id="menu-home"><a href="">בית</a></li>
+		<li id="menu-assoc"><a href="">ארגונים ועמותות</a></li>
+		<li id="menu-initiative"><a href="">יוזמה אישית</a></li>
+		<li id="menu-volunteer"><a href="">התנדבות</a></li>
+		<li id="menu-events"><a href="">אירועים</a></li>
+		<li id="menu-about"><a href="">מי אנחנו</a></li>
+		<li id="menu-ruach"><a href="">רוח טובה</a></li>
+	</ul>
+</nav>
+
+<div id="reshethead">
+<img src="{{ STATIC_URL }}img/reshetova-logo.jpg" alt="" id="reshetlogo" />
+
+{% if user.is_authenticated %}
+
+<div id="user-menu-logged">
+<a href="{{ user.get_profile.get_absolute_url }}"><img src="{{ STATIC_URL }}img/person-icon-small.png" alt="" /></a>
+<a href="{% url goodnet.views.post_form %}"><img src="{{ STATIC_URL }}img/plus-icon-small.png" alt="" /></a>
+<img src="{{ STATIC_URL }}img/star-icon-small.png" alt="" />
+<img src="{{ STATIC_URL }}img/tool-icon-small.png" alt="" />
+<img src="{{ STATIC_URL }}img/people-icon-small.png" alt="" />
+
+
+<div id="login_div">
+	<p>שלום {{ requset.user.get_profile.name }} | <a href="/goodnet/logout/">יציאה</a></p>
+</div>
+
+
+</div>
+
+{% else %}
+
+	<p><a href="/goodnet/login/">Login</a></p>
+<div id="user-menu-unlogged">
+<img src="{{ STATIC_URL }}img/orange-logo.jpg" alt="" />
+</div>
+
+{% endif %}
+
+<div style="clear:both;"></div>
+</div>
+
+<div id="searchstrip">
+
+</div>
+
+<div id="content"> 
+	{% block content %} {% endblock %}
+</div>
+
+<div id="sidebar">
+	{% block sidebar %}
+
+	<h2>עדכונים אחרונים</h2>
+	{% for u in sidebar_updates %}
+		<div>
+			<h4>{{u}}</h4>
+		</div>
+	{% endfor %}
+	<h2>אירועים קרובים</h2>
+	{% for e in sidebar_events %}
+		<div>
+			<h4>{{e}}</h4>
+		</div>
+	{% endfor %}
+
+	{% endblock %}
+</div>
+
+{% endblock %}

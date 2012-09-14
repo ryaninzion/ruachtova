@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he-IL">
+<head>
+<title></title>
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
+</head>
+<body style="padding:0 20px;">
+{% if success %}<p style="margin:20px 0 10px 0; color:#CC0000; text-align:center;">{{ success }}</p>{% else %}{% endif %}
+<form method="post" action="" enctype="multipart/form-data">
+{% csrf_token %}
+
+<img src="{{ STATIC_URL }}img/left-yellowarrow.png" class="headline-arrow" alt="" />
+<h3 class="form-title">העלה תמונות</h3><br/>
+
+	<input type="file" name="image" multiple>
+	<input type="submit" value="העלה"><br/><br/>
+	<span class="help_text">* אתם יכולים להעלות מספר תמונות על ידי לחיצה על כפתור CTRL בעת בחירה.<br/>** לא עובד עם Internet Explorer.</span>
+</form>
+<p style="text-align:center;"><a href="javascript:window.close()">סגור חלון</a></p>
+</body>
+</html>

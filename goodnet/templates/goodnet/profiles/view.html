@@ -1,0 +1,120 @@
+{% extends "goodnet/base.html" %}
+
+{% block extraheaders %}
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.lightbox-0.5.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/profile.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.lightbox-0.5.min.js"></script>
+	<script>
+	jQuery(document).ready(function($){
+		
+		$(function() {
+			$( "a.lightbox" ).lightBox(); 
+		});
+	});
+	</script>
+{% endblock %}
+{% load comments %}
+
+{% block content %}
+<img src="{{ STATIC_URL }}img/left-yellowarrow.png" class="headline-arrow" alt="" />
+<h2>{{ profile.name }}</h2>
+<div style="clear:both;"></div>
+<div id="post-right">
+	<img id="avatar" src="
+	{% if profile.avatar %} {{ profile.avatar.url }} {% else %} /static/img/default-avatar.jpg{% endif %}
+	"/>
+	<div id="profile_like"><a href="#" onClick='window.open("/goodnet/profile/add-friend/{{ profile.id }}/", "", "width=500", "height=200", "left=300", "top=300");'>ההוסיפו לאנשי הקשר</a></div>
+</div>
+<div id="post-left">
+	<ul>
+	{% if profile.categories.exists %}
+		<li><span class="lbl">תחומים:</span>
+		{% for category in profile.categories.all %}
+			{{ category }}
+		{% endfor %}</li>
+	{% else %}
+	{% endif %}
+	{% if profile.datebirth %}
+		{% if profile.profile_type.value == 'o' %}
+			<li><span class="lbl">נוסד ב:</span> {{ profile.datebirth }}</li>
+		{% else %}
+			<li><span class="lbl">תאריך לידה:</span> {{ profile.datebirth }}</li>
+		{% endif %}
+	{% else %}
+	{% endif %}
+	
+	{% if profile.areas.exists %}
+		<li><span class="lbl">אזורים פעילות:</span>
+		{% for area in profile.areas.all %}
+			{{ area }}
+		{% endfor %}</li>
+	{% else %}
+	{% endif %}
+	{% if profile.phone %}<li><span class="lbl">טלפון:</span> {{ profile.phone }}</li>{% else %}{% endif %}	
+	{% if profile.website %}<li><span class="lbl">אתר אינטרנט:</span> {{ profile.website }}</li>{% else %}{% endif %}	
+	{% if profile.facebook %}<li><span class="lbl">פרופיל פייסבוק:</span> {{ profile.facebook }}</li>{% else %}{% endif %}	
+	</ul>
+
+	<div class="desc">
+	{{ profile.desc|linebreaks }}
+	<ul id="profile_actions">
+		<li><a name="desc-more" class="desc-more">קרא עוד</a>
+		<a name="desc-less" class="desc-less">קרא פחות</a></li> 
+		{% if profile.user.email %}<li><a href="mailto:{{ profile.user.email }}">צרו קשר</a></li>{% else %}{% endif %} 
+		{% if profile.webiste %}
+			{% if profile.profile_type.value == 'o' %}
+				<li><a href="{{ profile.website }}">אתר העמותה</a></li> 
+			{% else %}
+				<li><a href="{{ profile.website }}">אתר אינטרנט אישית</a></li>
+			{% endif %}
+		{% else %}
+		{% endif %}
+		<li><img src="{{ STATIC_URL }}img/action-facebook.png" alt="" /> שתפו</li>
+	</ul>
+	</div>
+
+</div><br style="clear:both;" />
+
+
+
+<div id="photo-bar">
+	{% if gallery %}
+	<div id="right-scroll"><a href="javascript:slide('right');"><img src="{{ STATIC_URL }}img/right-yellowarrow.png" /></a></div>
+	<div id="photo-bar-inner">
+		<ul id="photo-bar-ul">
+			{% for photo in gallery %}
+				<li><a href="{{ photo.image.url }}" class="lightbox"><img src="{{ photo.thumb.url }}" /></a></li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div id="left-scroll"><a href="javascript:slide('left');"><img src="{{ STATIC_URL }}img/left-yellowarrow.png" /></a></div>
+	<input type='hidden' id='hidden_auto_slide_seconds' value=0 />
+	{% else %}
+		<h3>אין למשתמש תמונות</h3>
+	{% endif%}
+	{% if request.user.id == profile.user.id %}
+		<div class="center"><a href="#" onClick='window.open("/goodnet/profile/{{ profile.user.id }}/add-photos/", "", "width=500", "height=300", "left=300", "top=300");'>העלאת תמונות</a></div>
+	{% else %}
+	{% endif %}
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+{{ block.super }}
+	<div id="friends">
+	<div id="friends_head">חברים</div>
+	<ul>
+	{% if request.user.id == profile.user.id %}
+		{% for friend in profile.friends.all|slice:":6" %}
+			<li><img src="{% if friend.avatar %}{{ friend.avatar.url }}{% else %}/static/img/default-avatar.jpg{% endif %}" /></li>
+		{% endfor %}	
+	{% else %}
+		{% for friend in profile.friendlies.all|slice:":6" %}
+			<li><img src="{% if friend.avatar %}{{ friend.avatar.url }}{% else %}/static/img/default-avatar.jpg{% endif %}" /></li>
+		{% endfor %}
+	{% endif %}
+	</ul><div style="clear:both;"></div>
+	</div>
+{% endblock %}

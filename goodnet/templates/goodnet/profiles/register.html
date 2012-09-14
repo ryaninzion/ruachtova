@@ -1,0 +1,90 @@
+{% extends "goodnet/base.html" %}
+{% block extraheaders %}
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/jasny-bootstrap.min.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>	
+	<script src="{{ STATIC_URL }}js/bootstrap-fileupload.js"></script>
+{% endblock %}
+
+{% block content %}
+<div id="content">
+
+<h2 class="page-title">הירשמו לאתר</h2>
+
+<div class="intro">
+<span class="text-lbl">ברוכים הבאים!</span><br/>
+אנו מודים לכם שבחרתם לפתוח פרופיל באתר רשת טובה.<br/>
+יצירת הפרופיל תאפשר לכם להיחשף ליוזמות והזדמנויות התנדבות רבות ומגוונות.<br/>
+בנוסף, תוכלו ליצור יוזמות משלכם ולמצוא אנשים כמותכם שיעזרו לכם להפוך אותם מרעיון
+למציאות. בנוסף, אתם מוזמנים לפרסם אירועים, לעלות תמונות, סרטונים מעוררי השראה,
+חוויות מהתנדבויות קודמות ועוד.
+
+<small>שימו לב! אתם יכולים לבחור בפרופיל ארגון או חבר. הבחירה בסוג פרופיל תשפיע על החלוקה במאגר החיפוש שלנו,<br/>ותאפשר לנו לחדד את תוצאות החיפוש ולהוביל אליכם את הפניות הרלוונטיות ביותר</small>
+
+</div>
+
+<form enctype="multipart/form-data" action="" method="post">
+{% csrf_token %}
+
+<div class="circle-small">1</div>
+<h3 class="form-title">בחרו את סוג הפרופיל</h3>
+<small>במידה ואתם ארגון, עמותה או קבוצה שפועלת יחד, אנא פתחו פרופיל ארגון.<br/>
+במידה ואת\ה אדם פרטי שרוצה לעשות טוב, נא להצטרף כחבר</small>
+
+<div id="profile-type">
+	<ul>
+		<li><img src="{{ STATIC_URL }}img/heart-icon.png" /><label for="id_profile_type_1"><input type="radio" id="id_profile_type_1" value="p" name="profile_type" /> פרופיל חבר</label><small>אנשים פרטיים עם רצון לעשות טוב</small></li>
+		<li><img src="{{ STATIC_URL }}img/profile-icon.png" /><label for="id_profile_type_0"><input type="radio" id="id_profile_type_0" value="o" name="profile_type" /> פרופיל ארגון</label><small>עמותות, אירגונים, וגופים ציבוריים</small></li>
+	</ul>
+
+	<div style="clear:both;"></div>
+</div>
+
+<div class="circle-small">2</div>
+<h3 class="form-title">מלאו את הפרטים</h3>
+<div style="clear:both;"></div>
+<fieldset>
+<div id="avatar-upload1">
+	<div class="fileupload fileupload-new" data-provides="fileupload">
+	<div class="fileupload-new thumbnail" id="avatar-upload2">
+		העלה תמונה פרופיל<br/><span class="help_text">מקסימום 120x120 פיקסלים</span>
+	</div>
+	<div class="fileupload-preview fileupload-exists thumbnail"></div>
+  	<div>
+    		<span class="btn btn-file"><img src="{{ STATIC_URL }}img/inputyellow-next.png" class="fileupload-new"/><img src="{{ STATIC_URL }}img/inputyellow-next.png" class="fileupload-exists"/><input type="file" id="id_avatar" name="avatar"></span>
+
+    		<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">להסיר</a>
+  	</div>
+	</div>
+</div>
+<div class="form-field">
+	<label for="name">שם מלא:</label> {{ form.name }}
+	{% if form.name.errors %}{{ form.name.errors }}{% endif %}
+</div>
+<div class="form-field">
+	<label for="email">כתובת דוא"ל:</label> {{ form.email }}
+	{% if form.email.errors %}{{form.email.errors }}{% endif %}
+</div>
+<div class="form-field">
+	<label for="username">שם משתמש:</label> {{ form.username }}
+	{% if form.username.errors %}{{ form.username.errors }}{% endif %}
+</div>
+<div class="form-field">
+	<label for="password">סיסמה:</label> {{ form.password }}
+</div>
+<div class="form-field">
+	<label for="password1">אימות סיסמה:</label> {{ form.password1 }}
+	{% if form.password.errors %}{{ form.password.errors }}{% endif %}
+</div>
+<div class="form-field">
+	{{ form.agreement }} אני מסכים <a href="javascript:window.open('{% url django.contrib.flatpages.views.flatpage url="/terms/" %}','תנאי השימוש','height=500,width=500,left=300,top=300');">לתנאי השימוש</a> ו<a href="javascript:window.open('{% url django.contrib.flatpages.views.flatpage url="/privacy/" %}','מדיניות הפרתיות','height=500,width=500,left=300,top=300');">למדיניות הפרתיות</a> באתר
+	{% if form.agreement.errors %}{{ form.agreement.errors }}{% endif %}
+</div>
+<input type="submit" class="regsubmit" value="מעבר לשלב הבא" />
+</fieldset>
+</form>
+<img src="{{ STATIC_URL}}img/homebanner-pic.jpg" alt="" width="700" />
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,19 @@
+#post-right { width:200px; }
+#post-right img { max-width:200px; }
+#post-left { width:480px; }
+
+
+/* post creation form */
+
+#accordion dt a, #accordion dt a:hover, #accordion dt a:visited { display:block; color:#000; background-color:#FBBD09; padding:10px; font-size:16px; margin-bottom:3px; cursor:pointer; }
+#accordion dd ul { margin:0; padding:0; list-style-type:none; }
+#accordion li { margin-bottom:20px; list-style-type:none; }
+#accordion li label { width:150px; display:inline-block; cursor: pointer; }
+
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }

@@ -1,0 +1,93 @@
+{% extends "goodnet/base.html" %}
+{% load comments %}
+
+{% block stylesheets %}
+	{{ block.super }}
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/post.css">
+{% endblock %}
+
+{% block content %}
+<div id="content">
+<img src="{{ STATIC_URL }}img/left-yellowarrow.png" class="headline-arrow" alt="" />
+<h2>{{ post }}</h2>
+{% if post.ongoing %}
+<div id="one-time">
+	<img src="{{ STATIC_URL }}img/one-time.png" alt="" /> <p>אירוע חד פעמי</p>
+</div>
+{% endif %}
+מעת: {{ post.author.get_profile.name }} &nbsp; | &nbsp; {{ post.cdate|date:"d.m.Y" }}
+<br style="clear:both;" /><br/>
+
+<div id="post-right">
+	<img src="{% if post.image %}{{ post.image.url }}{% else %}{{ STATIC_URL }}img/no-pic.jpg{% endif %}" />
+</div>
+<div id="post-left">
+
+	{% if post.category %}<span class="text-lbl">תחום:</span> {{ post.category }}{% else %}{% endif %}
+	{% if post.date %}<span class="text-lbl">מועד:</span> {{ post.date|date:"l, j F Y, H:i" }}<br/>{% else %}{% endif %}
+	{% if post.start_date %}<span class="text-lbl">תאריך:</span> {{ post.start_date|date:"l, j F Y, H:i" }} &nbsp; &nbsp; <span class="text-lbl">עד תאריך:</span> {{ post.end_date|date:"l, j F Y, H:i" }}{% else %}{% endif %}
+	{% if post.location %}<span class="text-lbl">מקום:</span>{% if post.address %} {{ post.address }},{% else %}{% endif %} {{ post.location }}<br/><br/>{% else %}{% endif %}
+	<div class="desc">
+	{{ post.desc|linebreaks }}
+	<div id="desc-more-less">
+		<a name="desc-more" class="desc-more">קרא עוד</a>
+		<a name="desc-less" class="desc-less">קרא פחות</a>
+	</div>
+	</div>
+
+
+</div><br style="clear:both;" />
+
+<div id="action-bar">
+
+	{% if user.is_authenticated %}
+		{% if post.location %}
+			{% if user.get_profile in post.our_helpers.distinct %}
+				<span class="alert">את/ה הצטרף!</span>
+			{% else %}
+				<a href="{% url goodnet.views.join_cause post.id %}"><img src="{{ STATIC_URL }}img/join.png" alt="" /></a> &nbsp;
+			{% endif %}
+		{% else %}
+		{% endif %}	
+		{% if user.get_profile in post.liked.distinct %}
+			<span class="alert">נמצא במועדפים שלך</span>	
+		{% else %}
+			<img src="{{ STATIC_URL }}img/left-yellowarrow.png" alt="" /> <a href="{% url goodnet.views.bookmark post.id %}">הוסיפו למועדפים</a> &nbsp;
+		{% endif %}
+	{% else %}
+		{% if post.location %}
+			<a href="{% url loginrequest %}"><img src="{{ STATIC_URL }}img/join.png" alt="" /></a> &nbsp;
+		{% else %}
+		{% endif %}	
+			<img src="{{ STATIC_URL }}img/left-yellowarrow.png" alt="" /> <a href="{% url loginrequest %}">הוסיפו למועדפים</a> &nbsp;
+	{% endif %}
+	<img src="{{ STATIC_URL }}img/left-yellowarrow.png" alt="" /> <a href="mailto:?subject=חדש%20מרשת%20טובה&body=www.ruachtova.org.il{% url goodnet.views.post post.id %}">שילחו לחבר</a> &nbsp;
+	<a href="http://www.facebook.com/sharer.php?u=http://www.ruachtova.org.il{% url goodnet.views.post post.id %}"><img src="{{ STATIC_URL }}img/action-facebook.png" alt="" /></a>
+	<a href="http://twitter.com/share?text=חדש%20מרשת%20טובה&url=http://www.ruachtova.org.il{% url goodnet.views.post post.id %}"><img src="{{ STATIC_URL }}img/action-twitter.png" alt="" /></a> שתפו
+
+	<span class="inappropriate"><a href="" class="inappropriate">תוכן פוגעני</a></span>
+
+</div>
+
+{% get_comment_count for post as comment_count %}
+
+<h3>{% if comment_count > 0 %}{{ comment_count }} תגובות{% else %}אין תגובות{% endif %}</h3>
+
+{% get_comment_list for post as comment_list %}
+
+{% for comment in comment_list %}
+	<div class="comment" id="c{{ comment.id }}">
+		<p><b>{{ comment.person_name|escape }}</b></p>
+		{{ comment.comment|escape|urlizetrunc:40|linebreaks }}
+	</div>
+{% endfor %}
+
+<p>Post a comment</p>
+{% render_comment_form for post %}
+</div>
+
+<div id="sidebar">
+
+</div>
+
+{% endblock %}

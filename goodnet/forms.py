@@ -7,7 +7,7 @@ from goodnet.models import *
 from django.forms.widgets import *
 
 
-PROFILE_TYPE_CHOICES = [['org', 'פרופיל ארגון'],['personal', 'פרופיל חבר']]
+PROFILE_TYPE_CHOICES = [['o', 'פרופיל ארגון'],['p', 'פרופיל חבר']]
 
 class RegistrationForm(ModelForm):
 	profile_type	= forms.ChoiceField(widget=RadioSelect(), choices=PROFILE_TYPE_CHOICES)
@@ -66,3 +66,16 @@ class PostForm(ModelForm):
 
 	class Meta:
 		model = Post
+		exclude = ('author',)
+
+class EventForm(ModelForm):
+
+	class Meta:
+		model = Event
+		exclude = ('author',)
+
+class InitiativeForm(ModelForm):
+	
+	class Meta:
+		model = Initiative
+		exclude = ('author',)

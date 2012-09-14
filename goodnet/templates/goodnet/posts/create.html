@@ -1,0 +1,94 @@
+{% extends "goodnet/base.html" %}
+{% block extraheaders %}
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui-1.8.23.custom.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery-ui-1.8.23.custom.min.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.ui.datepicker-he.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.ui.timepicker.js"></script>
+	<script>
+	jQuery(document).ready(function($){
+		
+		$(function() {
+			$.datepicker.setDefaults($.datepicker.regional['he']);
+
+			$.timepicker.regional['he'] = {
+				timeText: 'שעה',
+				hourText: 'שעה',
+				minuteText: 'דקה',
+				closeText: 'סגור',
+				ampm: false
+			};
+			$.timepicker.setDefaults($.datepicker.regional['he']);
+			$( "#id_date" ).datetimepicker({
+				changeMonth: true,
+				changeYear: true
+			});
+
+			$( "#id_end_date" ).datepicker({
+				changeMonth: true,
+				changeYear: true
+			});
+
+			$( "#id_start_date" ).datepicker({
+				changeMonth: true,
+				changeYear: true
+			});
+
+			var allPanels = $('.forms').hide();
+    
+			$('#accordion > dt > a').click(function() {
+				allPanels.slideUp();
+				$(this).parent().next().slideDown();
+				return false;
+			});
+
+
+		});
+	});
+	</script>
+{% endblock %}
+
+{% block stylesheets %}
+	{{ block.super }}
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/post.css">
+{% endblock %}
+
+{% block content %}
+
+<h3>מה את/ה רוצה לפרסם?</h3>
+
+<dl id="accordion">
+
+<dt><a name="pform">הודעה טקסט</a></dt>
+<dd class="forms" id="pform">
+	<form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
+		<fieldset>
+		{{ pform.as_ul }}
+		<input type="hidden" name="selected_form" value="pform"/>
+		<input type="submit" class="regsubmit" value="שמירה" />
+		</fieldset>
+	</form>
+</dd>
+<dt><a name="eform">אירוע</a></dt>
+<dd class="forms" id="eform">
+	<form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
+		<fieldset>
+		{{ eform.as_ul }}
+		<input type="hidden" name="selected_form" value="eform"/>
+		<input type="submit" class="regsubmit" value="שמירה" />
+		</fieldset>
+	</form>
+</dd>
+<dt><a name="iform">יוזמה</a></dt>
+<dd class="forms" id="iform">
+	<form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
+		<fieldset>
+		{{ iform.as_ul }}
+		<input type="hidden" name="selected_form" value="iform"/>
+		<input type="submit" class="regsubmit" value="שמירה" />
+		</fieldset>
+	</form>
+</dd>
+</dl>
+
+{% endblock %}
