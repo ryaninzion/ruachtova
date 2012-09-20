@@ -14,6 +14,10 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	url(r'^pages/', include('django.contrib.flatpages.urls')),
+	url(r'^resetpassword/passwordsent/$', 'django.contrib.auth.views.password_reset_done'),
+	url(r'^resetpassword/$', 'django.contrib.auth.views.password_reset'),
+	url(r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm'),
+	url(r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
     # Uncomment the next line to enable the admin:
 	url(r'^admin/', include(admin.site.urls)),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

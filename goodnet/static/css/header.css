@@ -1,0 +1,23 @@
+
+#reshethead { clear:both; padding:20px 0; border-bottom:1px solid #ccc; }
+#reshetlogo { float:right; }
+#user-menu-logged, #user-menu-unlogged { float:left; text-align:left; }
+#user-menu-logged { padding-top:40px; } #user-menu-unlogged { padding-top:20px; }
+
+#searchstrip { height:80px; background-color:#FFF5D8; margin:30px 0; text-align:center; line-height:80px; }
+#search_form_select, #profile_search_form, #event_search_form, #initiative_search_form { display:inline-block; }
+
+#searchstrip .submit {
+	width:66px; text-align:center;
+	background:url('../img/inputyellow-62x33.png') top right no-repeat;
+	height:33px; line-height:33px; border:none; margin:0;
+}
+
+#user-menu-unlogged img { float:left; }
+#header_login { text-align:right; float:left; padding-top:30px; padding-left:20px; }
+#header_login #id_username, #header_login #id_password, #searchstrip select, #searchstrip .text-search { width:200px; height:20px; border-width:1px; background-color:#fff; }
+input.logsubmit {
+	width:86px; 
+	background:url('../img/inputyellow-small-openprofile.png') top right no-repeat;
+	height:33px; border:none; margin:0;
+}

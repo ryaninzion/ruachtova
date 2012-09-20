@@ -1,8 +1,8 @@
 /* Author:
 
 */
-
-		jQuery(document).ready(function() {
+(function($){})(window.jQuery);
+		$(document).ready(function (){
 
 			$(".desc-less").hide();
 
@@ -17,6 +17,30 @@
 				$(".desc p:first-child").show();
 				$(".desc-more").show();
 				$(".desc-less").hide();
+			});
+
+			$("#profile_search_form").show();
+			$("#event_search_form").hide();
+			$("#initiative_search_form").hide();
+
+			$("#search_form_select").change(function(){
+				if ($(this).val() == 'profile') {
+					$("#profile_search_form").show();
+					$("#event_search_form").hide();
+					$("#initiative_search_form").hide();
+				} else if ($(this).val() == 'event') {
+					$("#profile_search_form").hide();
+					$("#event_search_form").show();
+					$("#initiative_search_form").hide();
+				} else if ($(this).val() == 'initiative') {
+					$("#profile_search_form").hide();
+					$("#event_search_form").hide();
+					$("#initiative_search_form").show();
+				} else {
+					$("#profile_search_form").show();
+					$("#event_search_form").hide();
+					$("#initiative_search_form").hide();
+				}
 			});
 
 /*			$("#photo-bar-ul li:first").before($("photo-bar-ul li:last"));

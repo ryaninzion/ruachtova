@@ -41,7 +41,7 @@ class RegistrationForm(ModelForm):
 class ProfileForm(ModelForm):
 	datebirth = forms.DateField(widget=DateInput())
 	categories = forms.ModelMultipleChoiceField(queryset=Category.objects.all(),widget=forms.CheckboxSelectMultiple(),required=False)
-	area = forms.ModelMultipleChoiceField(queryset=Area.objects.all(),widget=forms.CheckboxSelectMultiple(),required=False)
+	areas = forms.ModelMultipleChoiceField(queryset=Area.objects.all(),widget=forms.CheckboxSelectMultiple(),required=False)
 
 	class Meta:
 		model = Profile
@@ -79,3 +79,27 @@ class InitiativeForm(ModelForm):
 	class Meta:
 		model = Initiative
 		exclude = ('author',)
+
+class ProfileSearchForm(ModelForm):
+	categories = forms.ModelChoiceField(queryset=Category.objects.filter(type="profile"),empty_label='תחום',required=False)
+	areas = forms.ModelChoiceField(queryset=Area.objects.all(),empty_label='אזור',required=False)
+
+	class Meta:
+		model = Profile
+		fields = ('categories','areas',)	
+
+class EventSearchForm(ModelForm):
+	category = forms.ModelChoiceField(queryset=Category.objects.filter(type="post"),empty_label='תחום',required=False)
+	location = forms.ModelChoiceField(queryset=Area.objects.all(),empty_label='אזור',required=False)
+	
+	class Meta:
+		model = Event
+		fields = ('category','location',)
+
+class InitiativeSearchForm(ModelForm):
+	category = forms.ModelChoiceField(queryset=Category.objects.filter(type="post"),empty_label='תחום',required=False)
+	location = forms.ModelChoiceField(queryset=Area.objects.all(),empty_label='אזור',required=False)
+
+	class Meta:
+		model = Initiative
+		fields = ('category','location',)

@@ -10,7 +10,9 @@
 	jQuery(document).ready(function($){
 		
 		$(function() {
-			$.datepicker.setDefaults($.datepicker.regional['he']);
+			$.datepicker.setDefaults($.datepicker.regional['he'] = {
+				dateFormat: 'yy-mm-dd'
+			});
 			$( "#id_datebirth" ).datepicker({
 				changeMonth: true,
 				changeYear: true
@@ -22,7 +24,6 @@
 {% endblock %}
 
 {% block content %}
-<div id="content">
 <form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
 <div class="circle-small">3</div>
 <h3 class="form-title">להשלים את הפרופיל שלך</h3>
@@ -77,15 +78,12 @@
 	{% if form.categories.errors %}{{ form.categories.errors }}{% endif %}
 </div>
 <div class="form-field">
-	<label for="area">מיקומים של פעילות:</label> {{ form.area }}
+	<label for="area">מיקומים של פעילות:</label> {{ form.areas }}
 	{% if form.area.errors %}{{ form.area.errors }}{% endif %}
 </div>
-{{ form.profile_type.value }}
 <input type="hidden" name="user" value="{{ form.user.value }}" />
 <input type="hidden" name="profile_type" value="{{ form.profile_type.value }}" />
-{% if form.errors %} {{ form.errors }} {% endif %}
 <input type="submit" class="regsubmit" value="שמירה" />
 </fieldset>
 </form>
-</div>
 {% endblock %}

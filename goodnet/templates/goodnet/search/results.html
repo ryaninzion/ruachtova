@@ -1,0 +1,33 @@
+{% extends "goodnet/base.html" %}
+
+{% block stylesheets %}
+	{{ block.super }}
+{% endblock %}
+
+{% block content %}
+	{% if projects.object_list > 0 %}
+					מצאנו עבורך {{ projects.paginator.count }} הזדמנויות להתנדב
+				{% else %}
+					לא נמצאו התנדבויות התואמות את העדפותיך
+				{% endif %}
+
+<div class="list">
+		{% for project in projects.object_list %}
+		<div class="item">
+			<div class="image">
+			</div>
+			<div class="">
+				<h3>{{ project.title }}</h3>
+				<div class="meta">
+					<span>תחום ההתנדבות: </span>
+					{{ project.category.title }} 
+				</div>
+				<div class="body">
+					{{ project.desc }}
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		{% endfor %}
+	</div>
+{% endblock %}

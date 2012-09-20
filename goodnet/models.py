@@ -107,7 +107,7 @@ class Post(AbstractPost):
 
 class Event(AbstractPost):
 	date = models.DateTimeField("תאריך ושעה")
-	location = models.CharField("מיקום",max_length=100)
+	location = models.ForeignKey(Area, verbose_name=u"מיקום")
 	address = models.CharField("רחוב ומםפר",max_length=100)
 
 	class Meta:
@@ -118,7 +118,7 @@ class Initiative(AbstractPost):
 	start_date = models.DateTimeField("תאריך ושעה")
 	end_date = models.DateTimeField("עד תאריך ושעה", blank=True, null=True)
 	ongoing = models.BooleanField("מתמשך?")
-	location = models.CharField("מיקום",max_length=100)
+	location = models.ForeignKey(Area, verbose_name=u"מיקום")
 	address = models.CharField("רחוב ומםפר",max_length=100)
 
 	class Meta:
@@ -145,7 +145,7 @@ class Profile(models.Model):
 	categories	= models.ManyToManyField(Category, blank=True, null=True, default="",verbose_name="קטגוריות",limit_choices_to={'type':'profile'})
 	areas		= models.ManyToManyField(Area, blank=True, null=True, default="",verbose_name="אזורים")	
 	likes		= models.ManyToManyField(AbstractPost, blank=True, null=True, related_name='liked', default="")
-	causes_joined	= models.ManyToManyField(Post, blank=True, null=True, related_name='our_helpers', default="")
+	causes_joined	= models.ManyToManyField(AbstractPost, blank=True, null=True, related_name='our_helpers', default="")
 	friends		= models.ManyToManyField("self", blank=True, null=True, symmetrical=False, related_name='friendlies', default="")
 
 	class Meta:

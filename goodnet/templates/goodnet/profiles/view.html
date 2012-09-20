@@ -106,15 +106,9 @@
 	<div id="friends">
 	<div id="friends_head">חברים</div>
 	<ul>
-	{% if request.user.id == profile.user.id %}
-		{% for friend in profile.friends.all|slice:":6" %}
-			<li><img src="{% if friend.avatar %}{{ friend.avatar.url }}{% else %}/static/img/default-avatar.jpg{% endif %}" /></li>
-		{% endfor %}	
-	{% else %}
 		{% for friend in profile.friendlies.all|slice:":6" %}
 			<li><img src="{% if friend.avatar %}{{ friend.avatar.url }}{% else %}/static/img/default-avatar.jpg{% endif %}" /></li>
 		{% endfor %}
-	{% endif %}
 	</ul><div style="clear:both;"></div>
 	</div>
 {% endblock %}

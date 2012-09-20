@@ -9,27 +9,28 @@
 	jQuery(document).ready(function($){
 		
 		$(function() {
-			$.datepicker.setDefaults($.datepicker.regional['he']);
+			$.datepicker.setDefaults($.datepicker.regional['he'] = {
+				dateFormat: 'yy-mm-dd'
+			});
 
-			$.timepicker.regional['he'] = {
+			$.timepicker.setDefaults($.datepicker.regional['he'] = {
 				timeText: 'שעה',
 				hourText: 'שעה',
 				minuteText: 'דקה',
 				closeText: 'סגור',
 				ampm: false
-			};
-			$.timepicker.setDefaults($.datepicker.regional['he']);
+			});
 			$( "#id_date" ).datetimepicker({
 				changeMonth: true,
 				changeYear: true
 			});
 
-			$( "#id_end_date" ).datepicker({
+			$( "#id_end_date" ).datetimepicker({
 				changeMonth: true,
 				changeYear: true
 			});
 
-			$( "#id_start_date" ).datepicker({
+			$( "#id_start_date" ).datetimepicker({
 				changeMonth: true,
 				changeYear: true
 			});

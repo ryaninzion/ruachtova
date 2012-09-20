@@ -1,6 +1,29 @@
-#sidebar { float:left; width:292px; }
+#sidebar { float:left; width:292px; border-top:3px solid #FBBD09; padding:30px 0; }
+#sidebar h2, #sidebar h3 { font-weight:normal; line-height:16px; } 
+
+#signup #person { float:right; padding-left:5px; }
+#signup h3 { padding:0; margin:0; font-weight:bold; }
+
+#signup, #latest_updates, #latest_events, #post_owner { margin-bottom:40px; }
+#latest_updates a, #latest_events a, #latest_updates a:hover, #latest_events a:hover, #latest_updates a:visited, #latest_events a:visited { color:#000; text-decoration:none; }
+
+.side-updates { padding:10px 0; border-bottom:1px solid #ccc; margin-bottom:10px; }
+.side-updates .uimg { float:right; max-width:70px; max-height:70px; padding-top:3px; }
+.side-updates .uinfo { float:left; width:210px; } 
+.uinfo h3 { background:url('../img/left-yellowarrow.png') top right no-repeat; padding:7px 40px 0 0; min-height:34px; margin:0; }
+.uinfo p { margin:0; padding:0; font-size:12px; line-height:14px; }
+
+#latest_events { background:#FFF5D8 url('../img/calendar-icon.png') top right no-repeat; padding:10px 100px 10px 10px; min-height:50px; }
+#latest_events h3 { margin:0; padding:0; } #latest_events div { margin-bottom:20px; }
 
 #friends { width:292px; background-color:#FFFCF1; }
 #friends_head { background:url('../img/title-bg-large.png') top right no-repeat; height:29px; line-height:29px; color:#000; font-weight:bold; padding-right:5px; }
 #friends ul { margin:0; padding:0; list-style-type:none; padding:10px 10px 0 0; }
 #friends ul li { float:right; padding:0 0 10px 10px; } #friends li img { max-width:70px; max-height:70px; border:0; }
+
+
+#post_owner { background-color:#FFF5D8; padding:10px 20px; }
+#post_owner_left { width:160px; float:left; } #post_owner_right { width:80px; float:right; padding-top:5px; }
+#post_owner #avatar { max-height:80px; max-width:80px; float:right; padding:0 0 10px 10px; }
+#post_owner ul { list-style-type:none; margin:0; padding:0; }
+#post_owner .lbl { font-weight:bold; color:#FBBD09; }

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block stylesheets %}
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/header.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/sidebar.css">
 {% endblock %}
 
@@ -23,7 +24,7 @@
 {% if user.is_authenticated %}
 
 <div id="user-menu-logged">
-<a href="{{ user.get_profile.get_absolute_url }}"><img src="{{ STATIC_URL }}img/person-icon-small.png" alt="" /></a>
+<a href="{% url goodnet.views.profile user.get_profile.id %}"><img src="{{ STATIC_URL }}img/person-icon-small.png" alt="" /></a>
 <a href="{% url goodnet.views.post_form %}"><img src="{{ STATIC_URL }}img/plus-icon-small.png" alt="" /></a>
 <img src="{{ STATIC_URL }}img/star-icon-small.png" alt="" />
 <img src="{{ STATIC_URL }}img/tool-icon-small.png" alt="" />
@@ -31,7 +32,7 @@
 
 
 <div id="login_div">
-	<p>שלום {{ requset.user.get_profile.name }} | <a href="/goodnet/logout/">יציאה</a></p>
+	<p>שלום {{ user.get_profile.name }} | <a href="/goodnet/logout/">יציאה</a></p>
 </div>
 
 
@@ -39,9 +40,15 @@
 
 {% else %}
 
-	<p><a href="/goodnet/login/">Login</a></p>
 <div id="user-menu-unlogged">
 <img src="{{ STATIC_URL }}img/orange-logo.jpg" alt="" />
+<form id="header_login" method="post" action="/goodnet/login/">
+{% csrf_token %}
+	<input type="text" id="id_username" name="username" value="שם משתמש">
+	<input type="password" id="id_password" name="password" value="סיסמה">
+	<input type="submit" class="logsubmit" value=""><br/>
+<small>> שכחתם את הסיסמה? <a href="/resetpassword/">ליחצו כאן</a> &nbsp; &nbsp; > מעוניינים להצטרף? <a href="{% url goodnet.views.registration %}">הירשמו עכשיו</a></small>
+</form>
 </div>
 
 {% endif %}
@@ -50,7 +57,38 @@
 </div>
 
 <div id="searchstrip">
+	<select id="search_form_select">
+		<option value="">חפש עבורי...</option>
+		<option value="profile">ארגונים וחברים</option>
+		<option value="event">אירועים</option>
+		<option value="initiative">יוזמות אישיות</option>
+	</select>
+	<form action="/goodnet/search/" id="profile_search_form" method="post">{% csrf_token %}		
+		{% for field in profile_search %}
+			{{ field }}
+		{% endfor %}
+		<input type="text" class="text-search" name="q" value="חיפוש חופשי">
+		<input type="hidden" name="type" value="profile">
+		<input type="submit" class="submit" value="חפש" />
+	</form>
 
+	<form action="/goodnet/search/" id="event_search_form" method="post">{% csrf_token %}		
+		{% for field in event_search %}
+			{{ field }}
+		{% endfor %}
+		<input type="text" class="text-search" name="q" value="חיפוש חופשי">
+		<input type="hidden" name="type" value="event">
+		<input type="submit" class="submit" value="חפש" />
+	</form>
+
+	<form action="/goodnet/search/" id="initiative_search_form" method="post">{% csrf_token %}		
+		{% for field in initiative_search %}
+			{{ field }}
+		{% endfor %}
+		<input type="text" class="text-search" name="q" value="חיפוש חופשי">
+		<input type="hidden" name="type" value="initiative">
+		<input type="submit" class="submit" value="חפש" />
+	</form>
 </div>
 
 <div id="content"> 
@@ -59,19 +97,38 @@
 
 <div id="sidebar">
 	{% block sidebar %}
-
-	<h2>עדכונים אחרונים</h2>
-	{% for u in sidebar_updates %}
-		<div>
-			<h4>{{u}}</h4>
+	{% if not user.is_authenticated %}
+		<div id="signup">
+			<img src="{{ STATIC_URL }}img/person-icon-small.png" id="person" alt="" />
+			<h3 class="form-title">מוכנים להתחיל לעשות טוב?</h3>
+			<a href="{% url goodnet.views.registration %}"><img src="{{ STATIC_URL }}img/inputyellow-openprofile.png" alt="" /></a>
 		</div>
-	{% endfor %}
+	{% else %}
+	{% endif %}
+
+	<div id="latest_updates">
+		<img src="{{ STATIC_URL }}img/latest-updates.png" alt="" />
+		{% for u in sidebar_updates %}
+			<div class="side-updates">
+				<img src="{{ u.image.url }}" class="uimg" />
+				<div class="uinfo">
+					<h3><a href="{% url goodnet.views.post u.id %}">{{ u.title }}</a></h3>
+					<p>{{ u.desc|truncatewords:10 }}</p>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div id="latest_events">
 	<h2>אירועים קרובים</h2>
 	{% for e in sidebar_events %}
 		<div>
-			<h4>{{e}}</h4>
+			<h3><a href="{% url goodnet.views.event e.id %}">{{e}}</a></h3>
+			<small>{{ e.date }}</small>
 		</div>
 	{% endfor %}
+	</div>
 
 	{% endblock %}
 </div>
