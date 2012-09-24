@@ -1,0 +1,48 @@
+﻿{% load helpers %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+		<link href="/static/styles/gdd-form.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com//ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<!--script type="text/javascript">
+			$(document).ready(function () {
+				$('.form li').children().focus(function () {
+					$('select, input[type="text"], textarea').removeClass("active");
+					$(this).addClass("active");
+					$(".form li").removeClass("active");
+					$(this).parent().addClass("active");
+				});
+
+				$('.form li').children().blur(function () {
+					$('select, input[type="text"], input[type="password"], textarea').removeClass("active");
+					$("form li").removeClass("active");
+				});
+			}); 
+		</script-->
+	</head>
+
+	<body>		
+		<div class="main">
+			<div class="form">	
+				<div class="inner-form">
+					<div class="field" style="padding:10px;">
+						<p>
+							הפרויקט שמילאתם נקלט במערכת ונכנס לטבלת הפרויקטים שלכם.
+						</p>
+						<p>
+							באפשרותכם להמשיך ולמלא פרויקטים כעת, או לשוב לרשימת הפרויקטים של היישוב.
+						</p>
+						<!--div style="float:right">
+							<a href="/gdd-city-group/{{ key }}/0"><img src="/static/styles/add.png" /></a>
+						</div-->
+						<!--div style="float:left">
+							<a href="/gdd-groups/{{ key }}"><img src="/static/styles/end.png" /></a>
+						</div-->
+						<div style="clear:both"></div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,72 @@
+/* SEARCH BOX */
+
+body
+{
+	direction:rtl;
+	color:#575858;
+	font-size:16px;
+	font-family:arial;
+}
+
+li
+{
+	padding:0;
+}
+
+a,
+a img
+{
+	border:none;
+}
+
+.clear
+{
+	clear:both;
+}
+
+.form
+{
+	width:550px;
+	margin:0 auto;
+	line-height:22px;
+}
+
+.form .widget ul
+{
+	margin:5px 0;
+}
+
+.form li
+{
+	list-style:none;
+}
+
+.form textarea
+{
+	border:2px solid #919191;
+	width:505px;
+}
+.form label
+{
+	color:#A32A22;
+}
+
+.form .field-radioselect label
+{
+	color:#000000;
+}
+
+.form .form-message
+{
+	float:right;
+	text-align:left;
+	color:#000000;
+	font-size:16px;
+	width:444px;
+	line-height:16px;
+}
+
+.form .submit-btn
+{
+	float:left;
+}

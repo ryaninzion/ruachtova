@@ -1,0 +1,17 @@
+<div class="color-results">
+	<p>
+		מצאנו עבורכם חמישה צבעים אפשריים למנוע החיפוש מתוך אתרכם.
+		בחרו בצבע בו אתם מעוניינים על--ידי לחיצ על תיבת הסימן הסמוכה לו:
+	</p>
+	<div class="list"> 
+		<ul>
+			{% for color in colors %}
+			<li>
+				<input type="radio" class="right" name="color-offered" value="{{ color }}" />
+				<div class="square" class="right" style="background-color:#{{ color }}">&nbsp;</div>
+				<div class="clear"></div>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>

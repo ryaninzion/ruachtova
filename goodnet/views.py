@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
@@ -8,6 +8,9 @@ from django.template import RequestContext
 from goodnet.models import *
 from goodnet.forms import *
 from django.contrib.auth import authenticate, login, logout
+from django.utils import simplejson
+from django.core.serializers.json import DjangoJSONEncoder
+import datetime
 
 
 def static_elements():
@@ -18,6 +21,29 @@ def static_elements():
 	event_search = EventSearchForm()
 	initiative_search = InitiativeSearchForm()
 	return {'sidebar_updates':sidebar_updates,'sidebar_events':sidebar_events,'lform':lform,'profile_search':profile_search,'event_search':event_search,'initiative_search':initiative_search}
+
+
+def index(request):
+	today = datetime.date.today()
+	initiatives = Initiative.objects.all().order_by('start_date')[:1]
+	profiles1 = Profile.objects.all().order_by('-user__date_joined')[:6]
+	profiles2 = Profile.objects.all().order_by('-user__last_login')[:6]
+	cats = Category.objects.filter(type="post")
+	results = {'cats':cats,'profiles2':profiles2,'profiles1':profiles1,'initiatives':initiatives}
+	results.update(static_elements())
+	return render_to_response('goodnet/index.html',results,context_instance=RequestContext(request))
+
+
+def events_index(request):
+	events = Event.objects.all()
+	return render_to_response('goodnet/posts/events_index.html',{'events':events},context_instance=RequestContext(request))
+
+def calendar_events(request):
+	events = Event.objects.all().values('id', 'title', 'date')
+	data = simplejson.dumps(list(events), cls=DjangoJSONEncoder)
+
+	return HttpResponse(data, mimetype='application/json')
+
 
 def post(request,id):
 	post = get_object_or_404(Post,pk=id)

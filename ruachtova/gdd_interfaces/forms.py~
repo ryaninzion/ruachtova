@@ -1,0 +1,206 @@
+# coding=utf-8
+
+from django.forms import *
+from gdd_interfaces.models import *
+from django.contrib.formtools.wizard import FormWizard
+from django.forms.forms import BoundField
+
+from django.http import HttpResponse
+
+from django.shortcuts import render_to_response
+
+from datetime import *
+import codecs
+from form_utils import forms  
+
+LOGISTIC_TYPES = [(dbtype.pk, dbtype.title) for dbtype in gddLogisticType.objects.all()]
+MATERIAL_TYPES = [(dbtype.pk, dbtype.title) for dbtype in gddMaterial.objects.all()]
+COLOUR_TYPES = [(dbtype.pk, dbtype.title) for dbtype in gddColour.objects.all()]
+GARDENING_TYPES = [(dbtype.pk, dbtype.title) for dbtype in gddGardening.objects.all()]
+FIELD_TYPES = [(dbtype.pk, dbtype.title) for dbtype in gddField.objects.all()]
+
+YES_NO_TYPES = [
+	(False, 'לא'),
+	(True, 'כן'),
+]
+
+class CityForm(forms.BetterModelForm):  
+	
+	class Meta:  
+		model = gddCity
+		
+		fieldsets = 	[('contact-details',
+					{'legend': 'פרטי איש/ת קשר לתיאום הורדת הציוד', 
+					'fields': 
+						['contact_fname', 'contact_lname', 'contact_phone_1', 'contact_phone_2', ],  
+					#'description': 'Information',  
+				}),
+				('logistic-address',
+					{'legend': 'כתובת הורדת ציוד',
+					'fields':
+						['logistic_address', ]
+				}),]
+
+class CityProjectForm(forms.BetterModelForm):  
+	
+	#field = ModelChoiceField(label = "תחום הפעילות",
+	#	choices=[('', 'בחרו')] + FIELD_TYPES)
+	
+	logistic_type = MultipleChoiceField(label="מה ייעשה בפרויקט?",
+		choices=LOGISTIC_TYPES,
+		widget=CheckboxSelectMultiple,
+		required=False)
+	
+	description = CharField(label="תיאור הפעילות",
+		initial="תיאור הפעילות שתקיימו ביום מעשים טובים",
+		max_length=400,
+		widget=Textarea(),
+		required=True)
+	
+	is_volunteer_external = TypedChoiceField(label="האם יש צורך בגיוס מתנדבים על-ידי רוח טובה",
+		coerce=bool,
+		choices=((True, 'כן'), (False, 'לא') ),
+		initial=False,
+		widget=RadioSelect)
+
+	field = ModelChoiceField(QuerySet = gddField.objects.order_by('pk').all(),
+		label="תחום הפעילות")
+		
+	class Meta:  
+		model = gddCityProject  
+		
+		fieldsets = 	[('project-details',
+					{'legend': 'פרטי הפרויקט', 
+					'fields': 
+						['city', 'title', 'field', 'logistic_type', 'description', 'volunteer_num', 'is_volunteer_external', ],  
+					#'description': 'Information',  
+				}),
+				('external_volunteers',
+					{'legend': 'גיוס מתנדבים על-ידי רוח טובה',
+					'fields':
+						['volunteer_num_external', 'from_time', 'to_time']
+				}),
+				('contact-details',
+					{'legend': 'פרטי איש/ת הקשר', 
+					'fields': 
+						['fname', 'lname', 'phone_1', 'email', 'position'],  
+					#'description': 'Information',  
+				}),
+				('additional-fields',
+					{'legend': 'הערות ופרטים נוספים', 
+					'fields': 
+						['comments'],
+					#'description': 'Information',  
+				}),] 
+		widgets = {
+			'city': HiddenInput,
+		}
+
+def get_form(*args, **kwargs):
+
+	try:
+		fieldset_list = kwargs.pop('type_list')
+	except:
+		fieldset_list = []
+		
+	view_fieldsets = []
+	
+	view_fieldsets.append(('', 
+					{'fields': 
+						['parent', ],  
+				}),)
+
+	if "gddGardening" in fieldset_list:
+		view_fieldsets.append(('הקמת גינה', 
+					{'fields': 
+						['gardening_type', 'gardening_area', 'gardening_fence', 'gardening_planters', ],  
+				}),)
+				
+	if "gddGardeningFacility" in fieldset_list:
+		view_fieldsets.append(('צביעת מתקנים בחצר', 
+					{'fields': 
+						['facility_material', 'facility_num', 'facility_colour', ],  
+				}),)
+	
+	if "gddGardeningFence" in fieldset_list:
+		view_fieldsets.append(('צביעת גדרות', 
+					{'fields': 
+						['fence_material', 'fence_length', 'fence_colour', ],  
+				}),)
+	
+	if "gddWallPaint" in fieldset_list:
+		view_fieldsets.append(('ציורי קיר', 
+					{'fields': 
+						['wallpaint_height', 'wallpaint_width', ],  
+				}),)
+	
+	if "gddPaintWall" in fieldset_list:
+		view_fieldsets.append(('צביעת קירות וחללים', 
+					{'fields': 
+						['wall_type', 'wall_area', 'wall_colour', ],  
+				}),)
+				
+	if "gddPaintWindows" in fieldset_list:
+		view_fieldsets.append(('צביעת חלונות', 
+					{'fields': 
+						['windows_num', 'windows_material', 'windows_colour', ],  
+				}),)
+				
+	if "gddPaintDoors" in fieldset_list:
+		view_fieldsets.append(('צביעת דלתות', 
+					{'fields': 
+						['doors_num', 'doors_material', 'doors_colour', ],  
+				}),)
+				
+	if "gddPaintGrate" in fieldset_list:
+		view_fieldsets.append(('צביעת סורגים', 
+					{'fields': 
+						['grate_length', 'grate_colour', 'grate_rusted', ],  
+				}),)
+				
+	if "gddPaintRailing" in fieldset_list:
+		view_fieldsets.append(('צביעת מעקות', 
+					{'fields': 
+						['railing_length', 'railing_colour', 'railing_rusted', ],  
+				}),)
+				
+	
+	if "gddApartments" in fieldset_list:
+		view_fieldsets.append(('צביעת דירות רווחה', 
+					{'fields': 
+						['apartments_num', 'apartments_area', ],  
+				}),)
+				
+	if len(fieldset_list) == 0:
+		return None
+	
+	class TotalForm(forms.BetterModelForm):  	
+	
+		wall_colour = MultipleChoiceField(label="באילו צבעים תרצו לצבוע את הקיר?",
+			choices=COLOUR_TYPES,
+			widget=CheckboxSelectMultiple,
+			required=False)
+		gardening_type = MultipleChoiceField(label="מה תרצו לשתול?",
+			choices=GARDENING_TYPES,
+			widget=CheckboxSelectMultiple,
+			required=False)
+		facility_material = MultipleChoiceField(label="האם המתקנים הם מעץ או ממתכת?",
+			choices=MATERIAL_TYPES,
+			widget=CheckboxSelectMultiple,
+			required=False)
+		
+		
+		class Meta:  
+			model = gddCityLogistics  
+			fieldsets = view_fieldsets
+			
+			widgets = {
+				'parent': HiddenInput,
+				'facility_colour': CheckboxSelectMultiple,
+			}
+	
+	#def __init__(self):
+		#super(TotalForm, self).__init__(*args, **kwargs)
+	
+	return TotalForm(*args, **kwargs)
+

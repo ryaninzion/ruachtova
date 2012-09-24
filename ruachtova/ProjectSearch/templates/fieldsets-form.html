@@ -1,0 +1,52 @@
+﻿{% load helpers %}
+<div class="form">	
+	<div class="inner-form">
+		<form action="#" method="post">{% csrf_token %}	
+			{% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
+			{% for fieldset in form.fieldsets %}
+				<ul>
+					<li class="field fieldset-title fieldset-{{ fieldset.name }}-title">
+						{% if fieldset.legend %}
+							<label><b>{{ fieldset.legend }}</b></label>
+						{% endif %}
+						<div class="widget field-meta">
+							&nbsp;
+							{% if fieldset.description %}
+								{{ fieldset.description }}
+							{% endif %}
+						</div>
+					</li>
+					<li class="fields">
+						<ul class="fieldset fieldset-{{ fieldset.name }}">
+							{% for field in fieldset %}
+								{% if field.is_hidden %}
+									{{ field }} 
+								{% else %}
+									<li class="field{% if field.errors %} error{% endif %} field-{{ field.html_name|lower }}">
+										{{ field.label_tag }}
+										{% if field.field.required %}
+											<span class="required">•</span>
+										{% endif %}
+										<div class="widget field-{{ field.field.widget|widget_type|lower }}">
+											{{ field }}
+										</div>
+										{% if field.help_text %}
+											<div class="help-text">
+												{{ field.help_text }}
+											</div>
+										{% endif %}
+										{{ field.errors }}
+									</li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					</li>
+				</ul>
+			{% endfor %}
+			<div class="form-submit">
+				<input type="image" src="/static/styles/gdd-next.png" />
+			</div>
+			<div class="clear"></div>
+		</form>
+	</div>
+</div>

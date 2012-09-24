@@ -1,0 +1,81 @@
+body
+{
+	font-family:arial;
+	font-size:16px;
+	background-color:#A32E1B;
+	color:#ffffff;
+	direction:rtl;
+}
+
+h2
+{
+	font-size:30px;
+}
+
+.main
+{
+	width:720px;
+	border:1px solid #000000;
+	padding:2px;
+	margin:0 auto;
+}
+
+.main-inner
+{
+	background-image:url('black-alpha-20.png');
+	padding:6px;
+}
+
+.square 
+{
+	width:75px;
+	height:75px;
+	border:1px solid #000000; 
+}
+
+.code
+{
+	width:550px;
+	margin:0 auto;
+	padding:5px;
+	background-color:#000000;
+	border:1px solid #ffffff;
+	direction:ltr;
+}
+
+.engine-view
+{
+	width:950px;
+	border:1px solid #000000;
+	padding:2px;
+	margin:0 auto;
+}
+ul
+{
+	list-style:none;
+}
+
+.left
+{
+	float:left;
+}
+
+.right
+{
+	float:right;
+}
+
+.clear
+{
+	clear:both;
+}
+
+.ltr
+{
+	direction:lre;
+}
+
+input.text
+{
+	width:315px;
+}

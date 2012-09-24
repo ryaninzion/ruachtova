@@ -2,6 +2,7 @@
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/header.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/sidebar.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/footer.css">
 {% endblock %}
 
 {% block module %}
@@ -131,6 +132,37 @@
 	</div>
 
 	{% endblock %}
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+<div id="goodnet_footer">
+	<div>
+		<span class="lbl">מי אנחנו</span>
+		{% load flatpages %}
+		{% get_flatpages as flatpages %}
+		<ul>
+		{% for page in flatpages %}
+			<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+		{% endfor %}
+		</ul>
+	</div>
+
+	<div>
+		<span class="lbl">עוד</span>
+	</div>
+
+	<div>
+		<span class="lbl">תחומים</span>
+	</div>
+
+	<div>
+		<span class="lbl">הצטרפו</span>
+	</div>
+	<img src="{{ STATIC_URL }}img/orange-footer.jpeg" alt="" />
+<div style="float:none; clear:both;"></div>
 </div>
 
 {% endblock %}

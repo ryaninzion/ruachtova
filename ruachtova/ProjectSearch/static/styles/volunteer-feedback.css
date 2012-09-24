@@ -1,0 +1,25 @@
+/* SEARCH BOX */
+
+body
+{
+	direction:rtl;
+	color:#575858;
+	font-size:12px;
+	font-family:arial;
+}
+
+li
+{
+	padding:0;
+}
+
+a,
+a img
+{
+	border:none;
+}
+
+.form label
+{
+	color:#A32A22;
+}

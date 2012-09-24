@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<{{ object }}>
+{% for field in form %}
+	<{{ field.name }}>{{ field.data }}</{{ field.name }}>
+{% endfor %}
+</{{ object }}>

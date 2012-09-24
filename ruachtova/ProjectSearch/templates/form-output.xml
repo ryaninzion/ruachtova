@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="windows-1255"?> 
+<lform>
+{% for  key, value in form.cleaned_data.items %}
+	<{{ key }}>{{ value }}</{{ key }}>
+{% endfor %}
+</lform> 

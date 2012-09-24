@@ -1,0 +1,126 @@
+﻿{% load helpers %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+		<link href="/static/styles/gdd-form.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com//ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<!--script type="text/javascript">
+			$(document).ready(function () {
+				$('.form li').children().focus(function () {
+					$('select, input[type="text"], textarea').removeClass("active");
+					$(this).addClass("active");
+					$(".form li").removeClass("active");
+					$(this).parent().addClass("active");
+				});
+
+				$('.form li').children().blur(function () {
+					$('select, input[type="text"], input[type="password"], textarea').removeClass("active");
+					$("form li").removeClass("active");
+				});
+			}); 
+		</script-->
+	</head>
+
+	<body>		
+		<div class="main">
+			<div class="info">
+				<h2>הרשמה לפרויקטים</h2>
+			</div>
+			<div class="step-bg step-{{ step }}-bg">
+				&nbsp;
+			</div>	
+			<div class="form">	
+				<div class="inner-form">
+					<form action="" method="post">{% csrf_token %}	
+							<ul class="fields"> 
+								<li class="field">
+									<label><b>הקמת גינה</b></label>
+									<div class="widget field-meta">
+										ענו במידה וברצונכם להקים גינה
+									</div>
+								</li>
+								{% for field in form.garden_fields %}
+									<li class="field{% if field.errors %} error{% endif %}">
+										{% if field.field.required %}
+											<span class="required">•</span>
+										{% endif %}
+										{{ field.label_tag }}											
+										<div class="widget field-{{ field.field.widget|widget_type|lower }}">
+											{{ field }}
+										</div>
+										{{ field.errors }}
+									</li>
+								{% endfor %}
+								<li class="field">
+									<label><b>צביעת מתקנים בחצר</b></label>
+									<div class="widget field-meta">
+										ענו במידה וברצונכם לצבוע מתקנים בחצר
+									</div>
+								</li>
+								{% for field in form.facility_fields %}
+									<li class="field{% if field.errors %} error{% endif %}">
+										{% if field.field.required %}
+											<span class="required">•</span>
+										{% endif %}
+										{{ field.label_tag }}											
+										<div class="widget field-{{ field.field.widget|widget_type|lower }}">
+											{{ field }}
+										</div>
+										{{ field.errors }}
+									</li>
+								{% endfor %}
+								<li class="field{% if field.errors %} error{% endif %}">
+									<label><b>צביעת גדרות</b></label>
+									<div class="widget field-meta">
+										ענו במידה וברצונכם לצבוע גדרות
+									</div>
+									<div class="clear"></div>
+								</li>			
+								{% for field in form.fence_fields %}
+									<li class="field">
+										{% if field.field.required %}
+											<span class="required">•</span>
+										{% endif %}
+										{{ field.label_tag }}											
+										<div class="widget field-{{ field.field.widget|widget_type|lower }}">
+											{{ field }}
+										</div>
+										{{ field.errors }}
+									</li>
+								{% endfor %}
+								<li class="field{% if field.errors %} error{% endif %}">
+									<label><b>גינון אדניות</b></label>
+									<div class="widget field-meta">
+										ענו במידה וברצונכם לשתול באדניות
+									</div>
+									<div class="clear"></div>
+								</li>			
+								{% for field in form.planters_fields %}
+									<li class="field">
+										{% if field.field.required %}
+											<span class="required">•</span>
+										{% endif %}
+										{{ field.label_tag }}											
+										<div class="widget field-{{ field.field.widget|widget_type|lower }}">
+											{{ field }}
+										</div>
+										{{ field.errors }}
+									</li>
+								{% endfor %}
+							</ul>
+							<div class="form-submit">
+								<input type="image" src="/static/styles/gdd-next.png" />
+							</div>
+							<div class="clear"></div>
+							<input type="hidden" name="{{ step_field }}" value="{{ step0 }}" />
+							{{ previous_fields|safe }}			
+					</form>
+				</div>
+				<div class="footer">
+					
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

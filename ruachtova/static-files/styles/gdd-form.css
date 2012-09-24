@@ -1,0 +1,757 @@
+/* SEARCH BOX */
+
+body
+{
+	direction:rtl;
+	color:#575858;
+	font-size:12px;
+	font-family:arial;
+}
+
+li
+{
+	padding:0;
+}
+
+a,
+a img
+{
+	border:none;
+}
+
+.clear
+{
+	clear:both;
+}
+
+.main
+{
+	width:650px;
+	margin:0 auto;
+}
+
+.search .wrapper
+{
+	height:253px;
+	width:243px;
+	margin:0 auto;
+	background-image:url('savionsearchbg.png');
+}
+
+.search .box
+{
+	width:185px;
+	margin:0 auto;
+	padding:20px 0 0;
+	overflow:auto;
+}
+
+.search select,
+.search input
+{
+	border:none;
+}
+
+.search .field-wrapper
+{
+    background-image: url("savionsmallfield.png");
+    background-repeat: no-repeat;
+    height: 23px;
+    margin: 0 0 16px;
+    padding: 5px 5px 0;
+    width: 175px;
+}
+
+.search select
+{
+	width:175px;
+}
+
+.search .textfield
+{
+	width:180px;
+}
+
+.search .submit
+{
+	float:left;
+}
+
+.search-top .wrapper
+{
+	background-image:url('savionsearchtop.png');
+	width:600px;
+	height:150px;
+}
+
+.search-top .box
+{
+	width:560px;
+	padding-top:25px;
+}
+.search-top .field-wrapper
+{
+	float:right;
+	margin:0 0 25px 30px;
+}
+
+.results .search-top-wrapper
+{
+	margin-bottom:25px;
+}
+/* RESULTS PAGE */
+
+.results
+{
+	color:#575858;
+	font-size:12px;
+	width:600px;
+}
+
+h2
+{
+	/*color:#979501;*/
+	font-weight:bold;
+	margin:0 0 2px;
+}
+
+h3
+{
+	color:#979501;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 0 0 5px;
+}
+
+h4
+{
+	color: #545454;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 2px;
+	margin:0 0 4px;
+}
+
+.results .count
+{
+	background-image: url("/static/styles/ruachtova-logo.png");
+    background-position: 530px 21px;
+    background-repeat: no-repeat;
+	color: #818384;
+    font-family: arial;
+    font-size: 14px;
+	padding: 18px 90px 25px 0;
+}
+
+.item .image
+{
+	background-image: url("/static/styles/image-frame.png");
+    background-repeat: no-repeat;
+    float: right;
+    height: 130px;
+    padding: 2px 2px 0 0;
+	margin:6px 0 0 0;
+    width: 138px;
+}
+
+.item .content
+{
+	float:right;
+	width:375px;
+	padding:0 25px 0 0;
+}
+
+.item .meta
+{
+   color: #797979;
+    font-size: 14px;
+}
+
+.item .meta span
+{
+	font-weight:bold;
+}
+
+.results .list .item
+{
+	padding:5px 0 20px;
+	background-image:url('savionline.png');
+	background-repeat:no-repeat;
+	background-position:center bottom;
+}
+
+.results .header {
+    background-color: #fffecd;
+    background-image: url("savionlinebottom.png");
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    border-top-color: #979501;
+    border-top-style: solid;
+    border-top-width: 5px;
+}
+
+.results .list .parent
+{
+	font-weight:bold;
+	margin:4px 0;
+}
+
+.results .list .body
+{
+    color: #797979;
+    font-family: Arial;
+    font-size: 12px;
+    line-height: 19px;
+	margin:5px 0 6px 0;
+}
+
+.results .pager
+{
+	margin:8px 0;
+	float:left;
+}
+
+.results .pager img
+{
+	margin:0 5px -4px;
+}
+.linkd a
+{
+    background-image:url('')
+}
+
+.results ul
+{
+	padding:0 15px;
+
+}
+
+.results .links a:hover
+{
+	text-decoration:underline;
+}
+
+.results li
+{
+	margin:8px 0;
+    list-style-type: none;
+    margin-top:5px;    
+}
+
+.results .projects a img
+{	
+	margin:0 0 -2px 8px;
+}
+
+.results .title
+{
+    width:600px;
+    height:40px;
+    background-color:#979501;
+}
+.results .title h4
+{
+    font-family:Arial;
+    font-size:20px;
+    color:White;
+    padding-top:5px;
+    padding-right:20px;
+}
+.results .links .add
+{
+    background-image: url("savionadd.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    color: #646201;
+    font-size: 14px;
+    font-weight: bold;
+    padding-right:20px;
+	margin:24px 15px 0 0;
+	text-decoration:none;
+}
+
+.results .links .register
+{
+    background-image: url("pencil.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    color: #979501;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    padding-right: 20px;
+    text-decoration:none;
+}
+.results .projects
+{
+    padding-bottom:0;
+}
+.results .registervol
+{
+    float:left;
+	margin:15px 0 10px;
+}
+.results .registervol .register
+{
+    
+    background-image: url("pencil.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    color: #979501;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    padding-right: 20px;
+    text-decoration:none;
+}
+
+.form
+{
+	width:650px;
+	margin:0 auto;
+}
+
+.form .title
+{
+	background-image: url("savionlinebottom.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+	padding:10px 0;
+}
+
+.generic .form .title
+{
+	background-image: url("generic-line.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+	padding:10px 0;
+}
+
+.form h1
+{
+	color:#979501;
+	font-size:26px;
+	margin:0;
+}
+
+.generic .form h1
+{
+	color:#2da0d9;
+	font-size:26px;
+	margin:0;
+}
+
+.form .inner-form
+{
+	background-color:#fafafa;
+	background-image: url("gdd-bottom-line.png");
+    background-position: center bottom;
+    background-repeat: no-repeat;
+	padding:5px 0;
+}
+
+.generic .form .inner-form
+{
+	background-color:#f3fbff;
+	background-image: url("generic-line.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+	padding:5px 0;
+}
+
+.form .field
+{
+	margin:6px 0;
+}
+
+.form label 
+{
+    font-size: 14px;
+    width: 225px;
+	color: #575858;	
+	display:inline-block;
+    vertical-align: top;
+}
+ 
+.form .required
+{
+	display:inline-block;
+	color:#a80707;
+	font-weight: bold;
+    vertical-align: top;
+}
+
+.form .help-text
+{
+	color:#949494;
+	width:515px;
+	font-size:12px;
+}
+
+.form .field-radioselect label
+{
+	width:100px;
+}
+
+.form select
+{
+	border: 0 none;
+    margin: 3px 9px;
+    padding: 0;
+    width: 260px;
+}
+
+.form input[type='text']
+{
+	border: 0 none;
+    height: 17px;
+    margin: 3px 2px;
+    width: 260px;
+}
+
+.form textarea
+{
+	border: 0 none;
+    height: 125px;
+    width: 270px;
+}
+
+.form ul
+{
+	list-style:none;
+}
+
+.form .field ul
+{
+	display:inline-block;
+	width:300px;
+	padding:0;
+}
+
+.form .field ul li
+{
+	display:inline-block;
+	width:125px;
+	margin:0 0 10px;
+}
+
+.form .field .widget
+{
+	display:inline-block;
+}
+
+.form .field-meta
+{
+}
+
+.form .field-textinput,
+.form .field-timeinput,
+.form .field-select
+{
+	background-image: url("field-title-border.png");
+    background-repeat: no-repeat;
+    height: 30px;
+    margin-top: 5px;
+    width: 280px;
+}
+
+.form .error .field-textinput,
+.form .error .field-timeinput,
+.form .error .field-select
+{
+	background-image: url("field-title-border-error.png");
+    background-repeat: no-repeat;
+}
+
+.form .field-textinput input,
+.form .field-select select,
+textarea
+{
+	font-family:arial;
+	font-size:12px;
+	color:#949494;
+}
+
+.form .field-textarea
+{
+	background-image: url("textarea-field-bg.png");
+    background-repeat: no-repeat;
+    padding: 2px 4px 2px 0;
+    width: 276px;
+}
+
+.form .error .field-textarea
+{
+	background-image: url("textarea-field-bg-error.png");
+    background-repeat: no-repeat;
+}
+
+.form .form-submit
+{
+	float:left;
+	margin:0 0 0 50px;
+}
+
+.step-bg
+{
+	width:650px;
+	height:62px;
+}
+
+.step-1-bg
+{
+	background-image:url('step-1-bg.png');
+}
+
+.step-2-bg
+{
+	background-image:url('step-2-bg.png');
+}
+
+.step-3-bg
+{
+	background-image:url('step-3-bg.png');
+}
+
+.form .field .errorlist
+{
+	color:#a80707;
+	font-weight:bold;
+	text-align: left;
+    width: 515px;
+}
+
+.form .field .errorlist li
+{
+	margin:0;
+}
+
+/* city index */
+
+.main .info
+{
+	background-image:url("long-red-line.png");
+	background-repeat:no-repeat;
+	background-position:center top;
+	margin:0;
+}
+
+.main .info h2
+{
+	font-size:22px;
+}
+
+.main .info .title
+{
+	padding:4px 60px 4px 0;
+}
+
+.main.index .city-index 
+{
+	color:#ffffff;
+	font-size:22px;
+	padding:4px;
+	background-image:url("long-gray-line.png");
+	background-repeat:no-repeat;
+	background-position:center top;
+}
+
+.main.index .city-index h4
+{
+	color:#de1a22;
+	font-weight:bold;
+	font-size:20px;
+}
+
+.main.index .city-index p
+{
+	color:#575757;
+	font-size:14px;
+}
+
+.main.index .city-index .links
+{
+	color:#de1a22;
+	text-align:left;
+}
+
+.main.index a,
+.main .info a
+{
+	font-weight:bold;
+	font-size:14px;
+}
+
+.main.index .city-index li
+{
+	color:#ffffff;
+	font-size:18px;
+	padding:4px;
+	background-image:url("long-gray-line.png");
+	background-repeat:no-repeat;
+	background-position:center bottom;
+	padding:8px 5px;
+}
+
+.gddlogo-bg
+{
+	background-image:url('gddlogo.png');
+	background-repeat:no-repeat;
+	background-position:center right;
+	padding-right:60px;
+}
+
+.red
+{
+	color:#af0101;
+}
+
+.yellow
+{
+	color:#efac08;
+}
+.prelude
+{
+	background-color:#fff3f3;
+	padding:10px 25px;
+	background-image: url("long-red-line.png");
+	background-position: center top;
+	background-repeat: no-repeat;
+}
+
+.form
+{
+	background-image: url("gdd-bottom-line.png");
+	background-position: center top;
+	background-repeat: no-repeat;
+	padding: 2px 0 0;
+}
+
+.main .navbar
+{
+	background-image: url("gdd-bottom-line.png");
+	background-position: center top;
+	background-repeat: no-repeat;
+}
+
+.bold
+{
+	font-weight:bold;
+}
+
+.size-16
+{
+	font-size:16px;
+}
+
+.size-18
+{
+	font-size:18px;
+}
+
+.bold
+{
+	font-weight:bold;
+}
+
+.main.index .city-index li.data-missing
+{
+	background-color: #FFF3F3;
+	background-image: url("long-red-line.png");
+}
+
+.red-line-top
+{
+	background-image: url("long-red-line.png");
+	background-position: center top;
+	background-repeat: no-repeat;
+}
+
+.city-index-wrapper .title
+{
+	padding:10px 0 0 0;
+}
+
+ul.city-index h5
+{
+	color:#575757;
+	font-weight:bold;
+	margin:0;
+	background-image:url('volunteers-icon.png');
+	background-repeat:no-repeat;
+	background-position:right top;
+	padding:6px 34px 4px 0;
+}
+ 
+.form .field-checkboxselectmultiple 
+{
+	margin:0 30px 15px 0;
+}
+
+.form .field-checkboxselectmultiple li
+{
+	vertical-align:top;
+}
+
+.form .field-checkboxselectmultiple label 
+{
+	/*text-indent: -28px;*/
+    width: 110px;
+	margin:0 10px 0 0;
+}
+
+.dfc.main
+{
+	width:510px;
+	margin:0 0;
+}
+
+.dfc .form
+{
+	width:510px;
+}
+
+.dfc .form label
+{
+	width:120px;
+}
+
+.vol-select
+{
+	padding:12px 12px 0 12px;
+}
+
+a.inner-link
+{
+	text-decoration:none;
+	font-weight:normal !important;
+}
+
+a:hover.inner-link
+{
+	text-decoration:underline;
+	font-weight:normal !important;
+}
+
+a:hover.yellow-hover
+{
+	color:#efac08;
+}
+
+ul.select li
+{
+	margin: 5px 0;
+}
+
+.field-1-fieldid .help-text,
+.field-2-fieldid .help-text,
+.field-3-fieldid .help-text
+{
+	color:#a80707;
+	font-weight:bold;
+}
+
+.field-1-volunteer_num
+{
+	display:none;
+}

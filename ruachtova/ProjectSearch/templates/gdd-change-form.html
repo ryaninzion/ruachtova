@@ -1,0 +1,57 @@
+﻿{% load helpers %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+		<link href="/static/styles/gdd-form.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com//ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<style>
+			.fieldset-external_volunteers,
+			.fieldset-external_volunteers-title,
+			.field-logistic_type
+			{
+				display:none;
+			}
+			
+			.fieldset
+			{
+				margin:15px 0;
+			}
+			
+			.form .field ul li 
+			{
+			    width: 140px;
+			}
+		</style>
+	</head>
+
+	<body>		
+		<div class="main dfc">
+			<div class="info">
+				<div class="title gddlogo-bg" style="float:right;">
+					<h2 class="red">הרשמה לפרויקט יוצרים שינוי</h2>
+					<h3 class="yellow">יום מעשים טובים 2012</h3>
+				</div>
+				<div class="add" style="float:left;padding:10px 0;">
+					&nbsp;
+				</div>
+				<div style="clear:both"></div>
+			</div>
+			{% include 'data-fieldsets-form.html' %}
+		</div>
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(".fieldset-project").append('<a href="#" id="add-media">קובץ נוסף</a>');
+				
+				$("#add-media").live("click", function(event) {
+					event.preventDefault();
+					
+					$(".fieldset-project").append('<li class="field field-media_file"><label for="id_media_file">צרפו את הפרויקט המתועד (מצגת, סרטון, תמונות)</label><div class="widget field-clearablefileinput"><input type="file" name="media_file"></div></li>');
+					$(this).remove();
+					$(".fieldset-project").append('<a href="#" id="add-media">קובץ נוסף</a>');
+				});
+			});
+		</script>
+	</body>
+</html>

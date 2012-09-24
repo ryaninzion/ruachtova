@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <link href="/static/styles/engine-generator.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="/static/styles/libraries/farbtastic.css" type="text/css" />
+	<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/static/styles/libraries/farbtastic.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<script type="text/javascript">
+    $(document).ready(function() {
+		$('#colorpicker').farbtastic('#color');
+		 $("#color-asist").click(function() {
+			//event.preventDefault();
+			if ($("#website").val() != "")
+				$("#color-asist-list").load("/GetSearchEngineColors/?website=" + $("#website").val());
+        });
+		$(".radio-toggle").click(function() {
+			if ($('input[name=color-select]:checked').val() == "color")
+				$("#color").val("#000000");
+			else
+				$("#color").val("");
+			$(this).parent().parent().children(".toggle-option").hide();
+			$(this).parent().parent().children("." + $(this).val()).show();
+		});
+		$("#submit").click(function() {
+			//event.preventDefault();
+			var color;
+			if ($("#color").val() != "")
+				color = $("#color").val();
+			else
+				color = $('input[name=color-offered]:checked').val();
+			
+			color = color.replace("#", "");
+			
+			var orientation = $('input[name=orientation]:checked').val();
+			
+			$(".engine-view").show();
+			
+			$("#code").html("&lt;iframe src=&quot;http://web.good-deeds-day.org/Search/" + color + "/" + orientation + "&quot;&gt;&lt;/iframe&gt;");
+			
+			$("#display-engine").remove();
+			
+			$('<iframe />', {
+				name: 'display-engine',
+				id:   'display-engine',
+				src: '/GenerateSearchEngine/?color=' + color + '&orientation=' + orientation,
+				style: "width:900px;height:300px;border:0",
+			}).prependTo('#engine-view');
+		});
+    });   
+</script>
+
+<body class="create-search"> 
+	<div class="main">
+		<div class="main-inner">
+			<div class="prelude">	
+				<p>
+					ברוכים הבאים לאשף יצירת חיפוש ההתנדבות של עמותת "רוח טובה"
+				</p>
+				<p>
+					באמצעות אשף זה, תוכלו להתאים את מנוע החיפוש במיוחד עבור אתר האינטרנט שלכם,
+					ולשלבו בו.
+					מנוע חיפוש זה יעניק לגולשכם אתר האפשרות למצוא לחפש במגוון ההתנדבויות 
+					המוצעות במאגר הגדול מסוגו בישראל, לבחור התנדבות ולהרשם אליה, והכל מאתר האיטרנט שלכם.
+				</p>
+			</div>
+			<div class="level">
+				<h2 class="level-1">כיוון</h2> 
+				<p>
+					ראשית, בחרו האם ברצונכם במנוע חיפוש מאונך או מאוזן
+				</p>
+				<div>	
+					<input type="radio" name="orientation" value="Horizontal" checked="checked">אופקי
+					<input type="radio" name="orientation" value="Vertical">אנכי
+				</div>
+			</div>
+			<div class="level">
+				<h2 class="level-2">צבע</h2>
+				<p>
+				כעת, בחרו את צבעו של מנוע החיפוש. רצוי שהצבע יתאים לאתרכם. אם תרצו, נוכל לעזור לכם לבחור את הצבע המתאים ביותר:
+				</p>
+				<div>
+					<input type="radio" class="radio-toggle" name="color-select" value="color">אני יודע באיזה צבע ברצוני להשתמש
+					<input type="radio" class="radio-toggle" name="color-select" value="offer">עזרו לי למצוא את הצבע המתאים ביותר
+				</div>
+				<div class="color toggle-option" style="display:none">
+					<label for="color">בחרו צבע:</label>
+					<form>
+						<input type="text" class="text" id="color" value="" name="color">
+					</form>
+					<div id="colorpicker"></div>
+				</div>
+				<div class="offer toggle-option" style="display:none">
+					<p>
+						כתבו להלן את כתובת אתר האינטרנט שלכם, ונציע לכם מספר צבעים מתאימים עבור מנוע החיפוש בו.
+					</p>
+					<label for="'website">כתבו את כתובת האתר שלכם:</label>
+					<input type="text" class="text ltr" id="website" value="http://" name="website">
+					<a href="#" id="color-asist">הצע לי צבעים מתאימים</a>
+				</div>
+				<div id="color-asist-list"></div>
+			</div>
+			<div class="level">
+				<h2 class="level-2">מנוע</h2>
+				<p>
+					לחצו על
+					<b>הצגת המנוע</b>
+					על-מנת להציג את המנוע החדש שלכם, והסבר כיצד להטמיעו באתרכם.
+				</p>
+				<div>
+					<a id="submit" href="#">הצגת מנוע</a>
+				</div>
+				<div id="display-engine"></div>
+			</div>
+		</div>
+	</div>
+	<div class="engine-view" id="engine-view" style="display:none">
+		<div class="details">
+			<p>
+				להלן מופיע קטע הקוד הנדרש על-מנת לשלב את מנוע החיפוש החדש שלכם באתרכם.
+				תוכלו להעתיק את הקוד ולהדביק אותו בתוכנת הניהול של האתר, או באמצעות חברת האתרים שלכם.	
+			</p>
+			<div class="code" id="code"> 
+				&nbsp;
+			</div>
+			<p>
+				בכל שאלה או בעיה תוכלו לפנות
+				<b>לעמותת רוח טובה</b>
+				בטלפון
+				<b>1-700-505-202</b>
+			</p>
+		</div>
+	</div>	
+</body>
+</html>

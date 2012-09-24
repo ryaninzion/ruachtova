@@ -1,0 +1,143 @@
+# coding=utf-8
+
+from django import forms
+from gdd_interfaces.models import *
+from gdd_interfaces.forms import *
+from django.http import HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
+from django.shortcuts import *
+
+from django.forms.models import model_to_dict
+
+import codecs
+import urllib
+
+from datetime import *
+
+# City page, with list of city ptoject
+
+def gdd_city(request, key):
+	
+	projects = gddCityProject.objects.filter(city__guid = key).order_by('-is_data_missing', 'title') 
+	data_missing_count = gddCityProject.objects.filter(city__guid = key, is_data_missing = True).count()
+	city = gddCity.objects.get(guid=key)
+	form = CityForm(instance=city)
+	
+	# Check if a form has been submitted
+	if request.POST:
+		
+		form = CityForm(request.POST, instance=city)
+		
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect("/gdd-city/" + str(key))
+	
+	return render_to_response('city-index.html', { 'projects': projects, 'city': city, 'form': form, 'data_missing_count': data_missing_count, })
+
+# The city project's form
+
+def gdd_city_project_form(request, guid, pid):
+	
+	# Check if a form has been submitted
+	if request.POST:
+		if int(pid) == 0:
+			form = CityProjectForm(request.POST)
+		else:
+			project = gddCityProject.objects.get(pk=pid)
+			form = CityProjectForm(request.POST, instance=project)
+		
+		if form.is_valid():
+			newform = form.save()
+			pid = newform.pk
+			return HttpResponseRedirect("/gdd-city-logistics/" + str(guid) + "/" + str(pid))
+	
+	# If a form has not been submitted, check if a new form should be created
+	elif int(pid) == 0:
+		form = CityProjectForm(initial={'city': guid})
+		
+	# If not, an existing model is being edited
+	else:
+		p = int(pid)
+		project = gddCityProject.objects.get(pk = p)
+		dictionary = model_to_dict(project)
+		form = CityProjectForm(instance=project)
+		
+	return render_to_response('gdd-city-form.html', { 'form': form, 'guid': guid })
+
+# Logistics form, dynamically built according to the city project form
+
+def gdd_city_logistics_form(request, guid, pid):
+
+	lid = 0
+	logistics = None
+	try:
+		logistics = gddCityLogistics.objects.get(parent__pk = pid)
+		lid = logistics.pk
+	except gddCityLogistics.DoesNotExist:
+		lid = 0
+	
+	project = gddCityProject.objects.get(pk = pid)
+	if project.field.id == 8:
+		logistic_types = ['gddWallPaint']
+	elif project.field.id == 5:
+		logistic_types = project.logistic_type.all().values_list('name', flat=True)
+	
+	#for item in project.
+	
+	# Check if a form has been submitted
+	if request.POST:
+		if logistics == None:
+			form = get_form(request.POST, type_list=logistic_types)
+		else:
+			#logistics = gddLogistics.objects.get(pk=lid)
+			form = get_form(request.POST, type_list=logistic_types, instance=logistics)
+
+		if form.is_valid():
+			data_missing = False
+			for key, value in request.POST.iteritems():
+				if value == '':
+					data_missing = True
+					
+			form.save()
+			
+			project.is_data_missing = data_missing
+			project.save()
+			
+			return HttpResponseRedirect("/gdd-city-form-end/" + guid)
+	
+	# If a form has not been submitted, check if a new form should be created
+	elif int(lid) == 0:
+		form = get_form(type_list=logistic_types, initial={'parent': pid})
+		if form == None:
+			return HttpResponseRedirect("/gdd-city-form-end/" + guid)
+		
+	# If not, an existing model is being edited
+	else:
+		logistics_data = gddCityLogistics.objects.get(pk=lid)
+		
+		if logistics_data.parent.city.guid != guid:
+			return HttpResponseRedirect("/gdd-error")
+			
+		form = get_form(type_list=logistic_types, instance=logistics_data)
+		if form == None:
+			return HttpResponseRedirect("/gdd-city-form-end/" + guid)
+	
+	return render_to_response('gdd-city-form.html', { 'form': form })
+
+def gdd_city_project_delete_verify(request, key, pid):
+
+	project = gddCityProject.objects.get(pk = pid)
+	return render_to_response('gdd-city-form-delete.html', { 'key': key, 'pid': pid, 'project': project })
+
+def gdd_ctiy_project_delete(request, key, pid):
+
+	project = gddCityProject.objects.get(pk=pid)
+	project.delete()
+	
+	return HttpResponseRedirect("/gdd-city/" + key)
+
+def gdd_city_form_end(request, key):
+	
+	return render_to_response('gdd-city-form-end.html', { 'key': key })
+
+

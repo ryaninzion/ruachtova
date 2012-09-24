@@ -93,6 +93,7 @@
 {% endblock %}
 
 {% block sidebar %}
+
 <div id="post_owner">
 <h2>{{ post.author.get_profile.name }}</h2>
 <div id="post_owner_right">
@@ -127,21 +128,34 @@
 	{% endif %}
 	{% if post.author.get_profile.phone %}<li><span class="lbl">טלפון:</span> {{ post.author.get_profile.phone }}</li>{% else %}{% endif %}	
 	</ul>
-</div><div style="clear:both;"></div>
+</div><div style="clear:both;"></div><br/>
 	<div class="desc">
-	{{ post.author.get_profile.desc|truncatewords:10 }}
+	{{ post.author.get_profile.desc|truncatewords:25 }}
 	<ul id="profile_actions">
 		{% if post.author.get_profile.user.email %}<li><a href="mailto:{{ post.author.get_profile.user.email }}">צרו קשר</a></li>{% else %}{% endif %} 
-		{% if post.author.get_profile.webiste %}
+		{% if post.author.get_profile.website %}
 			{% if post.author.get_profile.profile_type.value == 'o' %}
-				<li><a href="{{ post.author.get_profile.website }}">אתר העמותה</a></li> 
+				&nbsp; | &nbsp; <li><a href="{{ post.author.get_profile.website }}">אתר העמותה</a></li> 
 			{% else %}
-				<li><a href="{{ post.author.get_profile.website }}">אתר אינטרנט אישית</a></li>
+				&nbsp; | &nbsp; <li><a href="{{ post.author.get_profile.website }}">אתר אינטרנט אישית</a></li>
 			{% endif %}
 		{% else %}
 		{% endif %}
 	</ul>
 	</div>
+	{% if post.author.get_profile.id %}
+		<div id="prof_link"><a href="{% url goodnet.views.profile post.author.get_profile.id %}">לעמוד הפרופיל</a></div>
+	{% else %}
+	{% endif %}
+</div>
+
+<div id="friends">
+	<div id="friends_head">חברים</div>
+	<ul>
+		{% for friend in post.our_helpers.all|slice:":6" %}
+			<li><img src="{% if friend.avatar %}{{ friend.avatar.url }}{% else %}/static/img/default-avatar.jpg{% endif %}" /></li>
+		{% endfor %}
+	</ul><div style="clear:both;"></div>
 </div>
 {{ block.super }}
 {% endblock %}

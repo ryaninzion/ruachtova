@@ -1,0 +1,66 @@
+﻿{% load helpers %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+		<link href="/static/styles/gdd-form.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com//ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				if ($("#id_is_volunteer_external_0").attr("checked"))
+					$(".fieldset-external_volunteers, .fieldset-external_volunteers-title").toggle();
+				$("#id_is_volunteer_external_0").click(function()
+				{
+					$(".fieldset-external_volunteers, .fieldset-external_volunteers-title").show();
+				});
+				$("#id_is_volunteer_external_1").click(function()
+				{
+					$(".fieldset-external_volunteers, .fieldset-external_volunteers-title").hide();
+				});
+				
+				if ($("#id_field").val() == 5)
+						$(".field-logistic_type").show();				
+				$("#id_field").change(function() {
+					if ($("#id_field").val() == 5)
+						$(".field-logistic_type").show();
+					else
+						$(".field-logistic_type").hide();
+				});
+			}); 
+		</script>
+		<style>
+			.fieldset-external_volunteers,
+			.fieldset-external_volunteers-title,
+			.field-logistic_type
+			{
+				display:none;
+			}
+			
+			.fieldset
+			{
+				margin:15px 0;
+			}
+			
+			.form .field ul li 
+			{
+			    width: 140px;
+			}
+		</style>
+	</head>
+
+	<body>		
+		<div class="main">
+			<div class="info">
+				<div class="title gddlogo-bg" style="float:right;">
+					<h2 class="red">{{ title }}</h2>
+					<h3 class="yellow">יום מעשים טובים 2012</h3>
+				</div>
+				<div class="add" style="float:left;padding:10px 0;">
+					&nbsp;
+				</div>
+				<div style="clear:both"></div>
+			</div>
+			{% include 'fieldsets-form.html' %}
+		</div>
+	</body>
+</html>

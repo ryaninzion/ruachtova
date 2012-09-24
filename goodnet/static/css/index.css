@@ -1,0 +1,24 @@
+#sidebar { display:none; }
+#searchstrip { display:none; }
+#content { width:100%; border-top:none; padding:10px 0 30px 0; }
+
+h1 { text-align:center; color:#666; font-weight:normal; font-size:26px; margin:0 0 20px 0; padding:0; }
+#row1 h2, #row2 h2 { font-size:18px; line-height:20px; }
+#row1, #row2 { clear:both; } #row1 div, #row2 div { width:480px; padding:30px 0; border-top:3px solid #FBBD09; } 
+#row2 { border-top:1px solid #999; } #row2 div { border-top:none; }
+
+#row1 div#right { width:400px; float:right; background:url('../img/heart-icon.png') 403px 10px no-repeat; padding-right:80px; } 
+#row1 div#left { width:400px; float:left; background:url('../img/profile-icon.png') 403px 10px no-repeat; padding-right:80px; }
+#row1 h3 { font-size:14px; line-height:16px; padding-top:10px; margin:0 0 5px 0; }
+#row1 a, #row1 a:hover, #row1 a:visited { color:#000; text-decoration:none; }
+.desc { font-size:11px; margin:0; padding:0; }
+.register-button { float:left; padding:0 15px 15px 0; }
+.i-pic { float:right; max-height:100px; max-width:100px; padding: 10px 0 10px 10px; }
+.links { clear:both; margin-bottom:10px; }
+#row1 ul { padding:0; margin:0; list-style-type:none; } #row1 li { float:right; line-height:61px; padding-left:5px; }
+#row1 ul#open_profile li { float:none; margin:0; padding:0; line-height:17px; }
+ul#open_profile li:before { padding-left:7px; content: "•"; font-size:17px; color: Orange; }
+#row1 li img { max-width:61px; max-height:61px; }
+ul#open_profile { margin-bottom:20px; }
+
+#row2 div#left { width:308px; padding-right:172px; background:url('../img/pic-01.jpg') top right no-repeat; min-height:145px; }

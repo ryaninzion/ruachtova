@@ -1,0 +1,60 @@
+﻿{% load helpers %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+		<link href="/static/styles/gdd-form.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com//ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<style>
+			.fieldset-external_volunteers,
+			.fieldset-external_volunteers-title,
+			.field-logistic_type
+			{
+				display:none;
+			}
+			
+			.fieldset
+			{
+				margin:15px 0;
+			}
+			
+			.form .field ul li 
+			{
+			    width: 140px;
+			}
+		</style>
+	</head>
+
+	<body>		
+		<div class="main">
+			<div class="info">
+				<div class="title gddlogo-bg" style="float:right;">
+					<h2 class="red">للتسجيل للعمل التطوعي</h2>
+					<h3 class="yellow">يوم الأعمال الخيرية 2012</h3>
+				</div>
+				<div class="add" style="float:left;padding:10px 0;">
+					<a class="yellow" href="/gdd-city/{{ guid }}">חזרה לרשימת הפרויקטים</a>
+				</div>
+				<div style="clear:both"></div>
+			</div>
+			<!--div class="info vol-select">
+				<div style="float:right">
+					<h4>
+						<a class="red" href="/gdd-volunteer-form">
+							מתנדב יחיד
+						</a>
+					</h4>
+				</div>
+				<div style="float:left">
+					<h4>
+						<a class="red" href="/gdd-volunteer-group-form">
+							קבוצת מתנדבים
+						</a>
+					</h4>
+				</div>
+				<div class="clear"></div>
+			</div-->
+			{% include 'fieldsets-form.html' %}
+		</div>
+	</body>
+</html>

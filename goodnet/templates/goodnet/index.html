@@ -1,0 +1,77 @@
+{% extends "goodnet/base.html" %}
+
+{% block stylesheets %}
+	{{ block.super }}
+	{% if user.is_authenticated %}
+	{% else %}
+		<link rel="stylesheet" href="{{ STATIC_URL }}css/index.css">
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+
+	{% if user.is_authenticated %}
+
+	{% else %}
+		<h1>צור פרופיל ויוזמה משלך - מעורבות חברתית מתחילה בך</h1>
+
+		<div id="row1">
+			<div id="right">
+				<a href="{% url goodnet.views.registration %}"><img src="{{ STATIC_URL }}img/inputred-openprofile.png" class="register-button" /></a>
+				<h2>צרו פרופיל והתחילו להשתתף ברשת של עשייה טובה בסביבתכם</h2>
+				<small>יוזמות אחרונות:</small>
+				{% if initiatives %}
+					{% for i in initiatives %}
+					<img src="{{ i.image.url }}" class="i-pic" />
+					<h3><a href="{% url goodnet.views.initiative i.id %}">{{ i.title }}</a></h3>
+					<p class="desc">{{ i.desc|truncatewords:15 }}</p>
+					{% endfor %}
+					<p class="links"><a href="">לכל היוזמות</a> &nbsp; | &nbsp; <a href="{% url goodnet.views.registration %}">הצא יוזמה משלך</a></p>
+				{% else %}
+					<p>לא מצאו יוזמות</p>
+				{% endif %}
+				<ul>
+				{% if profiles1 %}
+					{% for p in profiles1 %}
+						<li><a href="{% url goodnet.views.profile p.id %}"><img class="hpavatar" src="
+						{% if p.avatar %} {{ p.avatar.url }} {% else %} /static/img/person-icon.png{% endif %}
+						"/></a></li>
+					{% endfor %}
+				{% else %}
+				{% endif %}
+				</ul>
+			</div>
+			<div id="left">
+				<a href="{% url goodnet.views.registration %}"><img src="{{ STATIC_URL }}img/inputyellow-openprofile.png" class="register-button" /></a>
+				<h2>אנחנו אירגון או עמותה</h2>
+				<small>פתחו פרופיל עוד היום ותוכלו:</small>
+				<ul id="open_profile">
+					<li>להציע פעילות התנדבותית</li>
+					<li>לפרסם ולהזמין לאירוע או פעילות</li>
+					<li>לנהל עמוד אישי אליו תוכלו לעלות תמונות וסרטונים</li>
+				</ul>
+				<ul>
+				{% if profiles1 %}
+					{% for p in profiles2 %}
+						<li><a href="{% url goodnet.views.profile p.id %}"><img class="hpavatar" src="
+						{% if p.avatar %} {{ p.avatar.url }} {% else %} /static/img/person-icon.png{% endif %}
+						"/></a></li>
+					{% endfor %}
+				{% else %}
+				{% endif %}
+				</ul>
+			</div>
+		</div>
+		
+		<div id="row2">
+			<div>
+				
+			</div>
+
+			<div id="left">
+				<h2><span class="text-lbl">מעשה טוב</span> “אני רוצה להתנדב”</h2>
+			</div>
+		</div>
+	{% endif %}
+
+{% endblock %}

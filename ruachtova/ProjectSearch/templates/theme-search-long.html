@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <link href="/static/styles/{{ theme }}/projectsearch.css" rel="stylesheet" type="text/css" />
+    <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".add").click(function () {
+            $('ul.projects').append("<li>" + $(this).attr("rel") + "</li>");
+            $(".cart .empty").remove();
+			$.get("/add-to-cart/?id=" + $(this).attr("rev"));
+        });
+		 $(".remove").click(function () {
+            $.get("/remove-from-cart/?id=" + $(this).attr("rev"));
+			$(this).parent().remove();
+        });
+    });   
+</script>
+
+<body class="search-long"> 
+    <div class="search-wrapper">	
+		<div class="search">
+			<form action="/Search/{{ theme }}/Index/" method="post">{% csrf_token %}		
+				<div class="wrapper">
+					<div class="box">
+						{% for field in form %}
+							<div class="field-wrapper">
+								{{ field }}
+							</div>
+						{% endfor %}
+						<input type="image" class="submit" src="/static/styles/{{ theme }}/search-brn.png" />
+					</div>
+				</div>
+			</form>
+		</div>    
+	</div>
+</body>
+</html>

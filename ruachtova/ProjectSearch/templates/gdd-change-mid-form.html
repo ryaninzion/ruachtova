@@ -1,0 +1,42 @@
+﻿{% load helpers %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+		<link href="/static/styles/gdd-form.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com//ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<!--script type="text/javascript">
+			$(document).ready(function () {
+				$('.form li').children().focus(function () {
+					$('select, input[type="text"], textarea').removeClass("active");
+					$(this).addClass("active");
+					$(".form li").removeClass("active");
+					$(this).parent().addClass("active");
+				});
+
+				$('.form li').children().blur(function () {
+					$('select, input[type="text"], input[type="password"], textarea').removeClass("active");
+					$("form li").removeClass("active");
+				});
+			}); 
+		</script-->
+	</head>
+
+	<body>		
+		<div class="main dfc">
+			<div class="form">	
+				<div class="inner-form">
+					<div class="field" style="padding:10px;">
+						<p>
+							אנו שמחים על הצטרפותכם לפרויקט "יוצרים שינוי".
+						</p>
+						<p>
+							פרטי קבוצתכם נקלטה במערכת. כעת תוכלו להתקדם לשלב הבא ולעדכן אותנו בפרטי הבעיה אותה תרצו להעלות ולפתור: <a href="/gdd-change-problem-form/{{ guid }}/">לחצו כאן לטופס הבעיה</a>
+						</p>
+						<div style="clear:both"></div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

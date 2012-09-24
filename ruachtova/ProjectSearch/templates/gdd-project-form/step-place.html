@@ -1,0 +1,170 @@
+﻿{% load helpers %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+		<link href="/static/styles/gdd-form.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com//ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<!--script type="text/javascript">
+			$(document).ready(function () {
+				$('.form li').children().focus(function () {
+					$('select, input[type="text"], textarea').removeClass("active");
+					$(this).addClass("active");
+					$(".form li").removeClass("active");
+					$(this).parent().addClass("active");
+				});
+
+				$('.form li').children().blur(function () {
+					$('select, input[type="text"], input[type="password"], textarea').removeClass("active");
+					$("form li").removeClass("active");
+				});
+			}); 
+		</script-->
+		<script type="text/javascript">
+			 jQuery(function() {
+				jQuery.support.placeholder = false;
+				test = document.createElement('input');
+				if('placeholder' in test) jQuery.support.placeholder = true;
+			});
+					 
+			 $(function() {
+				if(!$.support.placeholder) { 
+					var active = document.activeElement;
+					$(':text, textarea').focus(function () {
+						if ($(this).attr('placeholder') != '' && $(this).val() == $(this).attr('placeholder')) {
+							$(this).val('').removeClass('hasPlaceholder');
+						}
+					}).blur(function () {
+						if ($(this).attr('placeholder') != '' && ($(this).val() == '' || $(this).val() == $(this).attr('placeholder'))) {
+							$(this).val($(this).attr('placeholder')).addClass('hasPlaceholder');
+						}
+					});
+					$(':text, textarea').blur();
+					$(active).focus();
+					$('form').submit(function () {
+						$(this).find('.hasPlaceholder').each(function() { $(this).val(''); });
+					});
+				}
+			});
+		</script>
+	</head>
+
+	<body>		
+		<div class="main">
+			<!--p>
+				תודה על רצונך להצטרף ל"יום מעשים טובים".
+			</p>
+			<p>
+				ההרשמה נסגרה.
+			</p>
+			<p>
+				עמותת רוח טובה פועלת כל השנה ומזמינה אותך לקחת חלק בפעילות התנדבותית לאורך השנה. אם ברצונך לקבל פרטים על אפשרויות התנדבות- לחץ 								
+				<a href="http://www.ruachtova.org.il/volunteer-form">כאן</a><br />
+				יום מעשים טובים הבא יחול ב- 16.3.2013
+			</p-->
+			{% if 1 == 1 %}
+			<div class="info">
+				<h2>הרשמה לפרויקטים</h2>
+				<p>
+					אנו שמחים על הצטרפותכם ליום מעשים טובים השישי. 
+				</p>
+				<p>
+					לפניכם טופס למילוי כל הפרויקטים שברצונכם לקיים במוסדכם במהלך יום מעשים טובים המתקיים ב20.3.2012. 
+					אנא מלאו את פרטי המקום ולאחר מכן את פרטי הפעילות שתרצו לקיים.
+					<b>באפשרותכם לקיים כמה פעילויות במקביל במקום</b> (למשל: צביעה וגינון או צביעה והפעלה- ייתכן ותרצו לחלק את היום למשמרות) אולם <b>עליכם להפריד בין הפעילויות השונות כאשר אתם מזינים את הטופס</b>. 
+					על מנת ליצור את ההפרדה שימו לב כי בסיום הטופס תוכלו להוסיף פעילות נוספת.
+					לאחר מילוי הטופס נציג רוח טובה ייצור עמכם קשר לאישור הפרטים.
+					שיבוץ המתנדבים יחל ב1.2.2012.
+				</p>
+			</div>
+			<div class="step-bg step-{{ step }}-bg">
+				&nbsp;
+			</div>	
+			<div class="form">	
+				<div class="inner-form">
+					<form action="" method="post">{% csrf_token %}	
+							<ul class="fields"> 
+								{% for field in form.place_fields %}
+									<li class="field{% if field.errors %} error{% endif %}">
+										{% if field.field.required %}
+											<span class="required">•</span>
+										{% endif %}
+										{{ field.label_tag }}										
+										<div class="widget field-{{ field.field.widget|widget_type|lower }}">
+											{{ field }}
+										</div>
+										{{ field.errors }}
+									</li>
+								{% endfor %}
+								<li class="field">
+									<label><b>כתובת המקום</b></label>
+									<div class="widget field-meta">
+										&nbsp;
+									</div>
+								</li>
+								{% for field in form.address_fields %}
+									<li class="field{% if field.errors %} error{% endif %}">
+										{% if field.field.required %}
+											<span class="required">•</span>
+										{% endif %}
+										{{ field.label_tag }}											
+										<div class="widget field-{{ field.field.widget|widget_type|lower }}">
+											{{ field }}
+										</div>
+										{{ field.errors }}
+									</li>
+								{% endfor %}
+								<li class="field">
+									<label><b>כתובת הורדת ציוד</b></label>
+									<div class="widget field-meta">
+										במידה ורלוונטי
+									</div>
+								</li>
+								{% for field in form.logistic_address_fields %}
+									<li class="field{% if field.errors %} error{% endif %}">
+										{% if field.field.required %}
+											<span class="required">•</span>
+										{% endif %}
+										{{ field.label_tag }}											
+										<div class="widget field-{{ field.field.widget|widget_type|lower }}">
+											{{ field }}
+										</div>
+										{{ field.errors }}
+									</li>
+								{% endfor %}
+								<li class="field{% if field.errors %} error{% endif %}">
+									<label><b>פרטי איש/ת הקשר</b></label>
+									<div class="widget field-meta">
+										מי שיעמוד מטעם המקום בקשר עם צוות "יום מעשים טובים"
+									</div>
+									<div class="clear"></div>
+								</li>			
+								{% for field in form.contact_fields %}
+									<li class="field">
+										{% if field.field.required %}
+											<span class="required">•</span>
+										{% endif %}
+										{{ field.label_tag }}											
+										<div class="widget field-{{ field.field.widget|widget_type|lower }}">
+											{{ field }}
+										</div>
+										{{ field.errors }}
+									</li>
+								{% endfor %}
+							</ul>
+							<div class="form-submit">
+								<input type="image" src="/static/styles/gdd-next.png" />
+							</div>
+							<div class="clear"></div>
+							<input type="hidden" name="{{ step_field }}" value="{{ step0 }}" />
+							{{ previous_fields|safe }}			
+					</form>
+				</div>
+				<div class="footer">
+					
+				</div>
+			</div>
+			{% endif %}
+		</div>
+	</body>
+</html>

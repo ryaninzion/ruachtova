@@ -1,0 +1,473 @@
+/* SEARCH BOX */
+
+body
+{
+	direction:rtl;
+	color:#575858;
+	font-size:12px;
+	font-family:arial;
+}
+
+li
+{
+	padding:0;
+}
+
+a,
+a img
+{
+	border:none;
+}
+
+.clear
+{
+	clear:both;
+}
+
+.search .wrapper
+{
+	height:253px;
+	width:243px;
+	margin:0 auto;
+	background-image:url('search-long-highest-wrapper.png');
+}
+
+.search-long .wrapper
+{
+	height:70px;
+	width:900px;
+	margin:0 auto;
+	background-image:url('search-long-wrapper.png');
+}
+
+.search-mini .wrapper
+{
+	height:70px;
+	width:[[SEARCH_WIDTH]];
+	margin:0 auto;
+	background-image:url('search-long-high-wrapper.png');
+}
+
+.search .box
+{
+	width:185px;
+	margin:0 auto;
+	padding:20px 0 0;
+	overflow:auto;
+}
+
+.search-long .box
+{
+	width:875px;
+	margin:0 auto;
+	padding:20px 0 0;
+	overflow:auto;
+}
+
+.search select,
+.search input
+{
+	border:none;
+}
+
+.search .field-wrapper
+{
+    background-image: url("field-long.png");
+    background-repeat: no-repeat;
+    height: 24px;
+    margin: 0 0 16px;
+    padding: 5px 5px 0;
+    width: 175px;
+}
+ 
+.search-long .field-wrapper
+{
+    float:right;
+}
+
+.search select
+{
+	width:175px;
+}
+
+.search .textfield
+{
+	width:180px;
+}
+
+.search .submit
+{
+	float:left;
+}
+
+.search-top .wrapper
+{
+	background-image:url('search-long-high-wrapper.png');
+	width:600px;
+	height:150px;
+}
+
+.search-top .box
+{
+	width:560px;
+	padding-top:25px;
+}
+.search-top .field-wrapper
+{
+	float:right;
+	margin:0 0 25px 30px;
+}
+
+.results .search-top-wrapper
+{
+	margin-bottom:25px;
+}
+/* RESULTS PAGE */
+
+.results
+{
+	color:#575858;
+	font-size:12px;
+	width:600px;
+}
+
+h2
+{
+	color:#ff9900;
+	font-weight:bold;
+	margin:0 0 2px;
+}
+
+h3
+{
+	color:#ff9900;
+	font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 5px;
+}
+
+h4
+{
+	color: #545454;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 2px;
+	margin:0 0 4px;
+}
+
+.results .count
+{
+	background-image: url("/static/styles/ruachtova-logo.png");
+    background-position: 530px 21px;
+    background-repeat: no-repeat;
+	color: #818384;
+    font-family: arial;
+    font-size: 14px;
+	padding: 18px 90px 25px 0;
+}
+
+.item .image
+{
+	background-image: url("frame.png");
+    background-repeat: no-repeat;
+    float: right;
+    height: 130px;
+    padding: 2px 2px 0 0;
+	margin:6px 0 0 0;
+    width: 138px;
+}
+
+.item .content
+{
+	float:right;
+	width:375px;
+	padding:0 25px 0 0;
+}
+
+.item .meta
+{
+   color: #797979;
+    font-size: 14px;
+}
+
+.item .meta span
+{
+	font-weight:bold;
+}
+
+.results .list .item
+{
+	padding:5px 0 20px;
+	background-image:url('line.png');
+	background-repeat:no-repeat;
+	background-position:center bottom;
+}
+
+.results .header {
+    background-color: #fef3e2;
+    background-image: url("line.png");
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    border-top-color: #ff9900;
+    border-top-style: solid;
+    border-top-width: 5px;
+}
+
+.results .list .parent
+{
+	font-weight:bold;
+	margin:4px 0;
+}
+
+.results .list .body
+{
+    color: #797979;
+    font-family: Arial;
+    font-size: 12px;
+    line-height: 19px;
+	margin:5px 0 6px 0;
+}
+
+.results .pager
+{
+	margin:8px 0;
+	float:left;
+}
+
+.results .pager img
+{
+	margin:0 5px -4px;
+}
+.linkd a
+{
+    background-image:url('')
+}
+
+.results ul
+{
+	padding:0 15px;
+
+}
+
+.results .links a:hover
+{
+	text-decoration:underline;
+}
+
+.results li
+{
+	margin:8px 0;
+    list-style-type: none;
+    margin-top:5px;    
+}
+
+.results .projects a img
+{	
+	margin:0 0 -2px 8px;
+}
+
+.results .title
+{
+    width:600px;
+    height:40px;
+    background-color:#ff9900;
+}
+.results .title h4
+{
+    font-family:Arial;
+    font-size:20px;
+    color:White;
+    padding-top:5px;
+    padding-right:20px;
+}
+.results .links .add
+{
+    background-image: url("add.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    color: #e5e722;
+    font-size: 14px;
+    font-weight: bold;
+    padding-right:20px;
+	margin:24px 15px 0 0;
+	text-decoration:none;
+}
+
+.results .links .register
+{
+    background-image: url("pencil.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    color: #ff9900;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    padding-right: 20px;
+    text-decoration:none;
+}
+.results .projects
+{
+    padding-bottom:0;
+}
+.results .registervol
+{
+    float:left;
+	margin:15px 0 10px;
+}
+.results .registervol .register
+{
+    
+    background-image: url("pencil.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    color: #ff9900;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    padding-right: 20px;
+    text-decoration:none;
+}
+
+.form
+{
+	width:600px;
+	margin:0 auto;
+}
+
+.form .title
+{
+	background-image: url("line.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+	padding:10px 0;
+}
+
+.generic .form .title
+{
+	background-image: url("line.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+	padding:10px 0;
+}
+
+.form h1
+{
+	color:#ff9900;
+	font-size:26px;
+	margin:0;
+}
+
+.generic .form h1
+{
+	color:#2da0d9;
+	font-size:26px;
+	margin:0;
+}
+
+.form .inner-form
+{
+	background-color:#fef3e2;
+	background-image: url("line.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+	padding:5px 0;
+}
+
+.generic .form .inner-form
+{
+	background-color:#f3fbff;
+	background-image: url("line.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+	padding:5px 0;
+}
+
+.form .field
+{
+	margin:8px 0;
+}
+
+.form label 
+{
+    font-size: 14px;
+    width: 225px;
+	color: #575858;	
+	display:inline-block;
+	vertical-align:top;
+}
+
+.form .field-radioselect label
+{
+	width:100px;
+}
+
+.form select
+{
+	border: 0 none;
+    margin: 3px 9px;
+    padding: 0;
+    width: 260px;
+}
+
+.form input[type='text']
+{
+	border: 0 none;
+    height: 17px;
+    margin: 3px 2px;
+    width: 260px;
+}
+
+.form textarea
+{
+	border: 0 none;
+    height: 125px;
+    width: 270px;
+}
+
+.form ul
+{
+	list-style:none;
+}
+
+.form .field ul
+{
+	display:inline-block;
+	width:300px;
+	padding:0;
+}
+
+.form .field ul li
+{
+	display:inline-block;
+	width:125px;
+	margin:0 0 10px;
+}
+
+.form .field .widget
+{
+	display:inline-block;
+}
+
+.form .field-textinput,
+.form .field-select
+{
+	background-image: url("field-title-border.png");
+    background-repeat: no-repeat;
+    height: 30px;
+    margin-top: 5px;
+    width: 280px;
+}
+
+.form .field-textarea
+{
+	background-image: url("textarea-field-bg.png");
+    background-repeat: no-repeat;
+    padding: 2px 4px 2px 0;
+    width: 276px;
+}
+
+.form .form-submit
+{
+	float:left;
+	margin:0 0 0 50px;
+}

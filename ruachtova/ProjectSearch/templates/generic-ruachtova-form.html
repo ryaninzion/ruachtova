@@ -1,0 +1,56 @@
+﻿{% load helpers %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+		<link href="/static/styles/projectsearch.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com//ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<!--script type="text/javascript">
+			$(document).ready(function () {
+				$('.form li').children().focus(function () {
+					$('select, input[type="text"], textarea').removeClass("active");
+					$(this).addClass("active");
+					$(".form li").removeClass("active");
+					$(this).parent().addClass("active");
+				});
+
+				$('.form li').children().blur(function () {
+					$('select, input[type="text"], input[type="password"], textarea').removeClass("active");
+					$("form li").removeClass("active");
+				});
+			}); 
+		</script-->
+	</head>  
+	<body class="generic">				
+		<div class="form">	
+			<div class="title">
+					<h1>{{ title }}</h1> 
+			</div>
+			<div class="inner-form">
+				<form action="#" method="post">{% csrf_token %}	
+						<ul class="fields">
+							{% for field in form %}
+								<li class="field">
+									{{ field.label_tag }}
+									<div class="widget field-{{ field.field.widget|widget_type|lower }}">
+										{{ field }}
+									</div>
+									{{ field.errors }}
+								</li>
+							{% endfor %}
+						</ul>
+						<div class="form-submit">
+							<input value="{{ send }}" type="image" src="/static/styles/generic-send-btn.png" />
+						</div>
+						<div class="clear"></div>
+				</form>
+			</div>
+			<div class="footer">
+				
+			</div>
+			<!--div class="terms">
+				השירות מנוהל ומופעל על-ידי עמותת "רוח טובה" ובאחריותה - והמידע יועבר אליה. ידיעות אינטרנט לא נושאת בכל אחריות לגבי השירות והמידע שמוסרים הנרשמים 
+			</div-->
+		</div>
+	</body>
+</html>

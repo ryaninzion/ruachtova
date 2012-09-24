@@ -1,0 +1,5 @@
+#goodnet_footer { background-color:#F7F7F7; border-top:1px solid #E7E7E7; padding:20px; clear:both; margin-bottom:30px; }
+#goodnet_footer div { float:right; border-left:1px solid #C7C7C7; padding:0 30px; } #goodnet_footer .lbl { color:#FBBD09; }
+#goodnet_footer img { float:right; padding-right:30px; }
+#goodnet_footer div ul { list-style-type:none; padding:0; margin:0; } #goodnet div ul li { padding-bottom:7px; }
+#goodnet_footer a, #goodnet_footer a:hover, #goodnet_footer a:visited { color:#C7C7C7; text-decoration:none; }

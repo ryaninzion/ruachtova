@@ -1,0 +1,63 @@
+{% load helpers %}
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&language=iw">
+</script>
+
+<script type="text/javascript">
+	function initialize() {
+		var myLatlng = new google.maps.LatLng(31.821565,34.969482);
+		var myOptions = 
+		{
+			zoom: 9, 
+			center: myLatlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		}
+		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+		
+		// bounds of the desired area
+		var allowedBounds = new google.maps.LatLngBounds(
+			 new google.maps.LatLng(33.358062, 34.222412), 
+			 new google.maps.LatLng(29.649869, 35.299072)
+		);
+		var lastValidCenter = map.getCenter();
+
+		google.maps.event.addListener(map, 'center_changed', function() {
+			if (allowedBounds.contains(map.getCenter())) {
+				// still within valid bounds, so save the last valid position
+				lastValidCenter = map.getCenter();
+				return; 
+			}
+
+			// not valid anymore => return to last valid position
+			//map.panTo(lastValidCenter);
+		});
+
+		{% for project in projects %}
+			{% if project.lat > 0 %}
+				var marker{{ project.pk }} = new google.maps.Marker({
+					position: new google.maps.LatLng( {{ project.lat }}, {{ project.lng }} ),
+					map: map,
+					title:"{{ project.title }}"
+				});
+				
+				var infowindow{{ project.pk }} = new google.maps.InfoWindow({
+					content: '<div style="direction:rtl;font-family:arial">' + 
+								'<h3>{{ project.title }}</h3>' +
+								 '<h4>{{ project.subtitle }}</h4>' + 
+								 '<h5>{{ project.from_time }} - {{ project.to_time }}</h5>' +
+								 '<p>{{ project.description|escape|remove_newlines }}</p><div>',
+					maxWidth: 200
+				});
+				
+				google.maps.event.addListener(marker{{ project.pk }}, 'click', function() {
+				  infowindow{{ project.pk }}.open(map, marker{{ project.pk }});
+				});
+			{% endif %}
+		{% endfor %}
+	}
+</script>
+<script type="text/javascript">
+	window.onload = function () {
+		initialize();
+	}
+</script>

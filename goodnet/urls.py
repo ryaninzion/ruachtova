@@ -1,6 +1,9 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('goodnet.views',
+	url(r'^$', 'index'),
+	url(r'^events/$', 'events_index'),
+	url(r'^calendar/$', 'calendar_events'),
 	url(r'^post/(?P<id>\d+)/$','post'),
 	url(r'^event/(?P<id>\d+)/$','event'),
 	url(r'^initiative/(?P<id>\d+)/$','initiative'),

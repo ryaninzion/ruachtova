@@ -1,0 +1,162 @@
+﻿{% load helpers %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+		<link href="/static/styles/gdd-form.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com//ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#prelude-link").click(function() {
+					$("#prelude").slideToggle();
+				});
+				
+				$("#city-form-link").click(function() {
+					$("#city-form").slideToggle();
+				});
+			}); 
+		</script>
+		<style>
+			
+		</style>
+	</head>
+
+	<body>		
+		<div class="main index">
+			<div class="info">
+				<div class="title gddlogo-bg" style="float:right;">
+					<h2 class="red">טבלת פרויקטים עירוניים - <b>{{ city.title }}</b></h2>
+					<h3 class="yellow">יום מעשים טובים 2012</h3>
+				</div>
+				<div class="add" style="float:left;padding:10px 0;">
+					&nbsp;
+				</div>
+				<div style="clear:both"></div>
+			</div>
+			<div class="navbar">
+				<div style="float:right;padding:12px 0 0;">
+					{% if projects|length != 0 %}
+						<a class="yellow" href="#" id="prelude-link">הסבר והנחיות</a>&nbsp;&nbsp;
+						<a class="red" href="#" id="city-form-link">עדכון פרטי הורדת ציוד</a>
+					{% endif %}
+				</div>
+				<div style="float:left;padding:10px 0;">
+					<a href="/gdd-city-project/{{ city.guid }}/0"><img src="/static/styles/add.png" /></a>
+				</div>
+				<div style="clear:both"></div>
+			</div>		
+			<div id="prelude" class="prelude"{% if projects|length != 0 %} style="display:none"{% endif %}>
+				<div class="text">
+					<p>
+						שותפים יקרים,
+					</p>
+					<p>
+						ברוכים הבאים לטבלת ניהול הפרויקטים שתקיימו ביום מעשים טובים.
+					</p>
+					<p>
+						אנו מזמינים אתכם להשתמש בטבלה זו על מנת להזין ולעדכן את כל הפרויקטים שברצונכם להוציא אל הפועל במהלך יום מעשים טובים ביישובכם.
+					</p>
+					<p>
+						<b>פרויקט</b>
+						מהווה
+						<b>פעילות המתקיימת במקום מוגדר אחד,</b>
+						ומבוצעת על-ידי מתנדבים במהלך היום, 
+						<b>באחד מתחומי הפעילות הבאים:</b>
+					</p>
+					<ul>
+						<li>
+							<b>איכות הסביבה ובעלי חיים: </b>
+							טיפול בבעלי חיים, ניקיון חופים/פארקים/נחלים בסמוך ליישוב, הקמת עמדת מחזור וכו'
+						</il>
+						<li>
+							<b>אריזה והגשת מזון: </b>
+							מבצעי אריזת וחלוקת מזון לקראת חג הפסח, הגשת מזון בבתי תמחוי וכו'
+						</li>
+						<li>
+							<b>הפנינג, הפעלות ושוק קח-תן: </b>
+							נקודה מרכזית ובה ניידת מד"א, דוכן אדי, דוכני מכירה של מפעלים מוגנים וכו', אירועים לטובת אוכלוסיות מיוחדות ביישוב, צעדות, שווקי קח-תן לעידוד צרכנות אקולוגית ועוד.
+						</li>
+						<li>
+							<b>צביעה וגינון: </b>
+							צביעת מבנים, דירות רווחה, מתקנים וכו'; הקמת/טיפוח גינות קהילתיות וגינות נוי.
+						</li>
+						<li>
+							<b>ציורי קיר: </b> 
+							ציור וצביעה אמנותית על קירות.
+						</li>
+						<li>
+							<b>אחר:  </b>
+							פעילות יום מעשים טובים בכל תחום אחר שיעלה על דעתכם.
+						</li>
+					</ul>
+					<p>
+						במקרים הרלוונטיים, תתבקשו למלא נתונים לוגיסטיים אודות הפעילות שתרצו לבצע (כגון מידות, צבעים רצויים וכו'). נתונים אלה יסייעו לנו לחשב עבורכם את כמויות הציוד לו תדרשו לצורך הפעלת הפרויקט. אינכם חייבים למלא את כל הנתונים מיד, אבל תדרשו להשלים את כל הפרטים עד תאריך סיום הרישום. 
+					</p>
+					<p>
+						הפרויקטים שתמלאו ישמרו עבורכם בטבלה, ותוכלו להיכנס ולערוך אותה בכל עת שתרצו. כמו כן, תוכלו לשלוח אותה גם לרכזים אחרים תחתיכם כדי שימלאו את פרטי הפרויקטים אותם הם מפעילים, אך שימו לב, כי כל הרכזים אליהם תשלחו את הטבלה יוכלו לצפות בכל הפרויקטים שבטבלה ולשנותם. לכן בחרו היטב למי אתם שולחים את הטבלה.
+					</p>
+					<p>
+						<b>ביום ד', 1 לפברואר 2012, תיסגר הטבלה</b> ולא תוכלו להכניס בה עוד שינויים. החל מתאריך זה נתחיל בביצוע חישובי כמויות הציוד הדרוש על-פי הפרטים שמילאתם. ולאחר מכן נעביר אליכם את רשימות הציוד אותם חישבנו, לפני שליחת הציוד אליכם.  
+					</p>
+					<p>
+						לתשומת ליבכם, הציוד יגיע אליכם כשלושה שבועות לפני יום מעשים טובים, בתיאום מראש, לנקודה <u>אחת</u> ביישובכם. באחריותכם לפזר את החומרים לפרויקטים השונים ברחבי היישוב. אנא מלאו כאן כתובת להורדת הציוד ואיש קשר לתיאום: 
+					</p>
+				</div>					
+			</div>
+			<div id="city-form" {% if city.contact_fname != ' ' %} style="display:none"{% endif %}>
+				{% if projects|length > 0 and city.contact_fname == ' ' %}
+					<div class="red bold size-16">
+						טרם סיפקתם כתובת הורדת ציוד ופרטי איש קשר. אנא מלאו את הפרטים להלן:
+					</div>
+				{% endif %}
+				{% include 'fieldsets-form.html' %}
+			</div>
+			
+			<div class="city-index-wrapper">
+				{% if data_missing|length %}
+					<div class="red-line-top red bold size-16 title">
+						חסר מידע עבור {{ data_missing_count}} פרויקטים בטבלתכם. אנא השלימו אותו עד תאריך סגירת ההרשמה: 
+					</div>
+				
+				<!--ul class="city-index">
+					{% for project in data_missing %}
+						<li class="data-missing">
+							<h4>{{ project.title }} - {{ project.field.title }} - {{ project.fname }} {{ project.lname }}</h4>
+							<h5 style="">{{ project.volunteer_num}} מתנדבים</h5>
+							<p>
+								{{ project.description|truncatewords:30 }}
+							</p>
+							<div class="links">
+								{% if project.is_data_missing %}
+									<a href="/gdd-city-logistics/{{ city.guid }}/{{ project.pk }}"><img src="/static/styles/fill-btn.png" /></a>&nbsp;&nbsp;
+								{% endif %}
+								<a href="/gdd-city-project/{{ city.guid }}/{{ project.pk }}"><img src="/static/styles/edit-btn.png" /></a>&nbsp;&nbsp;
+								<a href="/gdd-city-form-delete/{{ city.guid }}/{{ project.pk }}"><img src="/static/styles/delete-btn.png" /></a>
+							</div>
+						</li>
+					{% endfor %}
+				</ul-->
+				{% endif %}
+				
+				<ul class="city-index">
+					{% for project in projects %}
+						<li {% if project.is_data_missing %}class="data-missing"{% endif %}>
+							<h4>{{ forloop.counter }}.{{ project.title }} - {{ project.field.title }} - {{ project.fname }} {{ project.lname }}</h4>
+							<h5 style="">{{ project.volunteer_num}} מתנדבים</h5>
+							<p>
+								{{ project.description|truncatewords:30 }}
+							</p>
+							<div class="links">
+								{% if project.is_data_missing %}
+									<a href="/gdd-city-logistics/{{ city.guid }}/{{ project.pk }}"><img src="/static/styles/fill-btn.png" /></a>&nbsp;&nbsp;
+								{% endif %}
+								<a href="/gdd-city-project/{{ city.guid }}/{{ project.pk }}"><img src="/static/styles/edit-btn.png" /></a>&nbsp;&nbsp;
+								<a href="/gdd-city-form-delete/{{ city.guid }}/{{ project.pk }}"><img src="/static/styles/delete-btn.png" /></a>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

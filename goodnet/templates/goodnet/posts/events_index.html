@@ -1,0 +1,40 @@
+{% extends "goodnet/base.html" %}
+{% load comments %}
+{% load kairios_tags %}
+
+{% block stylesheets %}
+	{{ block.super }}
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/post.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/fullcalendar.css">
+{% endblock %}
+
+{% block content %}
+
+<div id="calendar"></div>
+
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block scripts %}
+	<script src="{{ STATIC_URL }}js/jquery-ui-1.8.23.custom.min.js"></script>
+	<script src="{{ STATIC_URL }}libs/jquery-ui-1.8.11.custom.min.js"></script>
+	<script src="{{ STATIC_URL }}js/fullcalendar.min.js"></script>
+	<script>
+
+	$(document).ready(function (){
+
+	$('#calendar').fullCalendar({
+		events: '{% url goodnet.views.calendar_events %}',
+		isRTL: true,
+		eventClick: function(calEvent, jsEvent, view) {
+		        window.location = "/goodnet/event/" + calEvent.id;
+    		},
+		monthNames: ['ינואר', 'פברואר', 'מרס', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'],
+		dayNamesShort: ["'א", "'ב", "'ג", "'ד", "'ה", "'ו", "'ש"]
+	}); 
+
+	});
+	</script>
+{% endblock %}

@@ -1,0 +1,65 @@
+﻿{% load helpers %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+		<link href="/static/styles/gdd-form.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com//ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#prelude-link").click(function() {
+					$("#prelude").slideToggle();
+				});
+				
+				$("#city-form-link").click(function() {
+					$("#city-form").slideToggle();
+				});
+			}); 
+		</script>
+		<style>
+			
+		</style>
+	</head>
+
+	<body>		 
+		<div class="main index">
+			<div class="info">
+				<div class="title gddlogo-bg" style="float:right;">
+					<h2 class="red">טבלת הרשמת קבוצת - <b>{{ city.title }}</b></h2>
+					<h3 class="yellow">יום מעשים טובים 2012</h3>
+				</div>
+				<div class="add" style="float:left;padding:10px 0;">
+					&nbsp;
+				</div>
+				<div style="clear:both"></div>
+			</div>
+			<div class="navbar">
+				<div style="float:right;padding:12px 0 0;">
+					&nbsp;
+				</div>
+				<div style="float:left;padding:10px 0;">
+					<a href="/gdd-city-group/{{ city.guid }}/0"><img src="/static/styles/add-group.png" /></a>
+				</div>
+				<div style="clear:both"></div>
+			</div>		
+		
+			<div class="city-index-wrapper">
+				<ul class="city-index">
+					{% for group in groups %}
+						<li>
+							<h4>{{ group.group_name }} - {{ group.fname }} {{ group.lname }}</h4>
+							<h5>{{ group.volunteer_num}} מתנדבים</h5>
+							<p>
+								{{ group.description|truncatewords:30 }}
+							</p>
+							<div class="links">
+								<a href="/gdd-city-group/{{ city.guid }}/{{ group.pk }}"><img src="/static/styles/edit-btn.png" /></a>&nbsp;&nbsp;
+								<a href="/gdd-city-group-delete/{{ city.guid }}/{{ group.pk }}"><img src="/static/styles/delete-btn.png" /></a>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
