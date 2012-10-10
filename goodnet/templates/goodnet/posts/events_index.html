@@ -6,16 +6,45 @@
 	{{ block.super }}
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/post.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/fullcalendar.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/index-user.css">
 {% endblock %}
 
 {% block content %}
-
+<h1 id="cal_header">לוח אירועים</h1>
 <div id="calendar"></div>
 
+<div id="result_count">מצאנו {{ events.paginator.count }} אירועים עבורך</div>
+
+{% for event in events.object_list %}
+	<div class="event-result">
+		<div class="result-author"><img src="{{ STATIC_URL }}img/calendar-icon.png" /> מאת: {{ event.author.get_profile.name }} &nbsp; | &nbsp; {{ event.cdate|date:"d.m.Y" }}</div><div style="clear:both;"></div>
+		<img src="{{ event.image.url }}" class="result-image" />
+    		<h3 class="result-title"><a href="{% url goodnet.views.post event.id %}">{{ event.title }}</a></h3>
+		<span class="text-lbl">מועד:</span> {{ event.date|date:"D, d M Y, H:m" }}
+		<p class="result-desc">{{ event.desc|truncatewords:20 }}</p>
+		<p class="read-more"><a href="{% url goodnet.views.post event.id %}">המשך קריאה</a></p>
+		<div style="clear:both;"></div>
+	</div>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if events.has_previous %}
+            <a href="?page={{ events.previous_page_number }}">< עמוד הקודם </a>
+        {% endif %}
+
+        <span class="current">
+            &nbsp; &nbsp; עמוד {{ events.number }} מ {{ events.paginator.num_pages }} &nbsp; &nbsp;
+        </span>
+
+        {% if events.has_next %}
+            <a href="?page={{ events.next_page_number }}">עמוד הבא ></a>
+        {% endif %}
+    </span>
+</div>
+
 {% endblock %}
 
-{% block sidebar %}
-{% endblock %}
 
 {% block scripts %}
 	<script src="{{ STATIC_URL }}js/jquery-ui-1.8.23.custom.min.js"></script>
@@ -26,13 +55,25 @@
 	$(document).ready(function (){
 
 	$('#calendar').fullCalendar({
-		events: '{% url goodnet.views.calendar_events %}',
+		eventSources: [
+			{
+				url: '{% url goodnet.views.calendar_events %}',
+				allDayDefault: false
+			}
+		],
+		timeFormat: 'H:mm',
 		isRTL: true,
 		eventClick: function(calEvent, jsEvent, view) {
-		        window.location = "/goodnet/event/" + calEvent.id;
+		        window.location = "/goodnet/post/" + calEvent.id;
     		},
+		titleFormat: { week: "MMMM d[ yyyy]{ '&#8212;'[ MMMM] d yyyy}"},	
+		columnFormat: { week: 'dddd M/d' },
 		monthNames: ['ינואר', 'פברואר', 'מרס', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'],
-		dayNamesShort: ["'א", "'ב", "'ג", "'ד", "'ה", "'ו", "'ש"]
+		dayNamesShort: ["'א", "'ב", "'ג", "'ד", "'ה", "'ו", "'ש"],
+		dayNames: ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"],
+		defaultView: 'basicWeek',
+		buttonText: { prev: 'שבוע קודם &gt;', next: '&lt; שבוע הבא', today: 'היום' },
+		height: 300
 	}); 
 
 	});

@@ -56,6 +56,12 @@ class PhotoForm(ModelForm):
 	class Meta:
 		model = Photo
 
+class VideoForm(ModelForm):
+
+	class Meta:
+		model = Video
+		exclude = ('creator', 'date', 'desc')
+
 
 class LoginForm(forms.Form):
 	username	= forms.CharField("username")

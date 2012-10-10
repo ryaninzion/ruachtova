@@ -3,18 +3,9 @@
 {% block extraheaders %}
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.lightbox-0.5.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/profile.css">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-	<script src="{{ STATIC_URL }}js/jquery.lightbox-0.5.min.js"></script>
-	<script>
-	jQuery(document).ready(function($){
-		
-		$(function() {
-			$( "a.lightbox" ).lightBox(); 
-		});
-	});
-	</script>
 {% endblock %}
 {% load comments %}
+{% load micawber_tags %}
 
 {% block content %}
 <img src="{{ STATIC_URL }}img/left-yellowarrow.png" class="headline-arrow" alt="" />
@@ -24,7 +15,11 @@
 	<img id="avatar" src="
 	{% if profile.avatar %} {{ profile.avatar.url }} {% else %} /static/img/default-avatar.jpg{% endif %}
 	"/>
-	<div id="profile_like"><a href="#" onClick='window.open("/goodnet/profile/add-friend/{{ profile.id }}/", "", "width=500", "height=200", "left=300", "top=300");'>ההוסיפו לאנשי הקשר</a></div>
+	{% if request.user.id == profile.user.id %}
+		<div id="profile_like"><a href="{% url goodnet.views.post_form %}">פרסמו יוזמה חדשה</a></div>
+	{% else %}
+		<div id="profile_like"><a href="#" onClick='window.open("/goodnet/profile/add-friend/{{ profile.id }}/", "", "width=500", "height=200", "left=300", "top=300");'>ההוסיפו לאנשי הקשר</a></div>
+	{% endif %}
 </div>
 <div id="post-left">
 	<ul>
@@ -99,9 +94,109 @@
 	{% endif %}
 </div>
 
+<div id="profile_bottom">
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">רשימות</a></li>
+		<li><a href="#tabs-2">יוזמות</a></li>
+		<li><a href="#tabs-3">אירועים</a></li>
+		<li><a href="#tabs-4">וידאו</a></li>
+		<li><a href="#tabs-5">פרגונים</a></li>
+		<li><a href="#tabs-6">מועדפים</a></li>
+	</ul>
+	<div id="tabs-1">
+		{% for post in posts %}
+		<div class="profile-result">
+			<div class="result-author"><img src="{{ STATIC_URL }}img/left-yellowarrow.png" /> 
+    				<h3 class="result-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+			</div><div style="clear:both;"></div>
+			<img src="{{ post.image.url }}" class="result-image" />
+			<span class="text-lbl">{{ post.cdate|date:"d.m.Y" }}</span>
+			<p class="result-desc">{{ post.desc|truncatewords:30 }}</p>
+			<p class="read-more"><a href="{{ post.get_absolute_url }}">המשך קריאה</a></p>
+		</div>
+		{% endfor %}
+	</div>
+	<div id="tabs-2">
+		{% for i in initiatives %}
+		<div class="profile-result">
+			<div class="result-author"><img src="{{ STATIC_URL }}img/calendar-icon.png" />
+	    			<h3 class="result-title"><a href="{{ i.get_absolute_url }}">{{ i.title }}</a></h3>
+			</div><div style="clear:both;"></div>
+			<img src="{{ i.image.url }}" class="result-image" />
+			<span class="text-lbl">תאריך ושעה:</span> {{ i.date|date:"D, d M Y, H:m" }}
+			<p class="result-desc">{{ i.desc|truncatewords:30 }}</p>
+			<p class="read-more"><a href="{{ i.get_absolute_url }}">המשך קריאה</a></p>
+		</div>
+		{% endfor %}
+	</div>
+	<div id="tabs-3">
+		{% for e in events %}
+		<div class="profile-result">
+			<div class="result-author"><img src="{{ STATIC_URL }}img/calendar-icon.png" />
+	    			<h3 class="result-title"><a href="{{ e.get_absolute_url }}">{{ e.title }}</a></h3>
+			</div><div style="clear:both;"></div>
+			<img src="{{ e.image.url }}" class="result-image" />
+			<span class="text-lbl">מועד:</span> {{ e.date|date:"D, d M Y, H:m" }}
+			<p class="result-desc">{{ e.desc|truncatewords:30 }}</p>
+			<p class="read-more"><a href="{{ e.get_absolute_url }}">המשך קריאה</a></p>
+		</div>
+		{% endfor %}
+	</div>
+	<div id="tabs-4">
+		{% for v in videos %}
+			<div class="profile-result">
+				{{ v.link|oembed:"420x236" }}
+			</div>				
+		{% endfor %}
+	</div>
+	<div id="tabs-5">
+		{% get_comment_list for profile as comment_list %}
+
+		{% for comment in comment_list %}
+			<div class="profile-result" id="c{{ comment.id }}">
+				{{ comment.comment|escape|urlizetrunc:40|linebreaks }}
+				- <a href="{% url goodnet.views.profile comment.user.get_profile.id %}">{{ comment.user.get_profile.name }}</a>
+			</div>
+		{% endfor %}
+
+		<a name="testimony"></a>
+		{% if user.is_authenticated %}
+			<h3>פרסמו מילה טובה</h3>
+			{% render_comment_form for profile %}
+		{% else %}
+			<p><a href="{% url goodnet.views.loginrequest %}">עליך להתחבר כדי להשאיר מילה טובה</a></p> 
+		{% endif %}
+
+	</div>
+	<div id="tabs-6">
+		{% for f in profile.likes.all %}
+			<div class="profile-result">
+				<div class="result-author"><img src="{{ STATIC_URL }}img/left-yellowarrow.png" /> 
+    					<h3 class="result-title"><a href="{{ f.get_absolute_url }}">{{ f.title }}</a></h3>
+				</div><div style="clear:both;"></div>
+				<img src="{{ f.image.url }}" class="result-image" />
+				<p class="result-desc">{{ f.desc|truncatewords:30 }}</p>
+				<p class="read-more"><a href="{{ f.get_absolute_url }}">המשך קריאה</a></p>
+				<div style="clear:both;"></div>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+</div>
+
 {% endblock %}
 
 {% block sidebar %}
+	{% if user.is_authenticated %}
+	<div id="testify">
+		<a href="#testimony"><img src="{{STATIC_URL }}img/pic-02.jpg" id="testify_pic" alt="" />
+		<img src="{{ STATIC_URL }}img/tolerant.png" id="person" alt="" />
+		<h4 class="form-title">מילה טובה עושה את ההבדל</h4>
+		<small>קחו דקה לפרגן לחבר אוארגון שעושה טוב</small></a>
+	</div>
+	{% else %}
+	{% endif %}
 {{ block.super }}
 	<div id="friends">
 	<div id="friends_head">חברים</div>
@@ -111,4 +206,26 @@
 		{% endfor %}
 	</ul><div style="clear:both;"></div>
 	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{{ STATIC_URL }}js/jquery-ui-1.8.23.custom.min.js"></script>
+	<script src="{{ STATIC_URL }}libs/jquery-ui-1.8.11.custom.min.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.ui.tabs.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.lightbox-0.5.min.js"></script>
+	<script>
+	jQuery(document).ready(function($){
+		
+		$(function() {
+			$( "a.lightbox" ).lightBox(); 
+		});
+
+		var $tabs = $("#tabs").tabs();
+
+		$('#post_testimony').click(function() { // bind click event to link
+			$tabs.tabs('select', 4); // switch to third tab
+			return false;
+		});
+	});
+	</script>
 {% endblock %}

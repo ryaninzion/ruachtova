@@ -2,31 +2,35 @@
 
 {% block stylesheets %}
 	{{ block.super }}
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/profile.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/search.css">
 {% endblock %}
 
 {% block content %}
 	{% if projects.object_list > 0 %}
-					מצאנו עבורך {{ projects.paginator.count }} הזדמנויות להתנדב
-				{% else %}
-					לא נמצאו התנדבויות התואמות את העדפותיך
-				{% endif %}
+		מצאנו עבורך {{ projects.paginator.count }} תוצאות 
+	{% else %}
+		לא נמצאו התנדבויות התואמות את העדפותיך
+	{% endif %}
 
-<div class="list">
+	<div class="list">
 		{% for project in projects.object_list %}
-		<div class="item">
-			<div class="image">
-			</div>
-			<div class="">
-				<h3>{{ project.title }}</h3>
-				<div class="meta">
-					<span>תחום ההתנדבות: </span>
-					{{ project.category.title }} 
-				</div>
-				<div class="body">
-					{{ project.desc }}
-				</div>
-			</div>
-			<div class="clear"></div>
+
+		<div class="profile-result">
+			<div class="result-author"><img src="{{ STATIC_URL }}img/left-yellowarrow.png" /> 
+    				<h3 class="result-title"><a href="{{ project.get_absolute_url }}">{% if type == 'profile' %}{{ project.name }}{% else %}{{ project.title }}{% endif %}</a></h3>
+			</div><div style="clear:both;"></div>
+			<img src="
+				{% if type == 'profile' %}
+					{% if project.avatar %}{{ project.avatar.url }}{% else %}/static/img/default-avatar.jpg{% endif %}
+				{% else %}
+					{{ project.image.url }}
+				{% endif %}
+			" class="result-image" />
+			<span class="text-lbl">{{ project.cdate|date:"d.m.Y" }}</span>
+			<p class="result-desc">{{ project.desc|truncatewords:30 }}</p>
+			<p class="read-more"><a href="{{ project.get_absolute_url }}">המשך קריאה</a></p>
+			<div style="clear:both;"></div>
 		</div>
 		{% endfor %}
 	</div>

@@ -3,6 +3,7 @@
 {% block stylesheets %}
 	{{ block.super }}
 	{% if user.is_authenticated %}
+		<link rel="stylesheet" href="{{ STATIC_URL }}css/index-user.css">
 	{% else %}
 		<link rel="stylesheet" href="{{ STATIC_URL }}css/index.css">
 	{% endif %}
@@ -11,8 +12,62 @@
 {% block content %}
 
 	{% if user.is_authenticated %}
+		<div id="homebanner">
+			<img src="{{ STATIC_URL }}img/homebanner-pic.jpg" />
+		</div>
+		<div id="row1">
+			<div id="right">
+				<a href="{% url goodnet.views.post_form %}"><img src="{{ STATIC_URL }}img/suggest-initiative.png" class="register-button" /></a>
+				<h2>צור יוזמה משלך -<br/>אתה המפתח לשיפור פני החברה</h2>
+				<p class="desc">ביום החופים הבינלאומי יתקיימו פעילויות ניקיון בחופים ע”י קבוצות מתנדבים.ביום החופים הבינלאומי יתקיימו פעילויות ניקיון בחופים ע”י קבוצות מתנדבים.</p>
+				<p class="links"><a href="">לכל היוזמות</a> &nbsp; | &nbsp; <a href="{% url goodnet.views.registration %}">הצא יוזמה משלך</a></p>
+			</div>
+			<div id="left">
+			
+				<div id="latest_events">
+					<h2>אירועים קרובים</h2>
+					{% for e in sidebar_events %}
+							<h3><a href="{% url goodnet.views.post e.id %}">{{e}}</a></h3>
+							<small>{{ e.date }}</small>
+					{% endfor %}
+				</div>
+				<h2>על האתר ומטרותיו</h2>
+				<p class="dogood">Dogood מאפשר לך למצוא וליצור את הפעילות החברתית שהכי מתאימה לך.</p>
+				<a href="{% url goodnet.views.post_form %}"><img src="{{ STATIC_URL }}img/suggest-initiative.png" class="register-button" /></a>
+			</div>
+		</div>
+
+		<div id="photo-bar">
+		<img src="{{ STATIC_URL }}img/title-01.png" id="cats_header" />
+		{% if cats %}
+			<div id="right-scroll"><a href="javascript:slide('right');"><img src="{{ STATIC_URL }}img/right-yellowarrow.png" /></a></div>
+			<div id="photo-bar-inner">
+				<ul id="photo-bar-ul">
+				{% for cat in cats %}
+					<li><a href=""><img src="{{ cat.icon.url }}"/><br/>{{ cat.title }}</a></li>
+				{% endfor %}
+				</ul>
+			</div>
+			<div id="left-scroll"><a href="javascript:slide('left');"><img src="{{ STATIC_URL }}img/left-yellowarrow.png" /></a></div>
+			<input type='hidden' id='hidden_auto_slide_seconds' value=0 />
+		{% else %}
+		{% endif%}
+		<div style="clear:both;"></div>
+		</div>
+	
+		<div id="row2">
+			<div id="right">
+
+			</div>
+
+			<div id="left">
+				<h1>Do One Thing</h1>
+				<p>Help us reach our goal of 1 billion poeple practicing personal sustainability through Do One Thing. Each person is encouraged to choose one thing to pursue regularly. It can be anything from cycling to work or doing laundry in cold water.</p>
+			</div>
+		</div>
 
 	{% else %}
+
 		<h1>צור פרופיל ויוזמה משלך - מעורבות חברתית מתחילה בך</h1>
 
 		<div id="row1">
@@ -23,7 +78,7 @@
 				{% if initiatives %}
 					{% for i in initiatives %}
 					<img src="{{ i.image.url }}" class="i-pic" />
-					<h3><a href="{% url goodnet.views.initiative i.id %}">{{ i.title }}</a></h3>
+					<h3><a href="{% url goodnet.views.post i.id %}">{{ i.title }}</a></h3>
 					<p class="desc">{{ i.desc|truncatewords:15 }}</p>
 					{% endfor %}
 					<p class="links"><a href="">לכל היוזמות</a> &nbsp; | &nbsp; <a href="{% url goodnet.views.registration %}">הצא יוזמה משלך</a></p>
@@ -64,14 +119,74 @@
 		</div>
 		
 		<div id="row2">
-			<div>
+			<div id="right">
+				<img src="{{ STATIC_URL }}img/orly_guy.jpeg" />	
 				
+				<p>נתקלתם בבעיה?<br/>
+				צריכים עזרה?<br/>
+				אורלי וגיא ישמחו לעמוד לרשותכם</p>
 			</div>
 
 			<div id="left">
 				<h2><span class="text-lbl">מעשה טוב</span> “אני רוצה להתנדב”</h2>
 			</div>
 		</div>
+
+
+		<div id="photo-bar">
+		<img src="{{ STATIC_URL }}img/title-01.png" id="cats_header" />
+		{% if cats %}
+			<div id="right-scroll"><a href="javascript:slide('right');"><img src="{{ STATIC_URL }}img/right-yellowarrow.png" /></a></div>
+			<div id="photo-bar-inner">
+				<ul id="photo-bar-ul">
+				{% for cat in cats %}
+					<li><a href=""><img src="{{ cat.icon.url }}"/><br/>{{ cat.title }}</a></li>
+				{% endfor %}
+				</ul>
+			</div>
+			<div id="left-scroll"><a href="javascript:slide('left');"><img src="{{ STATIC_URL }}img/left-yellowarrow.png" /></a></div>
+			<input type='hidden' id='hidden_auto_slide_seconds' value=0 />
+		{% else %}
+		{% endif%}
+		<div style="clear:both;"></div>
+		</div>
+
+
+		<div id="row3">
+			<div>
+				Testimonials
+			</div>
+
+			<div>
+				
+	<div id="latest_updates">
+		<img src="{{ STATIC_URL }}img/latest-updates.png" alt="" />
+		{% for u in sidebar_updates %}
+			<div class="side-updates">
+				<img src="{{ u.image.url }}" class="uimg" />
+				<div class="uinfo">
+					<h3><a href="{% url goodnet.views.post u.id %}">{{ u.title }}</a></h3>
+					<p>{{ u.desc|truncatewords:10 }}</p>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		{% endfor %}
+	</div>
+			</div>
+
+
+	<div id="latest_events">
+	<h2>אירועים קרובים</h2>
+	{% for e in sidebar_events %}
+		<div>
+			<h3><a href="{% url goodnet.views.post e.id %}">{{e}}</a></h3>
+			<small>{{ e.date }}</small>
+		</div>
+	{% endfor %}
+	</div>
+
+		</div>
+
 	{% endif %}
 
 {% endblock %}

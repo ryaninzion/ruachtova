@@ -1,0 +1,50 @@
+{% extends "goodnet/base.html" %}
+
+{% block stylesheets %}
+	{{ block.super }}
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/profile.css">
+{% endblock %}
+
+{% block content %}
+<h1>ארגונים ועמותות</h1>
+
+{% for profile in profiles.object_list %}
+	<div class="profile-result">
+		<div class="result-author"><img src="{{ STATIC_URL }}img/left-yellowarrow.png" /> 
+    			<h3 class="result-title"><a href="{{ profile.get_absolute_url }}">{{ profile.name }}</a></h3>
+		</div><div style="clear:both;"></div>
+		<img src="
+		{% if profile.avatar %} {{ profile.avatar.url }} {% else %} /static/img/default-avatar.jpg{% endif %}
+		" class="result-image" />
+		{% if profile.categories.exists %}
+			<span class="text-lbl">תחומים:</span>
+			{% for category in profile.categories.all %}
+				{{ category }}{% if forloop.last %}{% else %}, {% endif %}
+			{% endfor %}
+		{% else %}
+		{% endif %}
+		<p class="result-desc">{{ profile.desc|truncatewords:30 }}</p>
+		<p class="read-more"><a href="{{ profile.get_absolute_url }}">המשך קריאה</a></p>
+		<div style="clear:both;"></div>
+	</div>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if profiles.has_previous %}
+            <a href="?page={{ profiles.previous_page_number }}">< עמוד הקודם </a>
+        {% endif %}
+
+        <span class="current">
+            &nbsp; &nbsp; עמוד {{ profiles.number }} מ {{ profiles.paginator.num_pages }} &nbsp; &nbsp;
+        </span>
+
+        {% if events.has_next %}
+            <a href="?page={{ profiles.next_page_number }}">עמוד הבא ></a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}
+
+

@@ -1,3 +1,4 @@
+h1 { margin-top:0; padding-top:0; }
 #post-right { width:200px; }
 #post-right img { max-width:200px; }
 #post-left { width:440px; }
@@ -17,3 +18,15 @@
 .ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
 .ui-timepicker-div td { font-size: 90%; }
 .ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+/* post index results */
+#result_count { height:50px; background-color:#FFF5D8; margin:30px 0; border-top:3px solid #FBBD09; border-bottom:1px solid #FBBD09; text-align:right; line-height:50px; color:#FBBD09; font-size:14px; font-weight:bold; padding-right:20px; }
+
+.event-result { width:440px; margin-left:50px; float:right; margin-top:20px; }
+.post-result { clear:both; border-bottom:1px solid #FFF5D8; padding-bottom:20px; margin-bottom:20px; }
+.result-author { line-height:34px; margin-bottom:5px; } .result-author img { height:34px; float:right; padding-left:10px; }
+.result-image { float:right; max-width:150px; max-height:150px; padding:5px 0 20px 10px; }
+h3.result-title { margin:0; padding:0; font-size:16px !important; } .result-title a, .result-title a:hover, .result-title a:visited { color:#000; text-decoration:none; }
+.result-desc { margin-bottom:10px !important; }
+
+.pagination { clear:both; text-align:center; padding-top:30px; }

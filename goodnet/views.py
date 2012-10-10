@@ -34,61 +34,70 @@ def index(request):
 	return render_to_response('goodnet/index.html',results,context_instance=RequestContext(request))
 
 
+def initiatives(request):
+	today = datetime.date.today()
+	initiative_list = Initiative.objects.filter(start_date__gte = today)
+	paginator = Paginator(initiative_list, 10) 
+
+	try:
+       		page = int(request.GET.get('page', '1'))
+	except ValueError:
+        	page = 1
+
+    	try:
+        	initiatives = paginator.page(page)
+	except (EmptyPage, InvalidPage):
+        	initiatives = paginator.page(paginator.num_pages)
+
+	results = {'initiatives':initiatives}
+	results.update(static_elements())
+	return render_to_response('goodnet/posts/initiatives.html',results,context_instance=RequestContext(request))
+
+
 def events_index(request):
-	events = Event.objects.all()
-	return render_to_response('goodnet/posts/events_index.html',{'events':events},context_instance=RequestContext(request))
+	event_list = Event.objects.all()
+	paginator = Paginator(event_list, 10) 
+
+	try:
+       		page = int(request.GET.get('page', '1'))
+	except ValueError:
+        	page = 1
+
+    	try:
+        	events = paginator.page(page)
+	except (EmptyPage, InvalidPage):
+        	events = paginator.page(paginator.num_pages)
+
+	results = {'events':events}
+	results.update(static_elements())
+	return render_to_response('goodnet/posts/events_index.html',results,context_instance=RequestContext(request))
 
 def calendar_events(request):
 	events = Event.objects.all().values('id', 'title', 'date')
 	data = simplejson.dumps(list(events), cls=DjangoJSONEncoder)
-
 	return HttpResponse(data, mimetype='application/json')
 
 
 def post(request,id):
-	post = get_object_or_404(Post,pk=id)
-	type = 'post'
-	results = {'post':post, 'type':type, 'request':request}
+	post = get_object_or_404(AbstractPost,pk=id)
+	results = {'post':post, 'request':request}
 	results.update(static_elements())
 	return render_to_response('goodnet/posts/view.html',results,context_instance=RequestContext(request))
 
-def event(request,id):
-	event = get_object_or_404(Event,pk=id)
-	type = 'event'
-	results = {'post':event, 'type':type, 'request':request}
-	results.update(static_elements())
-	return render_to_response('goodnet/posts/view.html',results,context_instance=RequestContext(request))
 
-def initiative(request,id):
-	initiative = get_object_or_404(Initiative,pk=id)
-	type = 'initiative'
-	results = {'post':initiative, 'type':type, 'request':request}
-	results.update(static_elements())
-	return render_to_response('goodnet/posts/view.html',results,context_instance=RequestContext(request))
-
-def bookmark(request,type,id):
+def bookmark(request,id):
 	post = id
 	profile = request.user.get_profile()
 	profile.likes.add(post)
 	profile.save()
-	if type == 'event':
-		return HttpResponseRedirect('/goodnet/event/%s' % post)
-	elif type == 'initiative':
-		return HttpResponseRedirect('/goodnet/initiative/%s' % post)
-	else:
-		return HttpResponseRedirect('/goodnet/post/%s' % post)
+	return HttpResponseRedirect('/goodnet/post/%s' % post)
 
-def join_cause(request,type,id):
+def join_cause(request,id):
 	post = id
 	profile = request.user.get_profile()
 	profile.causes_joined.add(post)
 	profile.save()
-	if type == 'event':
-		return HttpResponseRedirect('/goodnet/event/%s' % post)
-	elif type == 'initiative':
-		return HttpResponseRedirect('/goodnet/initiative/%s' % post)
-	else:
-		return HttpResponseRedirect('/goodnet/post/%s' % post)
+	return HttpResponseRedirect('/goodnet/post/%s' % post)
 
 def post_form(request):
 	if request.user.is_authenticated():
@@ -115,7 +124,8 @@ def post_form(request):
 					return HttpResponseRedirect('/goodnet/event/%i' % event.id)
 				else:
 					return render_to_response('goodnet/posts/create.html', {'eform':new_event}, context_instance=RequestContext(request))
-			else:
+			elif request.POST['selected_form'] == 'iform':
+
 				new_initiative = InitiativeForm(request.POST, request.FILES)
 				new_initiative.author = request.user
 				if new_initiative.is_valid():
@@ -125,12 +135,26 @@ def post_form(request):
 					return HttpResponseRedirect('/goodnet/initiative/%i' % initiative.id)
 				else:
 					return render_to_response('goodnet/posts/create.html', {'iform':new_initiative}, context_instance=RequestContext(request))
+			
+			else:
+
+				new_video = VideoForm(request.POST)
+				new_video.creator = request.user
+				if new_video.is_valid():
+					video = new_video.save(commit=False)
+					video.creator = request.user
+					video.save()
+					return HttpResponseRedirect('/goodnet/profile/%i' % request.user.get_profile().id)
+				else:
+					return render_to_response('goodnet/posts/create.html', {'vform':new_video}, context_instance=RequestContext(request))
+
 		else:
 			pform = PostForm()
 			eform = EventForm()
 			iform = InitiativeForm()
+			vform = VideoForm()
 			user = request.user
-			results = {'pform':pform,'eform':eform,'iform':iform,'user':user}
+			results = {'pform':pform,'eform':eform,'iform':iform,'vform':vform,'user':user}
 			results.update(static_elements())
 			return render_to_response('goodnet/posts/create.html', results, context_instance=RequestContext(request))
 	else:
@@ -155,7 +179,11 @@ def photo_form(request,id):
 def profile(request,id):
 	profile = get_object_or_404(Profile,pk=id)
 	gallery = Photo.objects.filter(creator=profile.user.id)
-	results = {'profile':profile, 'gallery':gallery, 'request':request}
+	posts = Post.objects.filter(author=profile.user.id)
+	events = Event.objects.filter(author=profile.user.id)
+	initiatives = Initiative.objects.filter(author=profile.user.id)
+	videos = Video.objects.filter(creator=profile.user.id)
+	results = {'profile':profile, 'posts':posts, 'events':events, 'initiatives':initiatives, 'videos':videos, 'gallery':gallery, 'request':request}
 	results.update(static_elements())
 	return render_to_response('goodnet/profiles/view.html',results,context_instance=RequestContext(request))
 
@@ -219,6 +247,25 @@ def profile_edit(request,id):
 		return HttpResponseRedirect('/goodnet/register/') 
 
 
+def profiles(request):
+	profile_list = Profile.objects.all()
+	paginator = Paginator(profile_list, 10) 
+
+	try:
+       		page = int(request.GET.get('page', '1'))
+	except ValueError:
+        	page = 1
+
+    	try:
+        	profiles = paginator.page(page)
+	except (EmptyPage, InvalidPage):
+        	profiles = paginator.page(paginator.num_pages)
+
+	results = {'profiles':profiles}
+	results.update(static_elements())
+	return render_to_response('goodnet/profiles/index.html',results,context_instance=RequestContext(request))
+
+
 def search_results(request):
 
 	if request.POST:
@@ -240,7 +287,7 @@ def search_results(request):
 					results = results.filter(location = search.data['location'])
 		elif request.POST['type'] == 'initiative':
 			search = InitiativeSearchForm(request.POST)
-			results = Initiatve.objects.filter()
+			results = Initiative.objects.filter()
 			if search.data:
 				if "category" in search.data and search.data['category'] != '':
 					results = results.filter(category__id = search.data['category'])
@@ -253,6 +300,7 @@ def search_results(request):
 		return HttpResponseRedirect('/goodnet/')
 	
 	pager = Paginator(results, 10) 
+	search_type = request.POST['type']
 
 	try:
 		page = int(request.GET.get('page', '1'))
@@ -266,7 +314,7 @@ def search_results(request):
 
 	querystring = request.META["QUERY_STRING"]
 		
-	rsults = {'projects':projects,'querystring':querystring}
+	rsults = {'projects':projects,'querystring':querystring,'type':search_type}
 	rsults.update(static_elements())
 	return render_to_response('goodnet/search/results.html', rsults, context_instance=RequestContext(request))
 

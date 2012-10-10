@@ -1,0 +1,28 @@
+#sidebar { display:none; }
+#content { width:100%; border-top:none; padding:10px 0 30px 0; }
+
+#homebanner { text-align:center; }
+
+h1 { text-align:center; color:#666; font-weight:normal; font-size:26px; margin:0 0 20px 0; padding:0; }
+#row1 h2, #row2 h2 { font-size:18px; line-height:20px; }
+#row1, #row2 { clear:both; } #row1 div, #row2 div { width:480px; padding:30px 0; border-top:3px solid #FBBD09; } 
+#row1 div#left, #row2 div#left { float:left; } #row1 div#right, #row2 div#right { float:right; }
+#row2, #row1 { padding-top:30px; } #row2 div { border-top:none; }
+
+#row1 div#right { width:400px; background:url('../img/heart-icon.png') 403px 10px no-repeat; padding-right:80px; } 
+#row1 h3 { font-size:14px; line-height:16px; padding-top:10px; margin:0 0 5px 0; }
+#row1 a, #row1 a:hover, #row1 a:visited { color:#000; text-decoration:none; }
+.desc { font-size:11px; margin:0; padding:5px 0 0 0; }
+.register-button { float:left; padding:0 15px 15px 0; }
+.i-pic { float:right; max-height:100px; max-width:100px; padding: 10px 0 10px 10px; }
+.links { clear:both; margin-bottom:10px; }
+#row1 div#latest_events { float:right; margin-left:20px; width:140px; padding:10px 100px 10px 10px; border:1px solid #999; background-color:#fff; }
+.dogood { margin-top:10px; } 
+
+#row2 div#left { width:308px; font-size:12px; padding-left:145px; padding-top:0; text-align:left; color:#999; background:url('../img/one-thing.jpg') top left no-repeat; min-height:145px; }
+#row2 div#left h1 { text-align:left; margin:0 0 10px 0; padding:0; }
+#row2 div#right img { float:right; padding-left:20px; } #row2 div#right { color:#666; font-size:18px; line-height:20px; padding:0; }
+.text-lbl { font-weight:bold; } #row2 div#right p { margin:0; padding-top:30px; }
+
+#photo-bar { position:relative; background-color:#FFF5D8; padding:20px 10px; width:100%; overflow:visible; } #photo-bar-inner { width:90%; }
+#cats_header { position:absolute; top:-15px; right:20px; } #photo-bar-ul li img { max-width:80px; max-height:80px; }

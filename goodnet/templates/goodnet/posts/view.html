@@ -9,12 +9,12 @@
 {% block content %}
 <img src="{{ STATIC_URL }}img/left-yellowarrow.png" class="headline-arrow" alt="" />
 <h2>{{ post }}</h2>
-{% if post.ongoing %}
+{% if post.initiative.ongoing %}
 <div id="one-time">
 	<img src="{{ STATIC_URL }}img/one-time.png" alt="" /> <p>אירוע חד פעמי</p>
 </div>
 {% endif %}
-מעת: {{ post.author.get_profile.name }} &nbsp; | &nbsp; {{ post.cdate|date:"d.m.Y" }}
+מאת: {{ post.author.get_profile.name }} &nbsp; | &nbsp; {{ post.cdate|date:"d.m.Y" }}
 <br style="clear:both;" /><br/>
 
 <div id="post-right">
@@ -23,9 +23,9 @@
 <div id="post-left">
 	<ul>
 	{% if post.category %}<li><span class="text-lbl">תחום:</span> {{ post.category }}</li>{% else %}{% endif %}
-	{% if post.date %}<li><span class="text-lbl">מועד:</span> {{ post.date|date:"l, j F Y, H:i" }}</li>{% else %}{% endif %}
-	{% if post.start_date %}<li><span class="text-lbl">תאריך:</span> {{ post.start_date|date:"l, j F Y, H:i" }} &nbsp; &nbsp; <span class="text-lbl">עד תאריך:</span> {{ post.end_date|date:"l, j F Y, H:i" }}</li>{% else %}{% endif %}
-	{% if post.location %}<li><span class="text-lbl">מקום:</span>{% if post.address %} {{ post.address }},{% else %}{% endif %} {{ post.location }}<br/></li>{% else %}{% endif %}
+	{% if post.event.date %}<li><span class="text-lbl">מועד:</span> {{ post.event.date|date:"l, j F Y, H:i" }}</li>{% else %}{% endif %}
+	{% if post.initiative.start_date %}<li><span class="text-lbl">תאריך:</span> {{ post.initiative.start_date|date:"l, j F Y, H:i" }} &nbsp; &nbsp; <span class="text-lbl">עד תאריך:</span> {{ post.initiative.end_date|date:"l, j F Y, H:i" }}</li>{% else %}{% endif %}
+	{% if post.event.location or post.initiative.location %}<li><span class="text-lbl">מקום:</span>{% if post.event.address or post.initiative.address %} {{ post.event.address }}{{ post.initiative.address }},{% else %}{% endif %} {{ post.event.location }}{{ post.initiative.location }}<br/></li>{% else %}{% endif %}
 	</ul>
 	<div class="desc">
 	{{ post.desc|linebreaks }}
@@ -44,21 +44,21 @@
 <div id="action-bar">
 
 	{% if user.is_authenticated %}
-		{% if post.location %}
+		{% if post.event.location or post.initiative.location %}
 			{% if user.get_profile in post.our_helpers.distinct %}
 				<span class="alert">את/ה הצטרף!</span> &nbsp; &nbsp;
 			{% else %}
-				<a href="{% url goodnet.views.join_cause type post.id %}"><img src="{{ STATIC_URL }}img/join.png" alt="" /></a> &nbsp;
+				<a href="{% url goodnet.views.join_cause post.id %}"><img src="{{ STATIC_URL }}img/join.png" alt="" /></a> &nbsp;
 			{% endif %}
 		{% else %}
 		{% endif %}	
 		{% if user.get_profile in post.liked.distinct %}
 			<span class="alert">נמצא במועדפים שלך</span>	
 		{% else %}
-			<img src="{{ STATIC_URL }}img/left-yellowarrow.png" alt="" /> <a href="{% url goodnet.views.bookmark type post.id %}">הוסיפו למועדפים</a> &nbsp;
+			<img src="{{ STATIC_URL }}img/left-yellowarrow.png" alt="" /> <a href="{% url goodnet.views.bookmark post.id %}">הוסיפו למועדפים</a> &nbsp;
 		{% endif %}
 	{% else %}
-		{% if post.location %}
+		{% if post.event.location or post.initiative.location %}
 			<a href="{% url goodnet.views.loginrequest %}"><img src="{{ STATIC_URL }}img/join.png" alt="" /></a> &nbsp;
 		{% else %}
 		{% endif %}	

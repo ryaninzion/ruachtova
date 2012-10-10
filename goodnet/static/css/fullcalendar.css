@@ -54,6 +54,7 @@ html .fc,
 	text-align: right;
 	}
 	
+#cal_header { margin-top:0; padding:0 0 10px 0; border-bottom:1px solid #ccc; color:#000; }
 .fc-header-title {
 	display: inline-block;
 	vertical-align: top;
@@ -62,6 +63,7 @@ html .fc,
 .fc-header-title h2 {
 	margin-top: 0;
 	white-space: nowrap;
+	font-size:22px !important;
 	}
 	
 .fc .fc-header-space {
@@ -124,8 +126,9 @@ html .fc,
 
 .fc-widget-header,    /* <th>, usually */
 .fc-widget-content {  /* <td>, usually */
-	border: 1px solid #ccc;
+	border: 1px solid #FFF5D8;
 	}
+.fc-widget-content { padding:10px 0 !important; }
 	
 .fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
 	background: #ffc;
@@ -435,7 +438,9 @@ table.fc-border-separate {
 ------------------------------------------------------------------------*/
 
 .fc-grid th {
-	text-align: center;
+	text-align: right;
+	background: #FBBD09;
+	padding:10px;
 	}
 	
 .fc-grid .fc-day-number {
@@ -469,8 +474,9 @@ table.fc-border-separate {
 	}
 	
 .fc-rtl .fc-grid .fc-event-time {
-	float: right;
+		display:block;
 	}
+
 	
 	
 
@@ -527,7 +533,7 @@ table.fc-border-separate {
 	}
 	
 .fc-widget-header .fc-agenda-divider-inner {
-	background: #eee;
+	background: #FBBD09;
 	}
 	
 /* slot rows */

@@ -9,6 +9,8 @@ class PostAdmin(admin.ModelAdmin):
 		obj.save()
 
 admin.site.register(Post, PostAdmin)
+admin.site.register(Event)
+admin.site.register(Initiative)
 admin.site.register(Category)
 admin.site.register(Profile)
 admin.site.register(Area)

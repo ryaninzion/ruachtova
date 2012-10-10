@@ -35,13 +35,7 @@ class Area(models.Model):
 
 	def __unicode__(self): return self.name
 
-"""
-def photo_file_path(instance):
-    return 'images/gallery-photos/'
 
-def thumbnail_file_path(instance):
-    return 'images/gallery-thumbnails/'
-"""
 class AbstractMedia(models.Model):
 	desc 		= models.TextField("תאור", blank=True, null=True)
 	date 		= models.DateTimeField("תאריך", default=datetime.now())
@@ -49,7 +43,6 @@ class AbstractMedia(models.Model):
 
 	class Meta:
 		ordering = ['-date']
-
 
 
 class Photo(AbstractMedia):
@@ -75,12 +68,10 @@ class Photo(AbstractMedia):
 			self.thumb = os.path.splitext(str(self.image))[0] + ".thumbnail" + ".jpg"
 			super(Photo, self).save(force_insert, force_update)
 
-"""
-def video_file_path(instance):
-    return '/'.join(['videos/profiles', instance.user.get_profile().id, ''])
-"""
+
 class Video(AbstractMedia):
 #	video		= models.FileField("וידאו", upload_to=video_file_path)
+	link		= models.CharField("כתובת וידאו",max_length=100)
 
 	class Meta:
 		verbose_name = "וידאו"
@@ -99,6 +90,10 @@ class AbstractPost(models.Model):
 	cdate = models.DateTimeField(auto_now_add=True)
 	def __unicode__(self): return self.title
 
+	@models.permalink
+	def get_absolute_url(self):
+		return ('goodnet.views.post', [str(self.id)])
+
 class Post(AbstractPost):
 
 	class Meta:
@@ -113,6 +108,10 @@ class Event(AbstractPost):
 	class Meta:
 		verbose_name = "אירוע"
 		verbose_name_plural = "אירועים"
+
+	@models.permalink
+	def get_absolute_url(self):
+		return ('goodnet.views.event', [str(self.id)])
 
 class Initiative(AbstractPost):
 	start_date = models.DateTimeField("תאריך ושעה")

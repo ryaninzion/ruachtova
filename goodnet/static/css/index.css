@@ -4,11 +4,12 @@
 
 h1 { text-align:center; color:#666; font-weight:normal; font-size:26px; margin:0 0 20px 0; padding:0; }
 #row1 h2, #row2 h2 { font-size:18px; line-height:20px; }
-#row1, #row2 { clear:both; } #row1 div, #row2 div { width:480px; padding:30px 0; border-top:3px solid #FBBD09; } 
-#row2 { border-top:1px solid #999; } #row2 div { border-top:none; }
+#row1, #row2, #row3 { clear:both; } #row1 div, #row2 div { width:480px; padding:30px 0; border-top:3px solid #FBBD09; } 
+#row1 div#left, #row2 div#left { float:left; } #row1 div#right, #row2 div#right { float:right; }
+#row2 { border-top:1px solid #999; padding-top:30px; } #row2 div { border-top:none; }
 
-#row1 div#right { width:400px; float:right; background:url('../img/heart-icon.png') 403px 10px no-repeat; padding-right:80px; } 
-#row1 div#left { width:400px; float:left; background:url('../img/profile-icon.png') 403px 10px no-repeat; padding-right:80px; }
+#row1 div#right { width:400px; background:url('../img/heart-icon.png') 403px 10px no-repeat; padding-right:80px; } 
+#row1 div#left { width:400px; background:url('../img/profile-icon.png') 403px 10px no-repeat; padding-right:80px; }
 #row1 h3 { font-size:14px; line-height:16px; padding-top:10px; margin:0 0 5px 0; }
 #row1 a, #row1 a:hover, #row1 a:visited { color:#000; text-decoration:none; }
 .desc { font-size:11px; margin:0; padding:0; }
@@ -22,3 +23,15 @@ ul#open_profile li:before { padding-left:7px; content: "•"; font-size:17px; co
 ul#open_profile { margin-bottom:20px; }
 
 #row2 div#left { width:308px; padding-right:172px; background:url('../img/pic-01.jpg') top right no-repeat; min-height:145px; }
+#row2 div#right img { float:right; padding-left:20px; } #row2 div#right { color:#666; font-size:18px; line-height:20px; padding:0; }
+.text-lbl { font-weight:bold; } #row2 div#right p { margin:0; padding-top:30px; }
+
+#photo-bar { position:relative; background-color:#FFF5D8; padding:20px 10px; width:100%; overflow:visible; } 
+#photo-bar-inner { float:right; width:90%; overflow:hidden; }
+#photo-bar-ul { position:relative; right:-110px; list-style-type:none; margin:0px; padding:0px; width:9999px; }
+#photo-bar-ul li { float:right; padding:0 5px; }
+#photo-bar-ul li img { width:80px; height:80px; .margin-bottom:-4px; }
+#photo-bar #right-scroll, #photo-bar #left-scroll { float:right; line-height:100px; }
+#cats_header { position:absolute; top:-15px; right:20px; } 
+
+#row3 { padding-top:30px; }#row3 div { width:300px; float:right; margin-left:50px; } #row3 div#latest_events { width:190px; margin-left:0; } 

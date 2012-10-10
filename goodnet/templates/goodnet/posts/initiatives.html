@@ -1,0 +1,42 @@
+{% extends "goodnet/base.html" %}
+
+{% block stylesheets %}
+	{{ block.super }}
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/post.css">
+{% endblock %}
+
+{% block content %}
+<h1>יוזמות אישיות</h1>
+
+{% for i in initiatives.object_list %}
+	<div class="post-result">
+		<div class="result-author"><img src="{{ STATIC_URL }}img/calendar-icon.png" />
+    			<h3 class="result-title"><a href="{{ i.get_absolute_url }}">{{ i.title }}</a></h3>
+		</div><div style="clear:both;"></div>
+		<img src="{{ i.image.url }}" class="result-image" />
+		<span class="text-lbl">תאריך ושעה:</span> {{ i.start_date|date:"D, d M Y, H:m" }}
+		<p class="result-desc">{{ i.desc|truncatewords:30 }}</p>
+		<p class="read-more"><a href="{{ i.get_absolute_url }}">המשך קריאה</a></p>
+		<div style="clear:both;"></div>
+	</div>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if initiatives.has_previous %}
+            <a href="?page={{ initiatives.previous_page_number }}">< עמוד הקודם </a>
+        {% endif %}
+
+        <span class="current">
+            &nbsp; &nbsp; עמוד {{ initiatives.number }} מ {{ initiatives.paginator.num_pages }} &nbsp; &nbsp;
+        </span>
+
+        {% if events.has_next %}
+            <a href="?page={{ initiatives.next_page_number }}">עמוד הבא ></a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}
+
+

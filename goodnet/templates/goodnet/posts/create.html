@@ -90,6 +90,17 @@
 		</fieldset>
 	</form>
 </dd>
+<dt><a name="vform">וידאו</a></dt>
+<dd class="forms" id="vform">
+	<form action="" method="post">{% csrf_token %}
+		<fieldset>
+		{{ vform.as_ul }}
+		<small>יש לשים כתובת לוידאו ב YouTube או ב Vimeo</small>
+		<input type="hidden" name="selected_form" value="vform"/>
+		<input type="submit" class="regsubmit" value="שמירה" />
+		</fieldset>
+	</form>
+</dd>
 </dl>
 
 {% endblock %}
